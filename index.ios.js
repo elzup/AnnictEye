@@ -1,5 +1,6 @@
-'use strict';
+// @flow
 
-const {AppRegistry} = require('react-native')
-const AnnictEye = require('./js/AnnictEye')
-AppRegistry.registerComponent('AnnictEye', () => AnnictEye);
+import './App/Config/ReactotronConfig'
+import { AppRegistry } from 'react-native'
+import App from './App/Containers/App'
+AppRegistry.registerComponent('AnnictEye', () => App);
