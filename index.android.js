@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
 	AppRegistry,
@@ -14,6 +8,9 @@ import {
 
 export default class AnnictEye extends Component {
 	render() {
+		const pic = {
+			uri: '~/Pictures/elzup_icon/co01.png'
+		};
 		return (
 			<View style={styles.container}>
 				<Text style={styles.welcome}>
@@ -26,6 +23,7 @@ export default class AnnictEye extends Component {
 					Double tap R on your keyboard to reload,{'\n'}
 					Shake or press menu button for dev menu
 				</Text>
+				<Image source={pic} style={{width: 200, height: 100}} />
 			</View>
 		);
 	}
