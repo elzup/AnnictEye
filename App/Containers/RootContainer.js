@@ -1,13 +1,11 @@
 // @flow
 
 import React, {Component} from 'react'
-import {View, StatusBar} from 'react-native'
+import {View, StatusBar, StyleSheet} from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import {connect} from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
-
-// Styles
-import styles from './Styles/RootContainerStyle'
+import {Fonts, Metrics, Colors} from '../Themes/'
 
 class RootContainer extends Component {
   componentDidMount () {
@@ -17,13 +15,35 @@ class RootContainer extends Component {
 
   render () {
     return (
-      <View style={styles.applicationView}>
+      <View style={Styles.applicationView}>
         <StatusBar barStyle='light-content' />
         <NavigationRouter />
       </View>
     )
   }
 }
+
+const Styles = StyleSheet.create({
+  applicationView: {
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: Colors.background
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: Fonts.type.base,
+    margin: Metrics.baseMargin
+  },
+  myImage: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center'
+  }
+})
 
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
