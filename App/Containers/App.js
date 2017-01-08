@@ -1,20 +1,15 @@
 // @flow
 
-import React, { Component, applyMiddleware, createStore } from 'react'
-import { Provider, thunk } from 'react-redux'
-import promise from 'redux-promise'
-import createLogger from 'redux-logger'
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import applyConfigSettings from '../Config'
+import { createStore } from '../Redux'
 
 applyConfigSettings()
 
 // create our store
-const logger = createLogger()
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk, promise, logger)
-)
+const store = createStore()
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
