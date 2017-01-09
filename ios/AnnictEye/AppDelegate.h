@@ -8,6 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "RCTLinkingManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
