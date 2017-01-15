@@ -1,9 +1,19 @@
 // @flow
 
 import React from 'react'
-import { ScrollView, Text, View, StyleSheet, Linking } from 'react-native'
+import { ScrollView, Text, View, StyleSheet } from 'react-native'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Metrics, ApplicationStyles } from '../Themes/'
+
+import simpleAuthClient from 'react-native-simple-auth'
+
+const appId = ''
+simpleAuthClient.configure('annict', {
+  client_id: appId,
+  response_type: 'code'
+}).then(() => {
+  console.log('simpleAuthClient setuped.')
+})
 
 const Styles = StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -19,15 +29,9 @@ const Styles = StyleSheet.create({
 
 export default class PresentationScreen extends React.Component {
   componentDidMount () {
-    const appId = ''
-
-    Linking.openURL([
-      'https://api.annict.com/oauth/authorize',
-      '?response_type=code',
-      '&client_id=' + appId,
-      '&redirect_uri=annicteye%3A%2F%2Fauth',
-      '&scope=read'
-    ].join(''))
+    simpleAuthClient.authorize('annict').then((info) => {
+      console.log(info)
+    })
   }
 
   render () {
