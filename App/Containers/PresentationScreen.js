@@ -5,11 +5,11 @@ import { ScrollView, Text, View, StyleSheet } from 'react-native'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Metrics, ApplicationStyles } from '../Themes/'
 
+import { CLIENT_ID } from 'react-native-dotenv'
 import simpleAuthClient from 'react-native-simple-auth'
 
-const appId = ''
 simpleAuthClient.configure('annict', {
-  client_id: appId,
+  client_id: CLIENT_ID,
   response_type: 'code'
 }).then(() => {
   console.log('simpleAuthClient setuped.')

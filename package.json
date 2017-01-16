@@ -61,6 +61,7 @@
     "nyc": "^9.0.1",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.4.0",
+    "react-native-dotenv": "0.0.3",
     "react-native-mock": "^0.2.8",
     "react-native-simple-auth": "^0.3.0",
     "reactotron-apisauce": "^1.5.2",
