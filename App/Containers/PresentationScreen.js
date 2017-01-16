@@ -39,7 +39,7 @@ export default class PresentationScreen extends React.Component {
       <View style={Styles.mainContainer}>
         <ScrollView style={Styles.container}>
           <View style={Styles.section} >
-            <Text style={Styles.sectionText} >
+            <Text>
               認証画面から Annict にログインし、認証コードをコピーしてください。
             </Text>
             <DrawerButton text='認証画面を開く' onPress={this.handlerPressOauth} />

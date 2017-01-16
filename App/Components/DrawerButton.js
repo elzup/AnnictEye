@@ -23,9 +23,11 @@ class DrawerButton extends Component {
 
 const Styles = {
   text: {
-    ...Fonts.style.h5,
+    ...Fonts.style.h6,
     backgroundColor: Colors.green,
     color: Colors.snow,
+    textAlign: 'center',
+    paddingVertical: 5,
     marginVertical: Metrics.baseMargin
   }
 }

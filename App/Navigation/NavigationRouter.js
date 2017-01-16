@@ -30,7 +30,7 @@ const Styles = {
     flex: 1
   },
   navBar: {
-    backgroundColor: Colors.background
+    backgroundColor: Colors.pink
   },
   title: {
     color: Colors.snow
