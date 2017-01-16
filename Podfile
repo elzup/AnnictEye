@@ -2,7 +2,7 @@
 platform :ios, '10.2'
 use_frameworks!
 
-xcodeproj './ios/AnnictEye.xcodeproj'
+project './ios/AnnictEye.xcodeproj'
 
 target 'AnnictEye' do
   pod 'SimpleAuth/Facebook'
