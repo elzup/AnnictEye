@@ -5,6 +5,16 @@ import { ScrollView, Text, View, StyleSheet } from 'react-native'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Metrics, ApplicationStyles } from '../Themes/'
 
+import simpleAuthClient from 'react-native-simple-auth'
+
+const appId = ''
+simpleAuthClient.configure('annict', {
+  client_id: appId,
+  response_type: 'code'
+}).then(() => {
+  console.log('simpleAuthClient setuped.')
+})
+
 const Styles = StyleSheet.create({
   ...ApplicationStyles.screen,
   logo: {
@@ -18,6 +28,12 @@ const Styles = StyleSheet.create({
 })
 
 export default class PresentationScreen extends React.Component {
+  componentDidMount () {
+    simpleAuthClient.authorize('annict').then((info) => {
+      console.log(info)
+    })
+  }
+
   render () {
     return (
       <View style={Styles.mainContainer}>

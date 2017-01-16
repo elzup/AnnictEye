@@ -23,6 +23,7 @@
     "flow": "flow --show-all-errors"
   },
   "dependencies": {
+    "annict": "^0.0.6",
     "apisauce": "^0.6.0",
     "format-json": "^1.0.3",
     "lodash": "^4.17.2",
@@ -37,6 +38,7 @@
     "react-native-i18n": "^0.1.1",
     "react-native-maps": "^0.11.0",
     "react-native-router-flux": "^3.37.0",
+    "react-native-simple-auth": "^0.3.0",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
@@ -60,6 +62,7 @@
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.4.0",
     "react-native-mock": "^0.2.8",
+    "react-native-simple-auth": "^0.3.0",
     "reactotron-apisauce": "^1.5.2",
     "reactotron-react-native": "^1.6.0",
     "reactotron-redux": "^1.5.2",

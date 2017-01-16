@@ -52,3 +52,5 @@ android/app/src/main/assets/fonts/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
+Pods/
