@@ -8,6 +8,8 @@ import {
   StyleSheet,
   Linking,
   TextInput } from 'react-native'
+import LoginActions from '../Redux/LoginRedux'
+import { connect } from 'react-redux'
 
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Metrics, Colors, ApplicationStyles } from '../Themes/'
@@ -31,7 +33,17 @@ const Styles = StyleSheet.create({
   }
 })
 
-export default class PresentationScreen extends React.Component {
+type PresentationScreenProps = {
+  dispatch: () => any,
+  fetching: boolean,
+  attemptLogin: () => void
+}
+
+class PresentationScreen extends React.Component {
+
+  props: PresentationScreenProps
+
+  isAttempting: boolean
 
   state: {
     code: string
@@ -42,9 +54,19 @@ export default class PresentationScreen extends React.Component {
     this.state = {
       code: ''
     }
+    this.isAttempting = false
   }
 
   componentDidMount () {
+  }
+
+  componentWillReceiveProps (newProps) {
+    this.forceUpdate()
+    if (this.isAttempting && !newProps.fetching) {
+      console.log('login')
+      console.log(newProps)
+      // NavigationActions.pop()
+    }
   }
 
   handlerPressOauth = () => {
@@ -63,6 +85,7 @@ export default class PresentationScreen extends React.Component {
 
   handlerSubmitCode = () => {
     const { code } = this.state
+    this.isAttempting = true
     console.log(code)
   }
 
@@ -97,3 +120,17 @@ export default class PresentationScreen extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fetching: state.login.fetching
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    attemptLogin: (code) => dispatch(LoginActions.loginRequest(code))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PresentationScreen)
