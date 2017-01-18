@@ -49,8 +49,8 @@ class PresentationScreen extends React.Component {
     code: string
   }
 
-  constructor () {
-    super()
+  constructor (props: PresentationScreenProps) {
+    super(props)
     this.state = {
       code: ''
     }
@@ -62,9 +62,9 @@ class PresentationScreen extends React.Component {
 
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
+    console.log('receive')
     if (this.isAttempting && !newProps.fetching) {
       console.log('login')
-      console.log(newProps)
       // NavigationActions.pop()
     }
   }
@@ -86,7 +86,7 @@ class PresentationScreen extends React.Component {
   handlerSubmitCode = () => {
     const { code } = this.state
     this.isAttempting = true
-    console.log(code)
+    this.props.attemptLogin(code)
   }
 
   render () {
