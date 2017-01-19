@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Linking,
   TextInput } from 'react-native'
-import LoginActions from '../Redux/LoginRedux'
+import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import { connect } from 'react-redux'
 
 // import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -62,10 +62,14 @@ class PresentationScreen extends React.Component {
 
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
-    console.log('receive')
-    if (this.isAttempting && !newProps.fetching) {
-      console.log('login')
-      // NavigationActions.pop()
+    const {loggedIn, fetching} = newProps
+    if (!this.isAttempting || fetching) {
+      return
+    }
+    if (loggedIn) {
+      console.log('login success!!')
+    } else {
+      console.log('login failed.')
     }
   }
 
@@ -123,6 +127,7 @@ class PresentationScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    loggedIn: isLoggedIn(state.login),
     fetching: state.login.fetching
   }
 }
