@@ -34,20 +34,17 @@ const ApplicationStyles = {
       borderBottomWidth: 1
     },
     sectionText: {
-      color: Colors.snow,
       marginVertical: Metrics.smallMargin,
       textAlign: 'center',
       fontWeight: 'bold'
     },
     subtitle: {
-      color: Colors.snow,
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin
     }
   },
-  darkLabelContainer: {
-    backgroundColor: Colors.cloud,
+  darkLabelContainer: { backgroundColor: Colors.cloud,
     padding: Metrics.smallMargin
   },
   darkLabel: {

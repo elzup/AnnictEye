@@ -1,13 +1,12 @@
-import { put } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 
-// attempts to login
-export function * login ({ username, password }) {
-  if (password === '') {
-    // dispatch failure
-    yield put(LoginActions.loginFailure('WRONG'))
+export function * login (api, {code}) {
+  const response = yield call(api.getToken, code)
+  console.log(response)
+  if (response.ok) {
+    yield put(LoginActions.loginSuccess(response.data.access_token))
   } else {
-    // dispatch successful logins
-    yield put(LoginActions.loginSuccess(username))
+    yield put(LoginActions.loginFailure('WRONG'))
   }
 }
