@@ -11,7 +11,7 @@ import {
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import { connect } from 'react-redux'
 
-// import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Metrics, Colors, ApplicationStyles } from '../Themes/'
 import DrawerButton from '../Components/DrawerButton'
 
@@ -33,15 +33,15 @@ const Styles = StyleSheet.create({
   }
 })
 
-type PresentationScreenProps = {
+type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
   attemptLogin: () => void
 }
 
-class PresentationScreen extends React.Component {
+class LoginScreen extends React.Component {
 
-  props: PresentationScreenProps
+  props: LoginScreenProps
 
   isAttempting: boolean
 
@@ -49,7 +49,7 @@ class PresentationScreen extends React.Component {
     code: string
   }
 
-  constructor (props: PresentationScreenProps) {
+  constructor (props: LoginScreenProps) {
     super(props)
     this.state = {
       code: ''
@@ -58,6 +58,12 @@ class PresentationScreen extends React.Component {
   }
 
   componentDidMount () {
+    const {loggedIn} = this.props
+    console.log(this.props)
+    console.log(loggedIn)
+    if (loggedIn) {
+      NavigationActions.listviewExample()
+    }
   }
 
   componentWillReceiveProps (newProps) {
@@ -67,7 +73,7 @@ class PresentationScreen extends React.Component {
       return
     }
     if (loggedIn) {
-      console.log('login success!!')
+      NavigationActions.listviewExample()
     } else {
       console.log('login failed.')
     }
@@ -103,8 +109,6 @@ class PresentationScreen extends React.Component {
               認証画面から Annict にログインし、認証コードをコピーしてください。
             </Text>
             <DrawerButton text='認証画面を開く' onPress={this.handlerPressOauth} />
-          </View>
-          <View style={Styles.section} >
             <TextInput
               ref='code'
               value={code}
@@ -138,4 +142,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PresentationScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
