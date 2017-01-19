@@ -3,10 +3,21 @@ import LoginActions from '../Redux/LoginRedux'
 import Annict from 'annict'
 import { CLIENT_ID, CLIENT_SECRET } from 'react-native-dotenv'
 
-// attempts to login
+export function * annictLogin (code) {
+  return new Promise(function (resolve, reject) {
+    const annict = new Annict()
+    annict.OAuth.token(
+    )
+    .then(response => response.json())
+    .then(token => {
+      resolve(token)
+    })
+  })
+}
+
 export function * login ({code}) {
-  const annict = new Annict()
   try {
+    const annict = new Annict()
     const token = yield call(annict.OAuth.token,
       CLIENT_ID,
       CLIENT_SECRET,

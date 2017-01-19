@@ -75,7 +75,7 @@ class PresentationScreen extends React.Component {
       '?response_type=code',
       '&client_id=' + CLIENT_ID,
       '&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
-      '&scope=read'
+      '&scope=read+write'
     ].join(''))
   }
 
