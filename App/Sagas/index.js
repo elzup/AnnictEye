@@ -16,6 +16,8 @@ import { login, logout } from './LoginSagas'
 const api = API.create()
 
 export default function * root () {
+  const keys = yield call(AsyncStorage.getAllKeys)
+  console.log(keys)
   const token = yield call(AsyncStorage.getItem, 'access_token')
   if (token !== null) {
     yield call(api.setToken, token)

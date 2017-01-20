@@ -5,11 +5,9 @@ import { AsyncStorage } from 'react-native'
 export function * login (api, {code}) {
   const response = yield call(api.oauthToken, code)
   if (response.ok) {
-    console.log(response)
-    const { token } = response.data
+    const token = response.data.access_token
     yield put(LoginActions.loginSuccess(token))
-    const res = yield call(AsyncStorage.setItem, 'access_token', token)
-    console.log(res)
+    yield call(AsyncStorage.setItem, 'access_token', token)
   } else {
     yield put(LoginActions.loginFailure('WRONG'))
   }
