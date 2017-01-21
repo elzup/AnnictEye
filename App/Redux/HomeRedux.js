@@ -2,6 +2,7 @@
 
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import { Program } from '../Services/Type'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -17,7 +18,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  programs: null,
+  programs: ([]: Array<Program>),
   error: null,
   fetching: false
 })
