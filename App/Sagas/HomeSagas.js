@@ -1,10 +1,14 @@
 import { call, put } from 'redux-saga/effects'
 import HomeActions from '../Redux/HomeRedux'
+// import LoginActions from '../Redux/LoginRedux'
+// import { AsyncStorage } from 'react-native'
 
 export function * progurams (api) {
   const response = yield call(api.mePrograms)
   if (response.ok) {
+    const programs = response.data.programs
+    yield put(HomeActions.programSuccess(programs))
   } else {
-    yield put(HomeActions.episodeFailure('WRONG'))
+    yield put(HomeActions.programFailure('WRONG'))
   }
 }

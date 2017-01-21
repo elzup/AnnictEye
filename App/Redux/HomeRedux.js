@@ -6,9 +6,9 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  episodeRequest: null,
-  episodeSuccess: ['access_token'],
-  episodeFailure: ['error']
+  programRequest: null,
+  programSuccess: ['programs'],
+  programFailure: ['error']
 })
 
 export const HomeTypes = Types
@@ -17,7 +17,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  episodes: null,
+  programs: null,
   error: null,
   fetching: false
 })
@@ -28,8 +28,8 @@ export const INITIAL_STATE = Immutable({
 export const request = (state: Object) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const success = (state: Object, { episodes }: Object) =>
-  state.merge({ fetching: false, error: null, episodes })
+export const success = (state: Object, { programs }: Object) =>
+  state.merge({ fetching: false, error: null, programs })
 
 // we've had a problem logging in
 export const failure = (state: Object, { error }: Object) =>
@@ -38,12 +38,9 @@ export const failure = (state: Object, { error }: Object) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.EPISODE_REQUEST]: request,
-  [Types.EPISODE_SUCCESS]: success,
-  [Types.EPISODE_FAILURE]: failure
+  [Types.PROGRAM_REQUEST]: request,
+  [Types.PROGRAM_SUCCESS]: success,
+  [Types.PROGRAM_FAILURE]: failure
 })
 
 /* ------------- Selectors ------------- */
-
-// Get episodes
-export const isLoggedIn = (loginState: Object) => loginState.access_token !== null

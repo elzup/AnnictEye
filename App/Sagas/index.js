@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga'
+import { takeLatest } from 'redux-saga'
 import API from '../Services/Api'
 
 /* ------------- Types ------------- */
@@ -18,9 +18,9 @@ const api = API.create()
 export default function * root () {
   yield [
     // some sagas only receive an action
-    takeEvery(LoginTypes.LOGIN_REQUEST, login, api),
-    takeEvery(LoginTypes.LOGOUT, logout, api),
-    takeEvery(LoginTypes.SYNC_LOGIN, syncLogin, api),
-    takeEvery(HomeTypes.EPISODE_REQUEST, programs, api)
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    takeLatest(LoginTypes.LOGOUT, logout, api),
+    takeLatest(LoginTypes.SYNC_LOGIN, syncLogin, api),
+    takeLatest(HomeTypes.PROGRAM_REQUEST, programs, api)
   ]
 }

@@ -65,10 +65,7 @@ class LoginScreen extends React.Component {
 
   componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
-    console.log('=> Received props')
     const {loggedIn, fetching} = newProps
-    console.log('loggedIn', loggedIn)
-    console.log('props', newProps)
     if (!this.isAttempting || fetching) {
       return
     }

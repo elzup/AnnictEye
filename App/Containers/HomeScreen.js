@@ -47,6 +47,8 @@ type HomeScreenProps = {
 
 class HomeScreen extends React.Component {
   props: HomeScreenProps
+  isAttempting: boolean
+  isLoaded: boolean
 
   state: {
     dataSource: Object
@@ -98,20 +100,29 @@ class HomeScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows(dataObjects)
     }
+    this.isAttempting = false
+    this.isLoaded = false
   }
 
   componentDidMount = () => {
     this.props.syncLogin()
+    this.isAttempting = true
   }
 
   componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
     const {loggedIn, fetching} = newProps
-    if (fetching) {
+    if (!this.isAttempting || fetching) {
       return
     }
     if (!loggedIn) {
       NavigationActions.loginScreen()
+      return
+    }
+    if (!this.isLoaded) {
+      this.props.loadProgram()
+      this.isAttempting = true
+      this.isLoaded = true
     }
   }
 
@@ -177,7 +188,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     syncLogin: () => dispatch(LoginActions.syncLogin()),
-    loadEpisodes: () => dispatch(HomeActions.requestEpisode())
+    loadProgram: () => dispatch(HomeActions.programRequest())
   }
 }
 
