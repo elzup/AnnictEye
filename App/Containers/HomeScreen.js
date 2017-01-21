@@ -5,9 +5,10 @@ import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
+import moment from 'moment'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import { ApplicationStyles, Metrics, Colors } from '../Themes/'
+import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 import type { Program } from '../Services/Type'
 
 type HomeScreenProps = {
@@ -69,11 +70,14 @@ class HomeScreen extends React.Component {
   }
 
   renderRow = (program: Program) => {
+    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
+    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
       <View style={Styles.episodeCard}>
         <View style={Styles.infos}>
+          <Text style={Styles.timeLabel}>{timeLabel}</Text>
           <Text style={Styles.boldLabel}>{program.work.title}</Text>
-          <Text style={Styles.label}>{program.episode.number_text}|{program.episode.title}</Text>
+          <Text style={Styles.label}>{label}</Text>
         </View>
       </View>
     )
@@ -119,6 +123,10 @@ const Styles = StyleSheet.create({
     flex: 1,
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
+  },
+  timeLabel: {
+    fontSize: Fonts.size.small,
+    color: Colors.green
   },
   infos: {
     flex: 1

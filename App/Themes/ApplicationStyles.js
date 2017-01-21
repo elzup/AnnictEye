@@ -70,7 +70,8 @@ const ApplicationStyles = {
     textAlign: 'center'
   },
   card: {
-    margin: Metrics.smallMargin,
+    marginHorizontal: Metrics.smallMargin,
+    marginVertical: Metrics.halfSmallMargin,
     padding: Metrics.baseMargin,
     shadowOffset: {
       width: Metrics.smallMargin,

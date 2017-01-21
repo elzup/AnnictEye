@@ -12,6 +12,7 @@ const metrics = {
   baseMargin: 10,
   doubleBaseMargin: 20,
   smallMargin: 5,
+  halfSmallMargin: 2.5,
   horizontalLineHeight: 1,
   searchBarHeight: 30,
   screenWidth: width < height ? width : height,
