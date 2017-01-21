@@ -6,10 +6,10 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  loginCheck: [],
   loginRequest: ['code'],
   loginSuccess: ['access_token'],
   loginFailure: ['error'],
+  syncLogin: null,
   logout: null
 })
 
@@ -40,12 +40,16 @@ export const failure = (state: Object, { error }: Object) =>
 // we've logged out
 export const logout = (state: Object) => INITIAL_STATE
 
+//
+export const sync = (state: Object) => state.merge({ fetching: true })
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
+  [Types.SYNC_LOGIN]: sync,
   [Types.LOGOUT]: logout
 })
 

@@ -36,7 +36,8 @@ const Styles = StyleSheet.create({
 type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  attemptLogin: () => void
+  attemptLogin: () => void,
+  syncLogin: () => void
 }
 
 class LoginScreen extends React.Component {
@@ -57,18 +58,17 @@ class LoginScreen extends React.Component {
     this.isAttempting = false
   }
 
-  componentDidMount () {
-    const {loggedIn} = this.props
-    console.log(this.props)
-    console.log(loggedIn)
-    if (loggedIn) {
-      NavigationActions.listviewExample()
-    }
+  componentDidMount = () => {
+    this.props.syncLogin()
+    this.isAttempting = true
   }
 
-  componentWillReceiveProps (newProps) {
+  componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
+    console.log('=> Received props')
     const {loggedIn, fetching} = newProps
+    console.log('loggedIn', loggedIn)
+    console.log('props', newProps)
     if (!this.isAttempting || fetching) {
       return
     }
@@ -138,7 +138,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (code) => dispatch(LoginActions.loginRequest(code))
+    attemptLogin: (code) => dispatch(LoginActions.loginRequest(code)),
+    syncLogin: () => dispatch(LoginActions.syncLogin())
   }
 }
 
