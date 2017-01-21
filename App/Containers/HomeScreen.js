@@ -64,8 +64,11 @@ class HomeScreen extends React.Component {
       this.isAttempting = true
       this.isLoaded = true
     }
+
+    // 放送済みのみ
+    const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(programs)
+      dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
     })
   }
 
