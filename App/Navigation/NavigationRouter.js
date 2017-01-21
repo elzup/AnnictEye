@@ -7,7 +7,7 @@ import {Colors} from '../Themes'
 
 // screens identified by the router
 import LoginScreen from '../Containers/LoginScreen'
-import ListviewExample from '../Containers/ListviewExample'
+import HomeScreen from '../Containers/HomeScreen'
 
 class NavigationRouter extends Component {
   render () {
@@ -15,8 +15,8 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='loginScreen' component={LoginScreen} title='ログイン' />
-            <Scene key='listviewExample' component={ListviewExample} title='Home' />
+            <Scene initial key='homeScreen' component={HomeScreen} title='ホーム' />
+            <Scene key='loginScreen' component={LoginScreen} title='ログイン' />
           </Scene>
         </Scene>
       </Router>

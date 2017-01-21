@@ -3,7 +3,9 @@
 import React from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors } from '../Themes/'
 
 const Styles = StyleSheet.create({
@@ -36,7 +38,15 @@ const Styles = StyleSheet.create({
   }
 })
 
-class ListviewExample extends React.Component {
+type HomeScreenProps = {
+  dispatch: () => any,
+  fetching: boolean,
+  syncLogin: () => void
+}
+
+class HomeScreen extends React.Component {
+  props: HomeScreenProps
+
   state: {
     dataSource: Object
   }
@@ -89,6 +99,21 @@ class ListviewExample extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    this.props.syncLogin()
+  }
+
+  componentWillReceiveProps = (newProps) => {
+    this.forceUpdate()
+    const {loggedIn, fetching} = newProps
+    if (fetching) {
+      return
+    }
+    if (!loggedIn) {
+      NavigationActions.loginScreen()
+    }
+  }
+
   /* ***********************************************************
   * STEP 3
   * `renderRow` function -How each cell/row should be rendered
@@ -97,7 +122,7 @@ class ListviewExample extends React.Component {
   * e.g.
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
-  renderRow (rowData) {
+  renderRow = (rowData) => {
     return (
       <View style={Styles.row}>
         <Text style={Styles.boldLabel}>{rowData.title}</Text>
@@ -124,7 +149,7 @@ class ListviewExample extends React.Component {
     }
   *************************************************************/
 
-  noRowData () {
+  noRowData = () => {
     return this.state.dataSource.getRowCount() === 0
   }
 
@@ -144,8 +169,14 @@ class ListviewExample extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    // ...redux state to props here
+    loggedIn: isLoggedIn(state.login)
   }
 }
 
-export default connect(mapStateToProps)(ListviewExample)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    syncLogin: () => dispatch(LoginActions.syncLogin())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

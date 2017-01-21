@@ -73,7 +73,7 @@ class LoginScreen extends React.Component {
       return
     }
     if (loggedIn) {
-      NavigationActions.listviewExample()
+      NavigationActions.homeScreen()
     } else {
       console.log('login failed.')
     }
