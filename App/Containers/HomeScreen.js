@@ -4,7 +4,7 @@ import React from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import HomeActions from '../Redux/HomeRedux'
+import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors } from '../Themes/'
@@ -181,7 +181,8 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: isLoggedIn(state.login)
+    loggedIn: isLoggedIn(state.login),
+    programs: selectPrograms(state.home)
   }
 }
 

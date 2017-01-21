@@ -9,7 +9,7 @@ import { HomeTypes } from '../Redux/HomeRedux'
 /* ------------- Sagas ------------- */
 
 import { login, logout, syncLogin } from './LoginSagas'
-import { programs } from './HomeSagas'
+import { getPrograms } from './HomeSagas'
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -21,6 +21,6 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.LOGOUT, logout, api),
     takeLatest(LoginTypes.SYNC_LOGIN, syncLogin, api),
-    takeLatest(HomeTypes.PROGRAM_REQUEST, programs, api)
+    takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api)
   ]
 }

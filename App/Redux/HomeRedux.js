@@ -44,3 +44,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 })
 
 /* ------------- Selectors ------------- */
+export const selectPrograms = (homeState: Object) => homeState.programs

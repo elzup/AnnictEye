@@ -1,3 +1,5 @@
+// @flow
+
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import { CLIENT_ID, CLIENT_SECRET } from 'react-native-dotenv'
@@ -24,7 +26,7 @@ const create = (baseURL = 'https://api.annict.com/') => {
 
   const oauthRevoke = (token) => api.post('oauth/revoke', { 'token': token })
 
-  const mePrograms = () => api.get('me/programs', { 'sort_started_at': 'desc' })
+  const mePrograms = () => api.get('v1/me/programs', { 'sort_started_at': 'desc' })
 
   return {
     setToken,
