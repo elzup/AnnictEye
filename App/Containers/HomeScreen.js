@@ -44,9 +44,15 @@ class HomeScreen extends React.Component {
     this.isLoaded = false
   }
 
+  componentWillMount = () => {
+    console.log('componentWillMount')
+  }
+
   componentDidMount = () => {
+    console.log('componentDidMount')
     this.props.syncLogin()
     this.isAttempting = true
+    this.isLoaded = false
   }
 
   componentWillReceiveProps = (newProps) => {
@@ -63,7 +69,6 @@ class HomeScreen extends React.Component {
     if (!this.isLoaded) {
       this.props.loadProgram()
       this.isAttempting = true
-      this.isLoaded = true
     }
 
     // 放送済みのみ
