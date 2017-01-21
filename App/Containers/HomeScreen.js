@@ -50,6 +50,7 @@ class HomeScreen extends React.Component {
   }
 
   componentWillReceiveProps = (newProps) => {
+    console.log('=> Receive', newProps)
     this.forceUpdate()
     const {loggedIn, fetching, programs} = newProps
     if (!this.isAttempting || fetching) {
@@ -113,6 +114,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    logout: () => dispatch(LoginActions.logout()),
     syncLogin: () => dispatch(LoginActions.syncLogin()),
     loadProgram: () => dispatch(HomeActions.programRequest())
   }

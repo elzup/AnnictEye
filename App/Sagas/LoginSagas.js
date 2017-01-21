@@ -16,9 +16,9 @@ export function * login (api, {code}) {
 
 export function * logout (api) {
   yield call(api.oauthRevoke)
-  yield put(LoginActions.logout)
   yield call(AsyncStorage.removeItem, 'access_token')
   yield call(AsyncStorage.removeItem, 'application_code')
+  yield put(LoginActions.logoutSuccess())
 }
 
 export function * syncLogin (api) {

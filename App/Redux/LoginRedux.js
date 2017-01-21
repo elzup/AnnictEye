@@ -10,7 +10,8 @@ const { Types, Creators } = createActions({
   loginSuccess: ['access_token'],
   loginFailure: ['error'],
   syncLogin: null,
-  logout: null
+  logout: null,
+  logoutSuccess: null
 })
 
 export const LoginTypes = Types
@@ -19,7 +20,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  access_token: null,
+  access_token: '',
   error: null,
   fetching: false
 })
@@ -35,10 +36,12 @@ export const success = (state: Object, { access_token }: Object) =>
 
 // we've had a problem logging in
 export const failure = (state: Object, { error }: Object) =>
-  state.merge({ fetching: false, error })
+  state.merge({ fetching: false, error, access_token: null })
 
 // we've logged out
-export const logout = (state: Object) => INITIAL_STATE
+export const logout = (state: Object) => state.merge({ fetching: true })
+export const logoutSuccess = (state: Object) =>
+  state.merge({ fetching: false, error: null, access_token: null })
 
 //
 export const sync = (state: Object) => state.merge({ fetching: true })
@@ -50,7 +53,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
   [Types.SYNC_LOGIN]: sync,
-  [Types.LOGOUT]: logout
+  [Types.LOGOUT]: logout,
+  [Types.LOGOUT_SUCCESS]: logoutSuccess
 })
 
 /* ------------- Selectors ------------- */
