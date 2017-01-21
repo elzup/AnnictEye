@@ -4,6 +4,7 @@ import React from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
+import HomeActions from '../Redux/HomeRedux'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors } from '../Themes/'
@@ -175,7 +176,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    syncLogin: () => dispatch(LoginActions.syncLogin())
+    syncLogin: () => dispatch(LoginActions.syncLogin()),
+    loadEpisodes: () => dispatch(HomeActions.requestEpisode())
   }
 }
 

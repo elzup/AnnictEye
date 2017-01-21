@@ -24,10 +24,13 @@ const create = (baseURL = 'https://api.annict.com/') => {
 
   const oauthRevoke = (token) => api.post('oauth/revoke', { 'token': token })
 
+  const mePrograms = () => api.get('me/programs', { 'sort_started_at': 'desc' })
+
   return {
     setToken,
     oauthToken,
-    oauthRevoke
+    oauthRevoke,
+    mePrograms
   }
 }
 
