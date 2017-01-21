@@ -12,7 +12,9 @@ const create = (baseURL = 'https://api.annict.com/') => {
     timeout: 10000
   })
 
-  const getToken = (code) => api.post('oauth/token', {
+  const setToken = (token) => { api.setHeader('Authorization', `Bearer ${token}`) }
+
+  const oauthToken = (code) => api.post('oauth/token', {
     'client_id': CLIENT_ID,
     'client_secret': CLIENT_SECRET,
     'grant_type': 'authorization_code',
@@ -20,8 +22,12 @@ const create = (baseURL = 'https://api.annict.com/') => {
     'code': code
   })
 
+  const oauthRevoke = (token) => api.post('oauth/revoke', { 'token': token })
+
   return {
-    getToken
+    setToken,
+    oauthToken,
+    oauthRevoke
   }
 }
 
