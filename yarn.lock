@@ -607,6 +607,12 @@ babel-plugin-detective@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-detective/-/babel-plugin-detective-2.0.0.tgz#6e642e83c22a335279754ebe2d754d2635f49f13"
 
+babel-plugin-dotenv@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-dotenv/-/babel-plugin-dotenv-0.0.1.tgz#b4fadedfba9571c4fb495080ff02c34b22a7d3d5"
+  dependencies:
+    dotenv "^2.0.0"
+
 babel-plugin-espower@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-espower/-/babel-plugin-espower-2.3.1.tgz#d15e904bc9949b14ac233b7965c2a5dc7a19a6a9"
@@ -2238,6 +2244,10 @@ dot-prop@^3.0.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-2.0.0.tgz#bd759c357aaa70365e01c96b7b0bec08a6e0d949"
+
 download@^4.1.2:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/download/-/download-4.4.3.tgz#aa55fdad392d95d4b68e8c2be03e0c2aa21ba9ac"
@@ -3006,9 +3016,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@0.33.0:
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.33.0.tgz#ef011eace7a6100f1ae08b852db78279032b8750"
+flow-bin@0.36.0:
+  version "0.36.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.36.0.tgz#557907bd9c2ab0670cfad9e7e906a74b0631e39a"
 
 fn-name@^2.0.0:
   version "2.0.1"
@@ -5390,6 +5400,12 @@ react-native-config@^0.1.2:
 react-native-device-info@^0.9.6:
   version "0.9.7"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.7.tgz#e4b35d60bbf73472beb30de3d2b96de15a51b75d"
+
+react-native-dotenv@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.0.3.tgz#5caf47a30b9c797c679dda835d81ae2ce3c1cc11"
+  dependencies:
+    babel-plugin-dotenv "^0.0.1"
 
 react-native-drawer@^2.3.0:
   version "2.3.0"

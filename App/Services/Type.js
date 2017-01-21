@@ -1,3 +1,5 @@
+// @flow
+
 export type Program = {
   id: number,
   work: Work,
@@ -7,12 +9,14 @@ export type Program = {
 export type Work = {
   id: number,
   title: string,
-  episodes: number
+  episodes_count: number,
+  watchers_count: number,
+  records_count: number
 }
 
 export type Episode = {
   id: number,
-  nubmer: number,
-  nubmer_text: string,
+  number: number,
+  number_text: string,
   records_count: number
 }

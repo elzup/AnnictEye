@@ -37,7 +37,8 @@ type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
   attemptLogin: () => void,
-  syncLogin: () => void
+  syncLogin: () => void,
+  loggedIn: boolean
 }
 
 class LoginScreen extends React.Component {

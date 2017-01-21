@@ -8,7 +8,7 @@ import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors } from '../Themes/'
-import { Program } from '../Services/Type'
+import type { Program } from '../Services/Type'
 
 const Styles = StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -43,7 +43,9 @@ const Styles = StyleSheet.create({
 type HomeScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  syncLogin: () => void
+  syncLogin: () => void,
+  loggedIn: boolean,
+  programs: Array<Program>
 }
 
 class HomeScreen extends React.Component {
@@ -96,11 +98,11 @@ class HomeScreen extends React.Component {
     })
   }
 
-  renderRow = (rowData: Program) => {
+  renderRow = (program: Program) => {
     return (
       <View style={Styles.row}>
-        <Text style={Styles.boldLabel}>{rowData.episode.number_text}</Text>
-        <Text style={Styles.label}>{rowData.work.title}</Text>
+        <Text style={Styles.boldLabel}>{program.episode.nubmer_text}</Text>
+        <Text style={Styles.label}>{program.work.title}</Text>
       </View>
     )
   }
