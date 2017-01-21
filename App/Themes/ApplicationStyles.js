@@ -68,6 +68,15 @@ const ApplicationStyles = {
     borderColor: Colors.ember,
     alignItems: 'center',
     textAlign: 'center'
+  },
+  card: {
+    marginHorizontal: Metrics.smallMargin,
+    marginVertical: Metrics.halfSmallMargin,
+    padding: Metrics.baseMargin,
+    shadowOffset: {
+      width: Metrics.smallMargin,
+      height: Metrics.smallMargin
+    }
   }
 }
 

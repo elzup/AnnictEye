@@ -1,13 +1,15 @@
-import { takeEvery } from 'redux-saga'
+import { takeLatest } from 'redux-saga'
 import API from '../Services/Api'
 
 /* ------------- Types ------------- */
 
 import { LoginTypes } from '../Redux/LoginRedux'
+import { HomeTypes } from '../Redux/HomeRedux'
 
 /* ------------- Sagas ------------- */
 
 import { login, logout, syncLogin } from './LoginSagas'
+import { getPrograms } from './HomeSagas'
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -16,8 +18,9 @@ const api = API.create()
 export default function * root () {
   yield [
     // some sagas only receive an action
-    takeEvery(LoginTypes.LOGIN_REQUEST, login, api),
-    takeEvery(LoginTypes.LOGOUT, logout, api),
-    takeEvery(LoginTypes.SYNC_LOGIN, syncLogin, api)
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    takeLatest(LoginTypes.LOGOUT, logout, api),
+    takeLatest(LoginTypes.SYNC_LOGIN, syncLogin, api),
+    takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api)
   ]
 }

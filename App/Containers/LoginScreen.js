@@ -17,27 +17,12 @@ import DrawerButton from '../Components/DrawerButton'
 
 import { CLIENT_ID } from 'react-native-dotenv'
 
-const Styles = StyleSheet.create({
-  ...ApplicationStyles.screen,
-  logo: {
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain'
-  },
-  centered: {
-    alignItems: 'center'
-  },
-  textInput: {
-    height: 40,
-    color: Colors.coal
-  }
-})
-
 type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
   attemptLogin: () => void,
-  syncLogin: () => void
+  syncLogin: () => void,
+  loggedIn: boolean
 }
 
 class LoginScreen extends React.Component {
@@ -65,10 +50,7 @@ class LoginScreen extends React.Component {
 
   componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
-    console.log('=> Received props')
     const {loggedIn, fetching} = newProps
-    console.log('loggedIn', loggedIn)
-    console.log('props', newProps)
     if (!this.isAttempting || fetching) {
       return
     }
@@ -144,3 +126,19 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+
+const Styles = StyleSheet.create({
+  ...ApplicationStyles.screen,
+  logo: {
+    height: Metrics.images.logo,
+    width: Metrics.images.logo,
+    resizeMode: 'contain'
+  },
+  centered: {
+    alignItems: 'center'
+  },
+  textInput: {
+    height: 40,
+    color: Colors.coal
+  }
+})

@@ -4,48 +4,25 @@ import React from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
+import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
+import moment from 'moment'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import { ApplicationStyles, Metrics, Colors } from '../Themes/'
-
-const Styles = StyleSheet.create({
-  ...ApplicationStyles.screen,
-  container: {
-    flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
-  },
-  row: {
-    flex: 1,
-    backgroundColor: Colors.fire,
-    marginVertical: Metrics.smallMargin,
-    justifyContent: 'center'
-  },
-  boldLabel: {
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    color: Colors.snow,
-    textAlign: 'center',
-    marginVertical: Metrics.smallMargin
-  },
-  label: {
-    textAlign: 'center',
-    color: Colors.snow,
-    marginBottom: Metrics.smallMargin
-  },
-  listContent: {
-    marginTop: Metrics.baseMargin
-  }
-})
+import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
+import type { Program } from '../Services/Type'
 
 type HomeScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  syncLogin: () => void
+  syncLogin: () => void,
+  loggedIn: boolean,
+  programs: Array<Program>
 }
 
 class HomeScreen extends React.Component {
   props: HomeScreenProps
+  isAttempting: boolean
+  isLoaded: boolean
 
   state: {
     dataSource: Object
@@ -53,101 +30,61 @@ class HomeScreen extends React.Component {
 
   constructor (props) {
     super(props)
-    /* ***********************************************************
-    * STEP 1
-    * This is an array of objects with the properties you desire
-    * Usually this should come from Redux mapStateToProps
-    *************************************************************/
-    const dataObjects = [
-      {title: 'First Title', description: 'First Description'},
-      {title: 'Second Title', description: 'Second Description'},
-      {title: 'Third Title', description: 'Third Description'},
-      {title: 'Fourth Title', description: 'Fourth Description'},
-      {title: 'Fifth Title', description: 'Fifth Description'},
-      {title: 'Sixth Title', description: 'Sixth Description'},
-      {title: 'Seventh Title', description: 'Seventh Description'},
-      {title: 'Eighth Title', description: 'Eighth Description'},
-      {title: 'Ninth Title', description: 'Ninth Description'},
-      {title: 'Tenth Title', description: 'Tenth Description'},
-      {title: 'Eleventh Title', description: 'Eleventh Description'},
-      {title: '12th Title', description: '12th Description'},
-      {title: '13th Title', description: '13th Description'},
-      {title: '14th Title', description: '14th Description'},
-      {title: '15th Title', description: '15th Description'},
-      {title: '16th Title', description: '16th Description'},
-      {title: '17th Title', description: '17th Description'},
-      {title: '18th Title', description: '18th Description'},
-      {title: '19th Title', description: '19th Description'},
-      {title: '20th Title', description: '20th Description'},
-      {title: 'BLACKJACK!', description: 'BLACKJACK! Description'}
-    ]
 
-    /* ***********************************************************
-    * STEP 2
-    * Teach datasource how to detect if rows are different
-    * Make this function fast!  Perhaps something like:
-    *   (r1, r2) => r1.id !== r2.id}
-    *************************************************************/
-    const rowHasChanged = (r1, r2) => r1 !== r2
+    const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id
 
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(dataObjects)
+      dataSource: ds.cloneWithRows(props.programs)
     }
+    this.isAttempting = false
+    this.isLoaded = false
   }
 
   componentDidMount = () => {
     this.props.syncLogin()
+    this.isAttempting = true
   }
 
   componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
-    const {loggedIn, fetching} = newProps
-    if (fetching) {
+    const {loggedIn, fetching, programs} = newProps
+    if (!this.isAttempting || fetching) {
       return
     }
     if (!loggedIn) {
       NavigationActions.loginScreen()
+      return
     }
+    if (!this.isLoaded) {
+      this.props.loadProgram()
+      this.isAttempting = true
+      this.isLoaded = true
+    }
+
+    // 放送済みのみ
+    const finishFilter = (program: Program) => moment(program.started_at).isBefore()
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
+    })
   }
 
-  /* ***********************************************************
-  * STEP 3
-  * `renderRow` function -How each cell/row should be rendered
-  * It's our best practice to place a single component here:
-  *
-  * e.g.
-    return <MyCustomCell title={rowData.title} description={rowData.description} />
-  *************************************************************/
-  renderRow = (rowData) => {
+  renderRow = (program: Program) => {
+    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
+    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <View style={Styles.row}>
-        <Text style={Styles.boldLabel}>{rowData.title}</Text>
-        <Text style={Styles.label}>{rowData.description}</Text>
+      <View style={Styles.episodeCard}>
+        <View style={Styles.infos}>
+          <Text style={Styles.timeLabel}>{timeLabel}</Text>
+          <Text style={Styles.boldLabel}>{program.work.title}</Text>
+          <Text style={Styles.label}>{label}</Text>
+        </View>
       </View>
     )
   }
-
-  /* ***********************************************************
-  * STEP 4
-  * If your datasource is driven by Redux, you'll need to
-  * reset it when new data arrives.
-  * DO NOT! place `cloneWithRows` inside of render, since render
-  * is called very often, and should remain fast!  Just replace
-  * state's datasource on newProps.
-  *
-  * e.g.
-    componentWillReceiveProps (newProps) {
-      if (newProps.someData) {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(newProps.someData)
-        })
-      }
-    }
-  *************************************************************/
 
   noRowData = () => {
     return this.state.dataSource.getRowCount() === 0
@@ -169,14 +106,47 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: isLoggedIn(state.login)
+    loggedIn: isLoggedIn(state.login),
+    programs: selectPrograms(state.home)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    syncLogin: () => dispatch(LoginActions.syncLogin())
+    syncLogin: () => dispatch(LoginActions.syncLogin()),
+    loadProgram: () => dispatch(HomeActions.programRequest())
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+
+const Styles = StyleSheet.create({
+  ...ApplicationStyles.screen,
+  container: {
+    flex: 1,
+    marginTop: Metrics.navBarHeight,
+    backgroundColor: Colors.silver
+  },
+  timeLabel: {
+    fontSize: Fonts.size.small,
+    color: Colors.green
+  },
+  infos: {
+    flex: 1
+  },
+  boldLabel: {
+    fontWeight: 'bold',
+    marginVertical: Metrics.smallMargin
+  },
+  label: {
+    marginBottom: Metrics.smallMargin
+  },
+  listContent: {
+    marginTop: Metrics.baseMargin
+  },
+  episodeCard: {
+    ...ApplicationStyles.card,
+    flex: 2,
+    backgroundColor: Colors.snow
+  }
+})
