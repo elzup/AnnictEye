@@ -18,5 +18,6 @@ export type Episode = {
   id: number,
   number: number,
   number_text: string,
-  records_count: number
+  records_count: number,
+  title: string
 }

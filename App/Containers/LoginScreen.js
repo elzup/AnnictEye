@@ -17,22 +17,6 @@ import DrawerButton from '../Components/DrawerButton'
 
 import { CLIENT_ID } from 'react-native-dotenv'
 
-const Styles = StyleSheet.create({
-  ...ApplicationStyles.screen,
-  logo: {
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain'
-  },
-  centered: {
-    alignItems: 'center'
-  },
-  textInput: {
-    height: 40,
-    color: Colors.coal
-  }
-})
-
 type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
@@ -142,3 +126,19 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+
+const Styles = StyleSheet.create({
+  ...ApplicationStyles.screen,
+  logo: {
+    height: Metrics.images.logo,
+    width: Metrics.images.logo,
+    resizeMode: 'contain'
+  },
+  centered: {
+    alignItems: 'center'
+  },
+  textInput: {
+    height: 40,
+    color: Colors.coal
+  }
+})
