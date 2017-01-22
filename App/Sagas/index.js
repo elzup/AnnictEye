@@ -5,11 +5,13 @@ import API from '../Services/Api'
 
 import { LoginTypes } from '../Redux/LoginRedux'
 import { HomeTypes } from '../Redux/HomeRedux'
+import { EpisodeTypes } from '../Redux/EpisodeRedux'
 
 /* ------------- Sagas ------------- */
 
 import { login, logout } from './LoginSagas'
 import { getPrograms } from './HomeSagas'
+import { loadEpisode } from './EpisodeSagas'
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -20,6 +22,7 @@ export default function * root () {
     // some sagas only receive an action
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.LOGOUT, logout, api),
-    takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api)
+    takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api),
+    takeLatest(EpisodeTypes.EPISODE_REQUEST, loadEpisode, api)
   ]
 }
