@@ -12,7 +12,7 @@ export function * getPrograms (api: any) {
     yield put(LoginActions.loginFailure('WRONG'))
     return
   }
-  yield put(LoginActions.loginSuccess(token))
+  yield put(LoginActions.loginSuccess())
   yield call(api.setToken, token)
 
   const response = yield call(api.mePrograms)

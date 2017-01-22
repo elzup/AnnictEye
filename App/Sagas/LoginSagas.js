@@ -8,7 +8,7 @@ export function * login (api, {code}) {
     const token = response.data.access_token
     yield call(AsyncStorage.setItem, 'access_token', token)
     yield call(AsyncStorage.setItem, 'application_code', code)
-    yield put(LoginActions.loginSuccess(token))
+    yield put(LoginActions.loginSuccess())
   } else {
     yield put(LoginActions.loginFailure('WRONG'))
   }
@@ -27,7 +27,7 @@ export function * syncLogin (api: any) {
     yield put(LoginActions.loginFailure('WRONG'))
     return false
   }
-  yield put(LoginActions.loginSuccess(token))
+  yield put(LoginActions.loginSuccess())
   yield call(api.setToken, token)
   return api
 }

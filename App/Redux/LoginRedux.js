@@ -7,7 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   loginRequest: ['code'],
-  loginSuccess: ['access_token'],
+  loginSuccess: [],
   loginFailure: ['error'],
   logout: null,
   logoutSuccess: null
@@ -19,7 +19,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  access_token: null,
+  isLoggedIn: false,
   error: null,
   fetching: false
 })
@@ -30,17 +30,17 @@ export const INITIAL_STATE = Immutable({
 export const request = (state: Object) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const success = (state: Object, { access_token }: Object) =>
-  state.merge({ fetching: false, error: null, access_token })
+export const success = (state: Object) =>
+  state.merge({ fetching: false, error: null, isLoggedIn: true })
 
 // we've had a problem logging in
 export const failure = (state: Object, { error }: Object) =>
-  state.merge({ fetching: false, error, access_token: null })
+  state.merge({ fetching: false, error, isLoggedIn: false })
 
 // we've logged out
 export const logout = (state: Object) => state.merge({ fetching: true })
 export const logoutSuccess = (state: Object) =>
-  state.merge({ fetching: false, error: null, access_token: null })
+  state.merge({ fetching: false, error: null, isLoggedIn: false })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -55,4 +55,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 /* ------------- Selectors ------------- */
 
 // Is the current user logged in?
-export const isLoggedIn = (loginState: Object) => loginState.access_token !== null
+export const isLoggedIn = (loginState: Object) => loginState.isLoggedIn
