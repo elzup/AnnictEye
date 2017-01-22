@@ -40,3 +40,26 @@ export type Episode = {
   title: string,
   records_count: number
 }
+
+export type User = {
+  id: number,
+  username: string,
+  name: string,
+  description: string,
+  url: string,
+  records_count: number,
+  created_at: string,
+}
+
+export type Record = {
+  id: number,
+  comment: string,
+  rating: number,
+  is_modified: boolean,
+  likes_count: number,
+  comments_count: number,
+  created_at: string,
+  user: User,
+  work: Work,
+  episode: Episode
+}
