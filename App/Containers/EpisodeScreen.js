@@ -32,6 +32,7 @@ class EpisodeScreen extends React.Component {
 
     const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id
 
+    // TODO: check
     if (props.episode === null) {
       Actions.homeScreen({ type: ActionConst.RESET })
     }
@@ -43,7 +44,7 @@ class EpisodeScreen extends React.Component {
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.loadEpisode()
+    this.props.loadEpisode(this.props.episode)
   }
 
   componentWillReceiveProps = (newProps) => {
@@ -110,7 +111,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    loadEpisode: () => dispatch(EpisodeActions.programRequest())
+    loadEpisode: (episode) => dispatch(EpisodeActions.episodeRequest(episode))
   }
 }
 
