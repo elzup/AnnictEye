@@ -100,7 +100,6 @@ class EpisodeScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  // 監視対象はここ
   return {
     isLoggedIn: isLoggedIn(state.login),
     records: selectRecords(state.episode),

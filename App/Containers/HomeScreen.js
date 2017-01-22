@@ -5,6 +5,7 @@ import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
+import EpisodeActions from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -107,7 +108,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    loadProgram: () => dispatch(HomeActions.programRequest())
+    loadProgram: () => dispatch(HomeActions.programRequest()),
+    setupEpisode: () => dispatch(EpisodeActions.episodeSetup())
   }
 }
 

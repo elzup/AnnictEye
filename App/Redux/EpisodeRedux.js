@@ -7,6 +7,7 @@ import type { Record, Episode } from '../Services/Type'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
+  episodeSetup: ['episode'],
   episodeRequest: ['episode'],
   episodeSuccess: ['records'],
   episodeFailure: ['error']
@@ -26,6 +27,9 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
+export const episodeSetup = (state: Object, { episode }: Object) =>
+  state.merge({ episode })
+
 // we're attempting to login
 export const episodeRequest = (state: Object) => state.merge({ fetching: true })
 
@@ -40,6 +44,7 @@ export const episodeFailure = (state: Object, { error }: Object) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
+  [Types.EPISODE_SETUP]: episodeSetup,
   [Types.EPISODE_REQUEST]: episodeRequest,
   [Types.EPISODE_SUCCESS]: episodeSuccess,
   [Types.EPISODE_FAILURE]: episodeFailure
