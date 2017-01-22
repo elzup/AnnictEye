@@ -11,7 +11,7 @@ import {
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import { connect } from 'react-redux'
 
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions, ActionConst } from 'react-native-router-flux'
 import { Metrics, Colors, ApplicationStyles } from '../Themes/'
 import DrawerButton from '../Components/DrawerButton'
 
@@ -53,7 +53,7 @@ class LoginScreen extends React.Component {
       return
     }
     if (loggedIn) {
-      NavigationActions.pop({ refresh: { isLoggedIn: null } })
+      Actions.homeScreen({ type: ActionConst.RESET })
     } else {
       console.log('login failed.')
     }

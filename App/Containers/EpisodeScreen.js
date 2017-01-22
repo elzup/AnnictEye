@@ -9,77 +9,75 @@ import {
   TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
-import EpisodeActions from '../Redux/EpisodeRedux'
-import moment from 'moment'
+import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
+// import moment from 'moment'
 
-import { Actions } from 'react-native-router-flux'
+import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import type { Program, Episode } from '../Services/Type'
+import type { Record, Episode } from '../Services/Type'
 
-type HomeScreenProps = {
+type EpisodeScreenProps = {
   dispatch: () => any,
+  logout: () => void,
+  loadEpisode: () => void,
   fetching: boolean,
   isLoggedIn: ?boolean,
-  programs: Array<Program>,
-  logout: () => void,
-  loadProgram: () => void,
-  setupEpisode: () => void
+  records: Array<Record>,
+  episode: Episode
 }
 
-class HomeScreen extends React.Component {
-  props: HomeScreenProps
+class EpisodeScreen extends React.Component {
+  props: EpisodeScreenProps
   state: {
-    dataSource: Object
+    dataSourceRecords: Object
   }
 
   constructor (props) {
     super(props)
 
-    const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id
+    const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id
 
-    // DataSource configured
+    // TODO: check
+    if (props.episode === null) {
+      Actions.homeScreen({ type: ActionConst.RESET })
+    }
     const ds = new ListView.DataSource({rowHasChanged})
-
-    // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs)
+      dataSourceRecords: ds.cloneWithRows(props.records)
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.loadProgram()
+    this.props.loadEpisode(this.props.episode)
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, fetching, programs } = newProps
+    const { isLoggedIn, fetching, records } = newProps
     if (fetching) {
       return
     }
     if (!isLoggedIn) {
-      Actions.loginScreen()
+      Actions.homeScreen({ type: ActionConst.RESET })
       return
     }
 
-    // 放送済みのみ
-    const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
+      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
     })
   }
 
-  renderRow = (program: Program, sectionID: number, rowID: number) => {
-    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
-    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
+  renderRow = (record: Record, sectionID: number, rowID: number) => {
+    const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
+    const timeLabel = '----'
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID, program.episode) }} >
+      <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
         <View style={Styles.episodeCard}>
           <View style={Styles.infos}>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{program.work.title}</Text>
+            <Text style={Styles.boldLabel}>{record.work.title}</Text>
             <Text style={Styles.label}>{label}</Text>
           </View>
         </View>
@@ -87,21 +85,23 @@ class HomeScreen extends React.Component {
     )
   }
 
-  pressRow = (rowID: number, episode: Episode) => {
-    this.props.setupEpisode(episode)
-    Actions.episodeScreen({ title: episode.title })
+  pressRow = (rowID: number) => {
+    console.log(rowID)
   }
 
   noRowData = () => {
-    return this.state.dataSource.getRowCount() === 0
+    return this.state.dataSourceRecords.getRowCount() === 0
   }
 
   render () {
     return (
       <View style={Styles.container}>
+        <View style={Styles.episodeHeader}>
+          <Text style={Styles.boldLabel}>{this.props.episode.title}</Text>
+        </View>
         <ListView
           contentContainerStyle={Styles.listContent}
-          dataSource={this.state.dataSource}
+          dataSource={this.state.dataSourceRecords}
           renderRow={this.renderRow}
           pageSize={15}
         />
@@ -111,22 +111,21 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  // 監視対象はここ
   return {
     isLoggedIn: isLoggedIn(state.login),
-    programs: selectPrograms(state.home)
+    records: selectRecords(state.episode),
+    episode: selectEpisode(state.episode)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    loadProgram: () => dispatch(HomeActions.programRequest()),
-    setupEpisode: (episode: Episode) => dispatch(EpisodeActions.episodeSetup(episode))
+    loadEpisode: (episode) => dispatch(EpisodeActions.episodeRequest(episode))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EpisodeScreen)
 
 const Styles = StyleSheet.create({
   ...ApplicationStyles.screen,

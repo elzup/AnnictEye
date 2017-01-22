@@ -28,11 +28,17 @@ const create = (baseURL: string = 'https://api.annict.com/') => {
 
   const mePrograms = () => api.get('v1/me/programs', { 'sort_started_at': 'desc' })
 
+  const records = (episodeID: number) => api.get('v1/records', {
+    'filter_episode_id': episodeID,
+    'sort_id': 'desc'
+  })
+
   return {
     oauthToken,
     oauthRevoke,
     mePrograms,
-    setToken
+    setToken,
+    records
   }
 }
 
