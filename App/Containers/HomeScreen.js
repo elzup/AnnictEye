@@ -89,7 +89,7 @@ class HomeScreen extends React.Component {
 
   pressRow = (rowID: number, episode: Episode) => {
     this.props.setupEpisode(episode)
-    Actions.episode()
+    Actions.episodeScreen({ title: episode.title })
   }
 
   noRowData = () => {
