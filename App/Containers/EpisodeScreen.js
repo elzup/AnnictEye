@@ -1,7 +1,12 @@
 // @flow
 
 import React from 'react'
-import { View, Text, ListView, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  ListView,
+  StyleSheet,
+  TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
@@ -64,18 +69,24 @@ class EpisodeScreen extends React.Component {
     })
   }
 
-  renderRow = (record: Record) => {
+  renderRow = (record: Record, sectionID: number, rowID: number) => {
     const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
     const timeLabel = '----'
     return (
-      <View style={Styles.episodeCard}>
-        <View style={Styles.infos}>
-          <Text style={Styles.timeLabel}>{timeLabel}</Text>
-          <Text style={Styles.boldLabel}>{record.work.title}</Text>
-          <Text style={Styles.label}>{label}</Text>
+      <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
+        <View style={Styles.episodeCard}>
+          <View style={Styles.infos}>
+            <Text style={Styles.timeLabel}>{timeLabel}</Text>
+            <Text style={Styles.boldLabel}>{record.work.title}</Text>
+            <Text style={Styles.label}>{label}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableHighlight>
     )
+  }
+
+  pressRow = (rowID: number) => {
+    console.log(rowID)
   }
 
   noRowData = () => {

@@ -1,7 +1,12 @@
 // @flow
 
 import React from 'react'
-import { View, Text, ListView, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  ListView,
+  StyleSheet,
+  TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
@@ -65,18 +70,24 @@ class HomeScreen extends React.Component {
     })
   }
 
-  renderRow = (program: Program) => {
+  renderRow = (program: Program, sectionID: number, rowID: number) => {
     const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
     const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <View style={Styles.episodeCard}>
-        <View style={Styles.infos}>
-          <Text style={Styles.timeLabel}>{timeLabel}</Text>
-          <Text style={Styles.boldLabel}>{program.work.title}</Text>
-          <Text style={Styles.label}>{label}</Text>
+      <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
+        <View style={Styles.episodeCard}>
+          <View style={Styles.infos}>
+            <Text style={Styles.timeLabel}>{timeLabel}</Text>
+            <Text style={Styles.boldLabel}>{program.work.title}</Text>
+            <Text style={Styles.label}>{label}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableHighlight>
     )
+  }
+
+  pressRow = (rowID: number) => {
+    console.log(rowID)
   }
 
   noRowData = () => {
