@@ -13,9 +13,9 @@ import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
 import EpisodeActions from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import type { Program } from '../Services/Type'
+import type { Program, Episode } from '../Services/Type'
 
 type HomeScreenProps = {
   dispatch: () => any,
@@ -23,7 +23,8 @@ type HomeScreenProps = {
   isLoggedIn: ?boolean,
   programs: Array<Program>,
   logout: () => void,
-  loadProgram: () => void
+  loadProgram: () => void,
+  setupEpisode: () => void
 }
 
 class HomeScreen extends React.Component {
@@ -59,7 +60,7 @@ class HomeScreen extends React.Component {
       return
     }
     if (!isLoggedIn) {
-      NavigationActions.loginScreen()
+      Actions.loginScreen()
       return
     }
 
@@ -74,7 +75,7 @@ class HomeScreen extends React.Component {
     const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
     const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
+      <TouchableHighlight onPress={() => { this.pressRow(rowID, program.episode) }} >
         <View style={Styles.episodeCard}>
           <View style={Styles.infos}>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
@@ -86,8 +87,9 @@ class HomeScreen extends React.Component {
     )
   }
 
-  pressRow = (rowID: number) => {
-    console.log(rowID)
+  pressRow = (rowID: number, episode: Episode) => {
+    this.props.setupEpisode(episode)
+    Actions.episode()
   }
 
   noRowData = () => {
@@ -120,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
     loadProgram: () => dispatch(HomeActions.programRequest()),
-    setupEpisode: () => dispatch(EpisodeActions.episodeSetup())
+    setupEpisode: (episode: Episode) => dispatch(EpisodeActions.episodeSetup(episode))
   }
 }
 
