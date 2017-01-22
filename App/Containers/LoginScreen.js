@@ -21,7 +21,6 @@ type LoginScreenProps = {
   dispatch: () => any,
   fetching: boolean,
   attemptLogin: () => void,
-  syncLogin: () => void,
   loggedIn: boolean
 }
 
@@ -44,7 +43,6 @@ class LoginScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    this.props.syncLogin()
     this.isAttempting = true
   }
 
@@ -55,7 +53,7 @@ class LoginScreen extends React.Component {
       return
     }
     if (loggedIn) {
-      NavigationActions.homeScreen()
+      NavigationActions.pop({ refresh: { isLoggedIn: null } })
     } else {
       console.log('login failed.')
     }
@@ -120,8 +118,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (code) => dispatch(LoginActions.loginRequest(code)),
-    syncLogin: () => dispatch(LoginActions.syncLogin())
+    attemptLogin: (code) => dispatch(LoginActions.loginRequest(code))
   }
 }
 

@@ -29,10 +29,10 @@ const create = (baseURL: string = 'https://api.annict.com/') => {
   const mePrograms = () => api.get('v1/me/programs', { 'sort_started_at': 'desc' })
 
   return {
-    setToken,
     oauthToken,
     oauthRevoke,
-    mePrograms
+    mePrograms,
+    setToken
   }
 }
 

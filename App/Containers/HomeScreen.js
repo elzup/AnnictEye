@@ -14,18 +14,17 @@ import type { Program } from '../Services/Type'
 type HomeScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  syncLogin: () => void,
-  loggedIn: boolean,
-  programs: Array<Program>
+  isLoggedIn: ?boolean,
+  programs: Array<Program>,
+  logout: () => void,
+  loadProgram: () => void
 }
 
 class HomeScreen extends React.Component {
   props: HomeScreenProps
-  isAttempting: boolean
-  isLoaded: boolean
-
   state: {
-    dataSource: Object
+    dataSource: Object,
+    isLoadRequested: boolean
   }
 
   constructor (props) {
@@ -38,31 +37,31 @@ class HomeScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs)
+      dataSource: ds.cloneWithRows(props.programs),
+      isLoadRequested: true
     }
-    this.isAttempting = false
-    this.isLoaded = false
   }
 
   componentDidMount = () => {
-    this.props.syncLogin()
-    this.isAttempting = true
+    console.log('componentDidMount')
+    this.props.loadProgram()
   }
 
   componentWillReceiveProps = (newProps) => {
+    console.log('=> Receive', newProps)
     this.forceUpdate()
-    const {loggedIn, fetching, programs} = newProps
-    if (!this.isAttempting || fetching) {
+    const { isLoggedIn, fetching, programs } = newProps
+    if (fetching) {
       return
     }
-    if (!loggedIn) {
-      NavigationActions.loginScreen()
-      return
-    }
-    if (!this.isLoaded) {
+    if (!this.state.isLoadRequested) {
       this.props.loadProgram()
-      this.isAttempting = true
-      this.isLoaded = true
+      this.setState({ isLoadRequested: true })
+    }
+    if (!isLoggedIn) {
+      NavigationActions.loginScreen()
+      this.setState({ isLoadRequested: false })
+      return
     }
 
     // 放送済みのみ
@@ -105,15 +104,16 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  // 監視対象はここ
   return {
-    loggedIn: isLoggedIn(state.login),
+    isLoggedIn: isLoggedIn(state.login),
     programs: selectPrograms(state.home)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    syncLogin: () => dispatch(LoginActions.syncLogin()),
+    logout: () => dispatch(LoginActions.logout()),
     loadProgram: () => dispatch(HomeActions.programRequest())
   }
 }
