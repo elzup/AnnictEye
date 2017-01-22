@@ -3,7 +3,7 @@
 import { call, put } from 'redux-saga/effects'
 import EpisodeActions from '../Redux/EpisodeRedux'
 import LoginActions from '../Redux/LoginRedux'
-import type { Episode } from '../Services/Type'
+import type { Record } from '../Services/Type'
 import { AsyncStorage } from 'react-native'
 
 export function * loadEpisode (api: any, { episode }) {
@@ -15,10 +15,10 @@ export function * loadEpisode (api: any, { episode }) {
   yield put(LoginActions.loginSuccess())
   api.setToken(token)
 
-  const response = yield call(api.mePrograms)
+  const response = yield call(api.records)
   if (response.ok) {
-    const episodes: Array<Episode> = response.data.episodes
-    yield put(EpisodeActions.episodeSuccess(episodes))
+    const records: Array<Record> = response.data.records
+    yield put(EpisodeActions.episodeSuccess(records))
   } else {
     yield put(EpisodeActions.episodeFailure('WRONG'))
   }
