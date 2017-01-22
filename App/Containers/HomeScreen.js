@@ -23,8 +23,7 @@ type HomeScreenProps = {
 class HomeScreen extends React.Component {
   props: HomeScreenProps
   state: {
-    dataSource: Object,
-    isLoadRequested: boolean
+    dataSource: Object
   }
 
   constructor (props) {
@@ -37,8 +36,7 @@ class HomeScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs),
-      isLoadRequested: true
+      dataSource: ds.cloneWithRows(props.programs)
     }
   }
 
@@ -54,13 +52,8 @@ class HomeScreen extends React.Component {
     if (fetching) {
       return
     }
-    if (!this.state.isLoadRequested) {
-      this.props.loadProgram()
-      this.setState({ isLoadRequested: true })
-    }
     if (!isLoggedIn) {
       NavigationActions.loginScreen()
-      this.setState({ isLoadRequested: false })
       return
     }
 
