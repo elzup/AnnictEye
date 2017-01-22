@@ -15,7 +15,7 @@ export function * loadEpisode (api: any, { episode }) {
   yield put(LoginActions.loginSuccess())
   api.setToken(token)
 
-  const response = yield call(api.records)
+  const response = yield call(api.records, episode.id)
   if (response.ok) {
     const records: Array<Record> = response.data.records
     yield put(EpisodeActions.episodeSuccess(records))
