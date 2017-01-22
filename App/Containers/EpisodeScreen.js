@@ -4,75 +4,73 @@ import React from 'react'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import CommentsActions, { selectPrograms } from '../Redux/CommentsRedux'
-import moment from 'moment'
+import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
+// import moment from 'moment'
 
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import type { Program, Comment, Episode } from '../Services/Type'
+import type { Record, Episode } from '../Services/Type'
 
-type CommentsScreenProps = {
+type EpisodeScreenProps = {
   dispatch: () => any,
   logout: () => void,
-  loadComments: () => void,
+  loadEpisode: () => void,
   fetching: boolean,
   isLoggedIn: ?boolean,
-  comments: Array<Comment>,
+  records: Array<Record>,
   episode: Episode
 }
 
-class CommentsScreen extends React.Component {
-  props: CommentsScreenProps
+class EpisodeScreen extends React.Component {
+  props: EpisodeScreenProps
   state: {
-    dataSourceComments: Object
+    dataSourceRecords: Object
   }
 
   constructor (props) {
     super(props)
 
-    const rowHasChanged = (r1: Comment, r2: Comment) => r1.id !== r2.id
+    const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id
 
-    // DataSource configured
+    if (props.episode === null) {
+      Actions.homeScreen({ type: ActionConst.RESET })
+    }
     const ds = new ListView.DataSource({rowHasChanged})
-
-    // Datasource is always in state
     this.state = {
-      dataSourceComments: ds.cloneWithRows(props.comments)
+      dataSourceRecords: ds.cloneWithRows(props.records)
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.loadProgram()
+    this.props.loadEpisode()
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, fetching, comments } = newProps
+    const { isLoggedIn, fetching, records } = newProps
     if (fetching) {
       return
     }
     if (!isLoggedIn) {
-      NavigationActions.loginScreen()
+      Actions.homeScreen({ type: ActionConst.RESET })
       return
     }
 
-    // 放送済みのみ
-    const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      dataSourceComments: this.state.dataSourceComments.cloneWithRows(comments.filter(finishFilter))
+      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
     })
   }
 
-  renderRow = (program: Program) => {
-    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
-    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
+  renderRow = (record: Record) => {
+    const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
+    const timeLabel = '----'
     return (
       <View style={Styles.episodeCard}>
         <View style={Styles.infos}>
           <Text style={Styles.timeLabel}>{timeLabel}</Text>
-          <Text style={Styles.boldLabel}>{program.work.title}</Text>
+          <Text style={Styles.boldLabel}>{record.work.title}</Text>
           <Text style={Styles.label}>{label}</Text>
         </View>
       </View>
@@ -80,7 +78,7 @@ class CommentsScreen extends React.Component {
   }
 
   noRowData = () => {
-    return this.state.dataSourceComments.getRowCount() === 0
+    return this.state.dataSourceRecords.getRowCount() === 0
   }
 
   render () {
@@ -91,7 +89,7 @@ class CommentsScreen extends React.Component {
         </View>
         <ListView
           contentContainerStyle={Styles.listContent}
-          dataSource={this.state.dataSourceComments}
+          dataSource={this.state.dataSourceRecords}
           renderRow={this.renderRow}
           pageSize={15}
         />
@@ -104,18 +102,19 @@ const mapStateToProps = (state) => {
   // 監視対象はここ
   return {
     isLoggedIn: isLoggedIn(state.login),
-    comments: selectPrograms(state.comments)
+    records: selectRecords(state.episode),
+    episode: selectEpisode(state.episode)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    loadEpisodes: () => dispatch(CommentsActions.programRequest())
+    loadEpisode: () => dispatch(EpisodeActions.programRequest())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EpisodeScreen)
 
 const Styles = StyleSheet.create({
   ...ApplicationStyles.screen,
