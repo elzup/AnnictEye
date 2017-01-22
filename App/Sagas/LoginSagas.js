@@ -21,15 +21,13 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
 }
 
-export function * syncLogin (api) {
-  console.log('=> syncLogin')
+export function * syncLogin (api: any) {
   const token = yield call(AsyncStorage.getItem, 'access_token')
-  if (token !== null) {
-    yield call(api.setToken, token)
-    yield call(AsyncStorage.setItem, 'access_token', token)
-    yield put(LoginActions.loginSuccess(token))
-    console.log('token setted')
-  } else {
+  if (token === null) {
     yield put(LoginActions.loginFailure('WRONG'))
+    return false
   }
+  yield put(LoginActions.loginSuccess(token))
+  yield call(api.setToken, token)
+  return api
 }

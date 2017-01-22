@@ -14,16 +14,15 @@ import type { Program } from '../Services/Type'
 type HomeScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  syncLogin: () => void,
-  loggedIn: boolean,
-  programs: Array<Program>
+  isLoggedIn: boolean,
+  programs: Array<Program>,
+  logout: () => void,
+  loadProgram: () => void
 }
 
 class HomeScreen extends React.Component {
   props: HomeScreenProps
   isAttempting: boolean
-  isLoaded: boolean
-
   state: {
     dataSource: Object
   }
@@ -41,34 +40,24 @@ class HomeScreen extends React.Component {
       dataSource: ds.cloneWithRows(props.programs)
     }
     this.isAttempting = false
-    this.isLoaded = false
-  }
-
-  componentWillMount = () => {
-    console.log('componentWillMount')
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.syncLogin()
+    this.props.loadProgram()
     this.isAttempting = true
-    this.isLoaded = false
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const {loggedIn, fetching, programs} = newProps
+    const { isLoggedIn, fetching, programs } = newProps
     if (!this.isAttempting || fetching) {
       return
     }
-    if (!loggedIn) {
+    if (!isLoggedIn) {
       NavigationActions.loginScreen()
       return
-    }
-    if (!this.isLoaded) {
-      this.props.loadProgram()
-      this.isAttempting = true
     }
 
     // 放送済みのみ
@@ -111,8 +100,9 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  // 監視対象はここ
   return {
-    loggedIn: isLoggedIn(state.login),
+    isLoggedIn: isLoggedIn(state.login),
     programs: selectPrograms(state.home)
   }
 }
@@ -120,7 +110,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    syncLogin: () => dispatch(LoginActions.syncLogin()),
     loadProgram: () => dispatch(HomeActions.programRequest())
   }
 }
