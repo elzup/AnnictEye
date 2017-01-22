@@ -19,7 +19,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  isLoggedIn: false,
+  isLoggedIn: null,
   error: null,
   fetching: false
 })

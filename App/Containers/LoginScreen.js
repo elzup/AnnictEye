@@ -53,7 +53,7 @@ class LoginScreen extends React.Component {
       return
     }
     if (loggedIn) {
-      NavigationActions.pop({ refresh: null })
+      NavigationActions.pop({ refresh: { isLoggedIn: null } })
     } else {
       console.log('login failed.')
     }

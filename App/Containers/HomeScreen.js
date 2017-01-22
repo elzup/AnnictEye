@@ -14,7 +14,7 @@ import type { Program } from '../Services/Type'
 type HomeScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  isLoggedIn: boolean,
+  isLoggedIn: ?boolean,
   programs: Array<Program>,
   logout: () => void,
   loadProgram: () => void
@@ -44,7 +44,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.loadProgram()
+    this.props.logout()
     this.isAttempting = true
   }
 

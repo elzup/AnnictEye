@@ -13,7 +13,7 @@ export function * getPrograms (api: any) {
     return
   }
   yield put(LoginActions.loginSuccess())
-  yield call(api.setToken, token)
+  api.setToken(token)
 
   const response = yield call(api.mePrograms)
   if (response.ok) {
