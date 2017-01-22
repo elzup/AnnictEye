@@ -22,9 +22,9 @@ type HomeScreenProps = {
 
 class HomeScreen extends React.Component {
   props: HomeScreenProps
-  isAttempting: boolean
   state: {
-    dataSource: Object
+    dataSource: Object,
+    isLoadRequested: boolean
   }
 
   constructor (props) {
@@ -37,26 +37,30 @@ class HomeScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs)
+      dataSource: ds.cloneWithRows(props.programs),
+      isLoadRequested: true
     }
-    this.isAttempting = false
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.props.logout()
-    this.isAttempting = true
+    this.props.loadProgram()
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
     const { isLoggedIn, fetching, programs } = newProps
-    if (!this.isAttempting || fetching) {
+    if (fetching) {
       return
+    }
+    if (!this.state.isLoadRequested) {
+      this.props.loadProgram()
+      this.setState({ isLoadRequested: true })
     }
     if (!isLoggedIn) {
       NavigationActions.loginScreen()
+      this.setState({ isLoadRequested: false })
       return
     }
 
