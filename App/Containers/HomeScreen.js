@@ -89,9 +89,7 @@ class HomeScreen extends React.Component {
 
   pressRow = (rowID: number, program: Program) => {
     const { episode, work } = program
-    console.log('=> ')
-    console.log(work)
-    this.props.setupEpisode(Object.assign(episode, { work }))
+    this.props.setupEpisode(episode.merge({ work }))
     Actions.episodeScreen({ title: `${work.title} ${episode.number_text}` })
   }
 
