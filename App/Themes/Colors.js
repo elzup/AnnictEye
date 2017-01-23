@@ -6,7 +6,7 @@ const colors = {
   facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
   silver: '#F7F7F7',
-  steel: '#CCCCCC',
+  steel: '#888888',
   error: 'rgba(200, 0, 0, 0.8)',
   green: '#36b1bf',
   pink: '#f85b73',

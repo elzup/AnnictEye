@@ -77,6 +77,10 @@ const ApplicationStyles = {
       width: Metrics.smallMargin,
       height: Metrics.smallMargin
     }
+  },
+  headerBox: {
+    margin: 0,
+    padding: Metrics.baseMargin
   }
 }
 

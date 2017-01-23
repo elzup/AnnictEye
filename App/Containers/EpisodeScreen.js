@@ -6,11 +6,12 @@ import {
   Text,
   ListView,
   StyleSheet,
+  ScrollView,
   TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
-// import moment from 'moment'
+import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
@@ -64,21 +65,23 @@ class EpisodeScreen extends React.Component {
       return
     }
 
+    const filterHasComment = (record: Record) => record.comment && record.comment !== ''
     this.setState({
-      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
+      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
     })
   }
 
   renderRow = (record: Record, sectionID: number, rowID: number) => {
-    const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
-    const timeLabel = '----'
+    const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
       <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
-        <View style={Styles.episodeCard}>
-          <View style={Styles.infos}>
+        <View style={Styles.recordCard}>
+          <View style={Styles.recordHead}>
+            <Text style={Styles.name}>{record.user.name}</Text>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{record.work.title}</Text>
-            <Text style={Styles.label}>{label}</Text>
+          </View>
+          <View style={Styles.recordBody}>
+            <Text style={Styles.comment}>{record.comment}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -94,18 +97,25 @@ class EpisodeScreen extends React.Component {
   }
 
   render () {
+    const { episode } = this.props
+    const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
     return (
-      <View style={Styles.container}>
-        <View style={Styles.episodeHeader}>
-          <Text style={Styles.boldLabel}>{this.props.episode.title}</Text>
+      <ScrollView
+        ref='scrollView'
+        automaticallyAdjustContentInsets={false} >
+        <View style={Styles.container}>
+          <View style={Styles.episodeHeader}>
+            <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
+            <Text style={Styles.boldLabel}>{episodeLabel}</Text>
+          </View>
+          <ListView
+            contentContainerStyle={Styles.listContent}
+            dataSource={this.state.dataSourceRecords}
+            renderRow={this.renderRow}
+            pageSize={15}
+            />
         </View>
-        <ListView
-          contentContainerStyle={Styles.listContent}
-          dataSource={this.state.dataSourceRecords}
-          renderRow={this.renderRow}
-          pageSize={15}
-        />
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -134,12 +144,15 @@ const Styles = StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
   },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
+  episodeHeader: {
+    ...ApplicationStyles.headerBox
   },
   infos: {
     flex: 1
+  },
+  subLabel: {
+    marginVertical: Metrics.smallMargin,
+    fontSize: Fonts.size.small
   },
   boldLabel: {
     fontWeight: 'bold',
@@ -151,9 +164,26 @@ const Styles = StyleSheet.create({
   listContent: {
     marginTop: Metrics.baseMargin
   },
-  episodeCard: {
+  recordCard: {
     ...ApplicationStyles.card,
-    flex: 2,
+    flex: 1,
     backgroundColor: Colors.snow
+  },
+  recordHead: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  name: {
+    fontSize: Fonts.size.small,
+    color: Colors.green
+  },
+  timeLabel: {
+    fontSize: Fonts.size.small,
+    color: Colors.steel,
+    textAlign: 'right'
+  },
+  recordBody: {
+    paddingTop: Metrics.baseMargin
   }
 })

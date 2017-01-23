@@ -34,11 +34,14 @@ export type Work = {
 
 export type Episode = {
   id: number,
-  number: number,
+  number: ?number,
   number_text: string,
   sort_number: number,
   title: string,
-  records_count: number
+  records_count: number,
+  work: Work,
+  prev_episode: ?Episode,
+  next_episode: ?Episode
 }
 
 export type User = {
@@ -53,7 +56,7 @@ export type User = {
 
 export type Record = {
   id: number,
-  comment: string,
+  comment: ?string,
   rating: number,
   is_modified: boolean,
   likes_count: number,
