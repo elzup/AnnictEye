@@ -56,7 +56,7 @@ export type User = {
 
 export type Record = {
   id: number,
-  comment: string,
+  comment: ?string,
   rating: number,
   is_modified: boolean,
   likes_count: number,

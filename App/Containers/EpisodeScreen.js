@@ -65,8 +65,9 @@ class EpisodeScreen extends React.Component {
       return
     }
 
+    const filterHasComment = (record: Record) => record.comment && record.comment !== ''
     this.setState({
-      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
+      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
     })
   }
 
@@ -74,10 +75,13 @@ class EpisodeScreen extends React.Component {
     const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
       <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
-        <View style={Styles.episodeCard}>
-          <View style={Styles.infos}>
+        <View style={Styles.recordCard}>
+          <View style={Styles.recordHead}>
+            <Text style={Styles.name}>{record.user.name}</Text>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{record.user.name}</Text>
+          </View>
+          <View style={Styles.recordBody}>
+            <Text style={Styles.comment}>{record.comment}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -143,10 +147,6 @@ const Styles = StyleSheet.create({
   episodeHeader: {
     ...ApplicationStyles.headerBox
   },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
-  },
   infos: {
     flex: 1
   },
@@ -164,9 +164,26 @@ const Styles = StyleSheet.create({
   listContent: {
     marginTop: Metrics.baseMargin
   },
-  episodeCard: {
+  recordCard: {
     ...ApplicationStyles.card,
-    flex: 2,
+    flex: 1,
     backgroundColor: Colors.snow
+  },
+  recordHead: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  name: {
+    fontSize: Fonts.size.small,
+    color: Colors.green
+  },
+  timeLabel: {
+    fontSize: Fonts.size.small,
+    color: Colors.steel,
+    textAlign: 'right'
+  },
+  recordBody: {
+    paddingTop: Metrics.baseMargin
   }
 })
