@@ -6,6 +6,7 @@ import {
   Text,
   ListView,
   StyleSheet,
+  ScrollView,
   TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
@@ -70,7 +71,6 @@ class EpisodeScreen extends React.Component {
   }
 
   renderRow = (record: Record, sectionID: number, rowID: number) => {
-    const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
     const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
       <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
@@ -78,7 +78,6 @@ class EpisodeScreen extends React.Component {
           <View style={Styles.infos}>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
             <Text style={Styles.boldLabel}>{record.user.name}</Text>
-            <Text style={Styles.label}>{label}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -97,18 +96,22 @@ class EpisodeScreen extends React.Component {
     const { episode } = this.props
     const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
     return (
-      <View style={Styles.container}>
-        <View style={Styles.episodeHeader}>
-          <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-          <Text style={Styles.boldLabel}>{episodeLabel}</Text>
+      <ScrollView
+        ref='scrollView'
+        automaticallyAdjustContentInsets={false} >
+        <View style={Styles.container}>
+          <View style={Styles.episodeHeader}>
+            <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
+            <Text style={Styles.boldLabel}>{episodeLabel}</Text>
+          </View>
+          <ListView
+            contentContainerStyle={Styles.listContent}
+            dataSource={this.state.dataSourceRecords}
+            renderRow={this.renderRow}
+            pageSize={15}
+            />
         </View>
-        <ListView
-          contentContainerStyle={Styles.listContent}
-          dataSource={this.state.dataSourceRecords}
-          renderRow={this.renderRow}
-          pageSize={15}
-        />
-      </View>
+      </ScrollView>
     )
   }
 }
