@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
-// import moment from 'moment'
+import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
@@ -71,13 +71,13 @@ class EpisodeScreen extends React.Component {
 
   renderRow = (record: Record, sectionID: number, rowID: number) => {
     const label = record.episode.number_text + ' | ' + (record.episode.title || '---')
-    const timeLabel = '----'
+    const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
       <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
         <View style={Styles.episodeCard}>
           <View style={Styles.infos}>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{record.work.title}</Text>
+            <Text style={Styles.boldLabel}>{record.user.name}</Text>
             <Text style={Styles.label}>{label}</Text>
           </View>
         </View>
@@ -94,12 +94,13 @@ class EpisodeScreen extends React.Component {
   }
 
   render () {
-    // const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
+    const { episode } = this.props
+    const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
     return (
       <View style={Styles.container}>
         <View style={Styles.episodeHeader}>
           <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-          <Text style={Styles.boldLabel}>{this.props.episode.title}</Text>
+          <Text style={Styles.boldLabel}>{episodeLabel}</Text>
         </View>
         <ListView
           contentContainerStyle={Styles.listContent}
@@ -136,6 +137,9 @@ const Styles = StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
   },
+  episodeHeader: {
+    ...ApplicationStyles.headerBox
+  },
   timeLabel: {
     fontSize: Fonts.size.small,
     color: Colors.green
@@ -144,7 +148,8 @@ const Styles = StyleSheet.create({
     flex: 1
   },
   subLabel: {
-    marginVertical: Metrics.smallMargin
+    marginVertical: Metrics.smallMargin,
+    fontSize: Fonts.size.small
   },
   boldLabel: {
     fontWeight: 'bold',
