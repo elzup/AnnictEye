@@ -94,9 +94,11 @@ class EpisodeScreen extends React.Component {
   }
 
   render () {
+    // const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
       <View style={Styles.container}>
         <View style={Styles.episodeHeader}>
+          <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
           <Text style={Styles.boldLabel}>{this.props.episode.title}</Text>
         </View>
         <ListView
@@ -140,6 +142,9 @@ const Styles = StyleSheet.create({
   },
   infos: {
     flex: 1
+  },
+  subLabel: {
+    marginVertical: Metrics.smallMargin
   },
   boldLabel: {
     fontWeight: 'bold',

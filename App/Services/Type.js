@@ -34,11 +34,14 @@ export type Work = {
 
 export type Episode = {
   id: number,
-  number: number,
+  number: ?number,
   number_text: string,
   sort_number: number,
   title: string,
-  records_count: number
+  records_count: number,
+  work: Work,
+  prev_episode: ?Episode,
+  next_episode: ?Episode
 }
 
 export type User = {

@@ -75,7 +75,7 @@ class HomeScreen extends React.Component {
     const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
     const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID, program.episode) }} >
+      <TouchableHighlight onPress={() => { this.pressRow(rowID, program) }} >
         <View style={Styles.episodeCard}>
           <View style={Styles.infos}>
             <Text style={Styles.timeLabel}>{timeLabel}</Text>
@@ -87,9 +87,12 @@ class HomeScreen extends React.Component {
     )
   }
 
-  pressRow = (rowID: number, episode: Episode) => {
-    this.props.setupEpisode(episode)
-    Actions.episodeScreen({ title: episode.title })
+  pressRow = (rowID: number, program: Program) => {
+    const { episode, work } = program
+    console.log('=> ')
+    console.log(work)
+    this.props.setupEpisode(Object.assign(episode, { work }))
+    Actions.episodeScreen({ title: `${work.title} ${episode.number_text}` })
   }
 
   noRowData = () => {
