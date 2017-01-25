@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableHighlight } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
@@ -82,6 +83,18 @@ class EpisodeScreen extends React.Component {
           </View>
           <View style={Styles.recordBody}>
             <Text style={Styles.comment}>{record.comment}</Text>
+          </View>
+          <View style={Styles.recordFooter}>
+            <View style={Styles.recordFooterActions}>
+              <View style={Styles.footerAction}>
+                <Icon name='rocket' size={30} color='#900' />
+                <Text style={Styles.timeLabel}>{record.comments_count}</Text>
+              </View>
+              <View style={Styles.footerAction}>
+                <Icon name='rocket' size={30} color='#900' />
+                <Text style={Styles.timeLabel}>{record.likes_count}</Text>
+              </View>
+            </View>
           </View>
         </View>
       </TouchableHighlight>
@@ -166,7 +179,8 @@ const Styles = StyleSheet.create({
   },
   recordCard: {
     ...ApplicationStyles.card,
-    flex: 1,
+    flex: 3,
+    flexDirection: 'column',
     backgroundColor: Colors.snow
   },
   recordHead: {
@@ -185,5 +199,10 @@ const Styles = StyleSheet.create({
   },
   recordBody: {
     paddingTop: Metrics.baseMargin
+  },
+  recordFooterActions: {
+    flex: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
 })
