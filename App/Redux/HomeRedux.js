@@ -19,22 +19,21 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   programs: ([]: Array<Program>),
-  error: null,
-  fetching: false
+  error: null
 })
 
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-export const request = (state: Object) => state.merge({ fetching: true })
+export const request = (state: Object) => state.merge({})
 
 // we've successfully logged in
 export const success = (state: Object, { programs }: Object) =>
-  state.merge({ fetching: false, error: null, programs })
+  state.merge({ error: null, programs })
 
 // we've had a problem logging in
 export const failure = (state: Object, { error }: Object) =>
-  state.merge({ fetching: false, error })
+  state.merge({ error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -46,4 +45,3 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 /* ------------- Selectors ------------- */
 export const selectPrograms = (homeState: Object) => homeState.programs
-export const isFetching = (homeState: Object) => homeState.fetching

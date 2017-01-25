@@ -20,27 +20,26 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   isLoggedIn: null,
-  error: null,
-  fetching: false
+  error: null
 })
 
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-export const request = (state: Object) => state.merge({ fetching: true })
+export const request = (state: Object) => state
 
 // we've successfully logged in
 export const success = (state: Object) =>
-  state.merge({ fetching: false, error: null, isLoggedIn: true })
+  state.merge({ error: null, isLoggedIn: true })
 
 // we've had a problem logging in
 export const failure = (state: Object, { error }: Object) =>
-  state.merge({ fetching: false, error, isLoggedIn: false })
+  state.merge({ error, isLoggedIn: false })
 
 // we've logged out
-export const logout = (state: Object) => state.merge({ fetching: true })
+export const logout = (state: Object) => state
 export const logoutSuccess = (state: Object) =>
-  state.merge({ fetching: false, error: null, isLoggedIn: false })
+  state.merge({ error: null, isLoggedIn: false })
 
 /* ------------- Hookup Reducers To Types ------------- */
 

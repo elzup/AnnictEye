@@ -11,7 +11,7 @@ import {
 
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import HomeActions, { selectPrograms, isFetching } from '../Redux/HomeRedux'
+import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
 import EpisodeActions from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
@@ -21,7 +21,7 @@ import type { Program, Episode } from '../Services/Type'
 
 type HomeScreenProps = {
   dispatch: () => any,
-  fetching: boolean,
+  loading: boolean,
   isLoggedIn: ?boolean,
   programs: Array<Program>,
   logout: () => void,
@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
   props: HomeScreenProps
   state: {
     dataSource: Object,
-    fetching: boolean
+    loading: boolean
   }
 
   constructor (props) {
@@ -46,24 +46,21 @@ class HomeScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs),
-      fetching: false
+      loading: false,
+      dataSource: ds.cloneWithRows(props.programs)
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.setState({ fetching: true })
+    this.setState({ loading: true })
     this.props.loadProgram()
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, isFetching, programs } = newProps
-    if (isFetching) {
-      return
-    }
+    const { isLoggedIn, programs } = newProps
     if (!isLoggedIn) {
       Actions.loginScreen()
       return
@@ -72,7 +69,7 @@ class HomeScreen extends React.Component {
     // 放送済みのみ
     const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      fetching: isFetching,
+      loading: false,
       dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
     })
   }
@@ -104,8 +101,7 @@ class HomeScreen extends React.Component {
   }
 
   renderFooter () {
-    console.log(`fetching => ${this.state.fetching}`)
-    if (!this.state.fetching) {
+    if (!this.state.loading) {
       return null
     }
     return (
@@ -137,7 +133,6 @@ const mapStateToProps = (state) => {
   // 監視対象はここ
   return {
     isLoggedIn: isLoggedIn(state.login),
-    isFetching: isFetching(state.home),
     programs: selectPrograms(state.home)
   }
 }

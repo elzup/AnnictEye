@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import EpisodeActions, { selectEpisode, selectRecords, isFetching, isSomeEpisode } from '../Redux/EpisodeRedux'
+import EpisodeActions, { selectEpisode, selectRecords, isSomeEpisode } from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
@@ -24,7 +24,6 @@ type EpisodeScreenProps = {
   dispatch: () => any,
   logout: () => void,
   loadEpisode: () => void,
-  isFetching: boolean,
   isLoggedIn: ?boolean,
   records: Array<Record>,
   episode: Episode
@@ -33,7 +32,7 @@ type EpisodeScreenProps = {
 class EpisodeScreen extends React.Component {
   props: EpisodeScreenProps
   state: {
-    fetching: boolean,
+    loading: boolean,
     dataSourceRecords: Object
   }
 
@@ -48,24 +47,21 @@ class EpisodeScreen extends React.Component {
     }
     const ds = new ListView.DataSource({rowHasChanged})
     this.state = {
-      fetching: false,
+      loading: false,
       dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.setState({ fetching: true })
+    this.setState({ loading: true })
     this.props.loadEpisode(this.props.episode)
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, isFetching, records } = newProps
-    if (isFetching) {
-      return
-    }
+    const { isLoggedIn, records } = newProps
     if (!isLoggedIn) {
       Actions.homeScreen({ type: ActionConst.RESET })
       return
@@ -73,7 +69,7 @@ class EpisodeScreen extends React.Component {
 
     const filterHasComment = (record: Record) => record.comment && record.comment !== ''
     this.setState({
-      fetching: false,
+      loading: false,
       dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
     })
   }
@@ -135,8 +131,7 @@ class EpisodeScreen extends React.Component {
   }
 
   renderFooter () {
-    console.log(`fetching => ${this.state.fetching}`)
-    if (!this.state.fetching) {
+    if (!this.state.loading) {
       return null
     }
     return (
@@ -184,8 +179,7 @@ const mapStateToProps = (state) => {
     isLoggedIn: isLoggedIn(state.login),
     records: selectRecords(state.episode),
     episode: selectEpisode(state.episode),
-    isSomeEpisode: isSomeEpisode(state.episode),
-    isFetching: isFetching(state.episode)
+    isSomeEpisode: isSomeEpisode(state.episode)
   }
 }
 

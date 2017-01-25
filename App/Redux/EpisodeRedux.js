@@ -22,8 +22,7 @@ export const INITIAL_STATE = Immutable({
   records: ([]: Array<Record>),
   episode: (null: ?Episode),
   prevEpisode: (null: ?Episode),
-  error: null,
-  fetching: false
+  error: null
 })
 
 /* ------------- Reducers ------------- */
@@ -32,15 +31,15 @@ export const episodeSetup = (state: Object, { episode }: Object) =>
   state.merge({ prevEpisode: state.episode, episode })
 
 // we're attempting to login
-export const episodeRequest = (state: Object) => state.merge({ fetching: true })
+export const episodeRequest = (state: Object) => state.merge({})
 
 // we've successfully logged in
 export const episodeSuccess = (state: Object, { records }: Object) =>
-  state.merge({ fetching: false, error: null, records })
+  state.merge({ error: null, records })
 
 // we've had a problem logging in
 export const episodeFailure = (state: Object, { error }: Object) =>
-  state.merge({ fetching: false, error })
+  state.merge({ error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -54,5 +53,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 /* ------------- Selectors ------------- */
 export const selectEpisode = (episodeState: Object) => episodeState.episode
 export const selectRecords = (episodeState: Object) => episodeState.records
-export const isFetching = (episodeState: Object) => episodeState.fetching
 export const isSomeEpisode = (episodeState: Object) => episodeState.prevEpisode === null || episodeState.episode.id === episodeState.prevEpisode.id
