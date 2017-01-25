@@ -5,6 +5,7 @@ const colors = {
   pink: '#f85b73',
   green: '#36b1bf',
   silver: '#F7F7F7',
+  disable: '#CCCCCC',
   steel: '#888888',
 
   clear: 'rgba(0,0,0,0)',

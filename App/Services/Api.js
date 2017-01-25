@@ -30,6 +30,7 @@ const create = (baseURL: string = 'https://api.annict.com/') => {
 
   const records = (episodeID: number) => api.get('v1/records', {
     'filter_episode_id': episodeID,
+    'per_page': 50,
     'sort_id': 'desc'
   })
 

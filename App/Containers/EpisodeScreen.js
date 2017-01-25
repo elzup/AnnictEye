@@ -7,6 +7,7 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
+  Linking,
   TouchableHighlight } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
@@ -73,6 +74,7 @@ class EpisodeScreen extends React.Component {
   }
 
   renderRow = (record: Record, sectionID: number, rowID: number) => {
+    const { episode } = this.props
     const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
       <View>
@@ -88,13 +90,18 @@ class EpisodeScreen extends React.Component {
             <View style={Styles.recordFooterActions}>
               <TouchableHighlight onPress={() => { this.pressLike(record) }}>
                 <View style={Styles.footerAction} >
-                  <Icon name='heart' color={Colors.steel} />
+                  <Icon name='heart' color={Colors.disable} />
                   <Text style={Styles.number}>{record.comments_count}</Text>
                 </View>
               </TouchableHighlight>
               <TouchableHighlight onPress={() => { this.pressReply(record) }}>
                 <View style={Styles.footerAction} >
-                  <Icon name='reply' color={Colors.steel} />
+                  <Icon name='reply' color={Colors.disable} />
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => { this.pressGlobe(episode, record) }}>
+                <View style={Styles.footerAction} >
+                  <Icon name='globe' color={Colors.steel} />
                 </View>
               </TouchableHighlight>
             </View>
@@ -110,6 +117,12 @@ class EpisodeScreen extends React.Component {
 
   pressReply = (record: Record) => {
     console.log(`reply action: ${record.id}`)
+  }
+
+  pressGlobe = (episode: Episode, record: Record) => {
+    console.log(`open action: ${record.id}`)
+    // HACK: move to model
+    Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
   }
 
   noRowData = () => {
