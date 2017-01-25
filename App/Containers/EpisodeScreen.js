@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import EpisodeActions, { selectEpisode, selectRecords, isFetching } from '../Redux/EpisodeRedux'
+import EpisodeActions, { selectEpisode, selectRecords, isFetching, isSomeEpisode } from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
@@ -49,7 +49,7 @@ class EpisodeScreen extends React.Component {
     const ds = new ListView.DataSource({rowHasChanged})
     this.state = {
       fetching: false,
-      dataSourceRecords: ds.cloneWithRows(props.records)
+      dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
     }
   }
 
@@ -171,6 +171,12 @@ class EpisodeScreen extends React.Component {
       </ScrollView>
     )
   }
+
+  componentWillUnmount = () => {
+    this.setState({
+      dataSourceRecords: this.state.dataSourceRecords.cloneWithRows([])
+    })
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -178,6 +184,7 @@ const mapStateToProps = (state) => {
     isLoggedIn: isLoggedIn(state.login),
     records: selectRecords(state.episode),
     episode: selectEpisode(state.episode),
+    isSomeEpisode: isSomeEpisode(state.episode),
     isFetching: isFetching(state.episode)
   }
 }
