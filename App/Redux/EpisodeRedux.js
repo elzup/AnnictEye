@@ -53,3 +53,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 /* ------------- Selectors ------------- */
 export const selectEpisode = (episodeState: Object) => episodeState.episode
 export const selectRecords = (episodeState: Object) => episodeState.records
+export const isFetching = (episodeState: Object) => episodeState.fetching

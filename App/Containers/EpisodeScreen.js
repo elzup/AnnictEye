@@ -8,11 +8,12 @@ import {
   StyleSheet,
   ScrollView,
   Linking,
+  ActivityIndicator,
   TouchableHighlight } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import EpisodeActions, { selectEpisode, selectRecords } from '../Redux/EpisodeRedux'
+import EpisodeActions, { selectEpisode, selectRecords, isFetching } from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
@@ -23,7 +24,7 @@ type EpisodeScreenProps = {
   dispatch: () => any,
   logout: () => void,
   loadEpisode: () => void,
-  fetching: boolean,
+  isFetching: boolean,
   isLoggedIn: ?boolean,
   records: Array<Record>,
   episode: Episode
@@ -32,6 +33,7 @@ type EpisodeScreenProps = {
 class EpisodeScreen extends React.Component {
   props: EpisodeScreenProps
   state: {
+    fetching: boolean,
     dataSourceRecords: Object
   }
 
@@ -46,20 +48,22 @@ class EpisodeScreen extends React.Component {
     }
     const ds = new ListView.DataSource({rowHasChanged})
     this.state = {
+      fetching: false,
       dataSourceRecords: ds.cloneWithRows(props.records)
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
+    this.setState({ fetching: true })
     this.props.loadEpisode(this.props.episode)
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, fetching, records } = newProps
-    if (fetching) {
+    const { isLoggedIn, isFetching, records } = newProps
+    if (isFetching) {
       return
     }
     if (!isLoggedIn) {
@@ -69,6 +73,7 @@ class EpisodeScreen extends React.Component {
 
     const filterHasComment = (record: Record) => record.comment && record.comment !== ''
     this.setState({
+      fetching: false,
       dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
     })
   }
@@ -129,6 +134,20 @@ class EpisodeScreen extends React.Component {
     return this.state.dataSourceRecords.getRowCount() === 0
   }
 
+  renderFooter () {
+    console.log(`fetching => ${this.state.fetching}`)
+    if (!this.state.fetching) {
+      return null
+    }
+    return (
+      <ActivityIndicator
+        animating
+        style={ApplicationStyles.indicator}
+        size='large'
+        />
+    )
+  }
+
   render () {
     const { episode } = this.props
     const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
@@ -145,7 +164,8 @@ class EpisodeScreen extends React.Component {
             contentContainerStyle={Styles.listContent}
             dataSource={this.state.dataSourceRecords}
             renderRow={this.renderRow}
-            pageSize={15}
+            renderFooter={this.renderFooter.bind(this)}
+            pageSize={50}
             />
         </View>
       </ScrollView>
@@ -157,7 +177,8 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: isLoggedIn(state.login),
     records: selectRecords(state.episode),
-    episode: selectEpisode(state.episode)
+    episode: selectEpisode(state.episode),
+    isFetching: isFetching(state.episode)
   }
 }
 
