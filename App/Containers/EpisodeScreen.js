@@ -75,7 +75,7 @@ class EpisodeScreen extends React.Component {
   renderRow = (record: Record, sectionID: number, rowID: number) => {
     const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID) }} >
+      <View>
         <View style={Styles.recordCard}>
           <View style={Styles.recordHead}>
             <Text style={Styles.name}>{record.user.name}</Text>
@@ -86,23 +86,30 @@ class EpisodeScreen extends React.Component {
           </View>
           <View style={Styles.recordFooter}>
             <View style={Styles.recordFooterActions}>
-              <View style={Styles.footerAction}>
-                <Icon name='rocket' size={30} color='#900' />
-                <Text style={Styles.timeLabel}>{record.comments_count}</Text>
-              </View>
-              <View style={Styles.footerAction}>
-                <Icon name='rocket' size={30} color='#900' />
-                <Text style={Styles.timeLabel}>{record.likes_count}</Text>
-              </View>
+              <TouchableHighlight onPress={() => { this.pressLike(record) }}>
+                <View style={Styles.footerAction} >
+                  <Icon name='heart' color={Colors.steel} />
+                  <Text style={Styles.number}>{record.comments_count}</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => { this.pressReply(record) }}>
+                <View style={Styles.footerAction} >
+                  <Icon name='reply' color={Colors.steel} />
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
-      </TouchableHighlight>
+      </View>
     )
   }
 
-  pressRow = (rowID: number) => {
-    console.log(rowID)
+  pressLike = (record: Record) => {
+    console.log(`like action: ${record.id}`)
+  }
+
+  pressReply = (record: Record) => {
+    console.log(`reply action: ${record.id}`)
   }
 
   noRowData = () => {
@@ -198,11 +205,24 @@ const Styles = StyleSheet.create({
     textAlign: 'right'
   },
   recordBody: {
-    paddingTop: Metrics.baseMargin
+    marginVertical: Metrics.smallMargin,
+    lineHeight: Fonts.size.input
+  },
+  recordFooter: {
+    paddingTop: Metrics.smallMargin
   },
   recordFooterActions: {
-    flex: 3,
+    flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  footerAction: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  number: {
+    marginLeft: Metrics.smallMargin,
+    fontSize: Fonts.size.small
   }
 })
