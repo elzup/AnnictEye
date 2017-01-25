@@ -123,6 +123,7 @@ class HomeScreen extends React.Component {
           renderFooter={this.renderFooter.bind(this)}
           pageSize={50}
           onEndReachedThreshold={10}
+          enableEmptySections
           />
       </View>
     )

@@ -161,6 +161,7 @@ class EpisodeScreen extends React.Component {
             renderRow={this.renderRow}
             renderFooter={this.renderFooter.bind(this)}
             pageSize={50}
+            enableEmptySections
             />
         </View>
       </ScrollView>
@@ -240,7 +241,9 @@ const Styles = StyleSheet.create({
     textAlign: 'right'
   },
   recordBody: {
-    marginVertical: Metrics.smallMargin,
+    marginVertical: Metrics.smallMargin
+  },
+  comment: {
     lineHeight: Fonts.size.input
   },
   recordFooter: {
