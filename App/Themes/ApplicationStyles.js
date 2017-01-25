@@ -81,6 +81,11 @@ const ApplicationStyles = {
   headerBox: {
     margin: 0,
     padding: Metrics.baseMargin
+  },
+  indicator: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8
   }
 }
 
