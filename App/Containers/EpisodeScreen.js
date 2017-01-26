@@ -9,7 +9,7 @@ import {
   ScrollView,
   Linking,
   ActivityIndicator,
-  TouchableHighlight } from 'react-native'
+  TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
@@ -89,22 +89,22 @@ class EpisodeScreen extends React.Component {
           </View>
           <View style={Styles.recordFooter}>
             <View style={Styles.recordFooterActions}>
-              <TouchableHighlight onPress={() => { this.pressLike(record) }}>
+              <TouchableOpacity onPress={() => { this.pressLike(record) }}>
                 <View style={Styles.footerAction} >
                   <Icon name='heart' color={Colors.disable} />
                   <Text style={Styles.number}>{record.comments_count}</Text>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => { this.pressReply(record) }}>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.pressReply(record) }}>
                 <View style={Styles.footerAction} >
                   <Icon name='reply' color={Colors.disable} />
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => { this.pressGlobe(episode, record) }}>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.pressGlobe(episode, record) }}>
                 <View style={Styles.footerAction} >
                   <Icon name='globe' color={Colors.steel} />
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

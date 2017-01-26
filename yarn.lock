@@ -43,8 +43,8 @@ after@0.8.2:
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
 ajv-keywords@^1.0.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.0.tgz#c11e6859eafff83e0dafc416929472eca946aa2c"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
 ajv@^4.7.0:
   version "4.11.2"
@@ -64,14 +64,6 @@ align-text@^0.1.1, align-text@^0.1.3:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
-
-annict@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/annict/-/annict-0.0.6.tgz#9cdfd5139c88f627b058afd302a8adb3a5881f3f"
-  dependencies:
-    es6-promise "^4.0.5"
-    isomorphic-fetch "^2.2.1"
-    qs "^6.2.1"
 
 ansi-align@^1.1.0:
   version "1.1.0"
@@ -106,20 +98,20 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apisauce@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-0.6.0.tgz#c7c8472473bd01ff5fa515758d2a6a4ba0312da9"
-  dependencies:
-    axios "^0.15.2"
-    ramda "^0.22.1"
-    ramdasauce "^1.1.1"
-
 apisauce@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-0.7.0.tgz#c1f82131a9336bd8eac80cf710ee147b8abe8294"
   dependencies:
     axios "^0.15.3"
     ramda "^0.22.1"
+    ramdasauce "^1.1.1"
+
+apisauce@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-0.8.0.tgz#87a9c5e7c6d0dc4794c9818c98820b527181daa6"
+  dependencies:
+    axios "^0.15.3"
+    ramda "^0.23.0"
     ramdasauce "^1.1.1"
 
 append-transform@^0.4.0:
@@ -198,11 +190,11 @@ array-unique@^0.2.1:
   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.2.1.tgz#a1d97ccafcbc2625cc70fadceb36a50c58b01a53"
 
 array.prototype.find@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/array.prototype.find/-/array.prototype.find-2.0.1.tgz#1557f888df6c57e4d1256f20852d687a25b51fde"
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/array.prototype.find/-/array.prototype.find-2.0.3.tgz#08c3ec33e32ec4bab362a2958e686ae92f59271d"
   dependencies:
     define-properties "^1.1.2"
-    es-abstract "^1.5.0"
+    es-abstract "^1.7.0"
 
 arraybuffer.slice@0.0.6:
   version "0.0.6"
@@ -369,7 +361,7 @@ aws4@^1.2.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.5.0.tgz#0a29ffb79c31c9e712eeb087e8e7a64b4a56d755"
 
-axios@^0.15.2, axios@^0.15.3:
+axios@^0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
   dependencies:
@@ -2078,8 +2070,8 @@ entities@^1.1.1, entities@~1.1.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
 enzyme@^2.6.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-2.7.0.tgz#772477800547ca2514cc0af258e647c166aee899"
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-2.7.1.tgz#76370e1d99e91f73091bb8c4314b7c128cc2d621"
   dependencies:
     cheerio "^0.22.0"
     function.prototype.name "^1.0.0"
@@ -2110,9 +2102,9 @@ errorhandler@~1.4.2:
     accepts "~1.3.0"
     escape-html "~1.0.3"
 
-es-abstract@^1.5.0, es-abstract@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.6.1.tgz#bb8a2064120abcf928a086ea3d9043114285ec99"
+es-abstract@^1.6.1, es-abstract@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.7.0.tgz#dfade774e01bfcd97f96180298c449c8623fb94c"
   dependencies:
     es-to-primitive "^1.1.1"
     function-bind "^1.1.0"
@@ -2152,10 +2144,6 @@ es6-map@^0.1.3:
     es6-set "~0.1.3"
     es6-symbol "~3.1.0"
     event-emitter "~0.3.4"
-
-es6-promise@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.0.5.tgz#7882f30adde5b240ccfa7f7d78c548330951ae42"
 
 es6-set@^0.1.4, es6-set@~0.1.3:
   version "0.1.4"
@@ -2330,8 +2318,8 @@ eslint@3.3.1:
     user-home "^2.0.0"
 
 eslint@^3.13.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.14.0.tgz#2c617e5f782fda5cbee5bc8be7ef5053af8e63a3"
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.14.1.tgz#8a62175f2255109494747a1b25128d97b8eb3d97"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"
@@ -3300,7 +3288,7 @@ is-plain-obj@^1.0.0:
 
 is-posix-bracket@^0.1.0:
   version "0.1.1"
-  resolved "https://registry.yarnpkg.com/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
+  resolved "http://registry.npmjs.org/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
 
 is-primitive@^2.0.0:
   version "2.0.0"
@@ -3378,7 +3366,7 @@ isobject@^2.0.0:
   dependencies:
     isarray "1.0.0"
 
-isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
+isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -4029,8 +4017,8 @@ mute-stream@0.0.5:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
 nan@^2.3.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.0.tgz#aa8f1e34531d807e9e27755b234b4a6ec0c152a8"
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.1.tgz#d5b01691253326a97a2bbee9e61c55d8d60351e2"
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -4607,7 +4595,7 @@ qs@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-4.0.0.tgz#c31d9b74ec27df75e543a86c78728ed8d4623607"
 
-qs@^6.2.1, qs@~6.3.0:
+qs@~6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"
 
@@ -4624,6 +4612,10 @@ raf@^3.2.0:
 ramda@^0.22.1:
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.22.1.tgz#031da0c3df417c5b33c96234757eb37033f36a0e"
+
+ramda@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"
 
 ramdasauce@^1.1.1:
   version "1.1.1"
@@ -4727,8 +4719,8 @@ react-native-config@^0.1.2:
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.1.2.tgz#cf6e3e312845f411fe9ef42f3ea283c576078681"
 
 react-native-device-info@^0.9.6:
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.7.tgz#e4b35d60bbf73472beb30de3d2b96de15a51b75d"
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
 
 react-native-dotenv@0.0.3:
   version "0.0.3"
@@ -4893,7 +4885,7 @@ react-redux@^4.4.6:
 
 react-static-container@1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-static-container/-/react-static-container-1.0.1.tgz#694c0dd68a896b879519afb548399cc1989c9ab0"
+  resolved "http://registry.npmjs.org/react-static-container/-/react-static-container-1.0.1.tgz#694c0dd68a896b879519afb548399cc1989c9ab0"
 
 react-timer-mixin@^0.13.2, react-timer-mixin@^0.13.3:
   version "0.13.3"
@@ -5110,7 +5102,7 @@ regenerator-transform@0.9.8:
 
 regex-cache@^0.4.2:
   version "0.4.3"
-  resolved "http://registry.npmjs.org/regex-cache/-/regex-cache-0.4.3.tgz#9b1a6c35d4d0dfcef5711ae651e8e9d3d7114145"
+  resolved "https://registry.yarnpkg.com/regex-cache/-/regex-cache-0.4.3.tgz#9b1a6c35d4d0dfcef5711ae651e8e9d3d7114145"
   dependencies:
     is-equal-shallow "^0.1.3"
     is-primitive "^2.0.0"
