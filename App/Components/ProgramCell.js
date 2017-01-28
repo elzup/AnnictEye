@@ -3,7 +3,7 @@
 import React from 'react'
 import moment from 'moment'
 import {
-  TouchableHighlight,
+  TouchableOpacity,
   View,
   Text
 } from 'react-native'
@@ -16,7 +16,7 @@ const ProgramCell = (props: { program: Program, onPress: () => void }) => {
   const label = `${program.episode.number_text}|${program.episode.title}`
   const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
   return (
-    <TouchableHighlight onPress={onPress} >
+    <TouchableOpacity onPress={onPress} >
       <View style={Styles.card}>
         <View style={Styles.infos}>
           <Text style={Styles.time}>{timeLabel}</Text>
@@ -24,7 +24,7 @@ const ProgramCell = (props: { program: Program, onPress: () => void }) => {
           <Text style={Styles.title}>{label}</Text>
         </View>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   )
 }
 
