@@ -178,48 +178,5 @@ const Styles = StyleSheet.create({
   },
   listContent: {
     marginTop: Metrics.baseMargin
-  },
-  recordCard: {
-    ...ApplicationStyles.card,
-    flex: 3,
-    flexDirection: 'column',
-    backgroundColor: Colors.snow
-  },
-  recordHead: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  name: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
-  },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.steel,
-    textAlign: 'right'
-  },
-  recordBody: {
-    marginVertical: Metrics.smallMargin
-  },
-  comment: {
-    lineHeight: Fonts.size.input
-  },
-  recordFooter: {
-    paddingTop: Metrics.smallMargin
-  },
-  recordFooterActions: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  footerAction: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  number: {
-    marginLeft: Metrics.smallMargin,
-    fontSize: Fonts.size.small
   }
 })

@@ -23,34 +23,32 @@ const RecordCell = (props: RecordCellProps) => {
   const { record, onPressLike, onPressReply, onPressGlobe } = props
   const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
   return (
-    <View>
-      <View style={Styles.recordCard}>
-        <View style={Styles.recordHead}>
-          <Text style={Styles.name}>{record.user.name}</Text>
-          <Text style={Styles.timeLabel}>{timeLabel}</Text>
-        </View>
-        <View style={Styles.recordBody}>
-          <Text style={Styles.comment}>{record.comment}</Text>
-        </View>
-        <View style={Styles.recordFooter}>
-          <View style={Styles.recordFooterActions}>
-            <TouchableOpacity onPress={onPressLike}>
-              <View style={Styles.footerAction} >
-                <Icon name='heart' color={Colors.disable} />
-                <Text style={Styles.number}>{record.comments_count}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressReply}>
-              <View style={Styles.footerAction} >
-                <Icon name='reply' color={Colors.disable} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressGlobe}>
-              <View style={Styles.footerAction} >
-                <Icon name='globe' color={Colors.steel} />
-              </View>
-            </TouchableOpacity>
-          </View>
+    <View style={Styles.root}>
+      <View style={Styles.head}>
+        <Text style={Styles.userName}>{record.user.name}</Text>
+        <Text style={Styles.postTime}>{timeLabel}</Text>
+      </View>
+      <View style={Styles.body}>
+        <Text style={Styles.comment}>{record.comment}</Text>
+      </View>
+      <View style={Styles.footer}>
+        <View style={Styles.footerActions}>
+          <TouchableOpacity onPress={onPressLike}>
+            <View style={Styles.footerAction} >
+              <Icon name='heart' color={Colors.disable} />
+              <Text style={Styles.number}>{record.comments_count}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressReply}>
+            <View style={Styles.footerAction} >
+              <Icon name='reply' color={Colors.disable} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressGlobe}>
+            <View style={Styles.footerAction} >
+              <Icon name='globe' color={Colors.steel} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -58,24 +56,48 @@ const RecordCell = (props: RecordCellProps) => {
 }
 
 const Styles = {
-  card: {
+  root: {
     ...ApplicationStyles.card,
-    flex: 2,
+    flex: 3,
+    flexDirection: 'column',
     backgroundColor: Colors.snow
   },
-  infos: {
-    flex: 1
+  head: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  time: {
+  userName: {
     fontSize: Fonts.size.small,
     color: Colors.green
   },
-  workTitle: {
-    fontWeight: 'bold',
+  postTime: {
+    fontSize: Fonts.size.small,
+    color: Colors.steel,
+    textAlign: 'right'
+  },
+  body: {
     marginVertical: Metrics.smallMargin
   },
-  title: {
-    marginBottom: Metrics.smallMargin
+  comment: {
+    lineHeight: Fonts.size.input
+  },
+  footer: {
+    paddingTop: Metrics.smallMargin
+  },
+  footerActions: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  footerAction: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  number: {
+    marginLeft: Metrics.smallMargin,
+    fontSize: Fonts.size.small
   }
 }
 
