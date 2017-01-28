@@ -3,25 +3,25 @@
 import React from 'react'
 import {
   View,
-  Text,
   ListView,
-  StyleSheet,
-  ActivityIndicator,
-  TouchableHighlight } from 'react-native'
+  StyleSheet } from 'react-native'
+
+import ProgramCell from '../Components/ProgramCell'
+import Indicator from '../Components/Indicator'
 
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import HomeActions, { selectPrograms, isFetching } from '../Redux/HomeRedux'
+import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
 import EpisodeActions from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions } from 'react-native-router-flux'
-import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
+import { ApplicationStyles, Metrics, Colors } from '../Themes/'
 import type { Program, Episode } from '../Services/Type'
 
 type HomeScreenProps = {
   dispatch: () => any,
-  fetching: boolean,
+  loading: boolean,
   isLoggedIn: ?boolean,
   programs: Array<Program>,
   logout: () => void,
@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
   props: HomeScreenProps
   state: {
     dataSource: Object,
-    fetching: boolean
+    loading: boolean
   }
 
   constructor (props) {
@@ -46,24 +46,21 @@ class HomeScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(props.programs),
-      fetching: false
+      loading: false,
+      dataSource: ds.cloneWithRows(props.programs)
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.setState({ fetching: true })
+    this.setState({ loading: true })
     this.props.loadProgram()
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, isFetching, programs } = newProps
-    if (isFetching) {
-      return
-    }
+    const { isLoggedIn, programs } = newProps
     if (!isLoggedIn) {
       Actions.loginScreen()
       return
@@ -72,24 +69,16 @@ class HomeScreen extends React.Component {
     // 放送済みのみ
     const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      fetching: isFetching,
+      loading: programs.length === 0,
       dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
     })
   }
 
   renderRow = (program: Program, sectionID: number, rowID: number) => {
-    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
-    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID, program) }} >
-        <View style={Styles.episodeCard}>
-          <View style={Styles.infos}>
-            <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{program.work.title}</Text>
-            <Text style={Styles.label}>{label}</Text>
-          </View>
-        </View>
-      </TouchableHighlight>
+      <ProgramCell
+        program={program}
+        onPress={() => { this.pressRow(rowID, program) }} />
     )
   }
 
@@ -103,20 +92,6 @@ class HomeScreen extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
-  renderFooter () {
-    console.log(`fetching => ${this.state.fetching}`)
-    if (!this.state.fetching) {
-      return null
-    }
-    return (
-      <ActivityIndicator
-        animating
-        style={ApplicationStyles.indicator}
-        size='large'
-        />
-    )
-  }
-
   render () {
     return (
       <View style={Styles.container}>
@@ -124,9 +99,10 @@ class HomeScreen extends React.Component {
           contentContainerStyle={Styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
-          renderFooter={this.renderFooter.bind(this)}
+          renderFooter={() => <Indicator loading={this.state.loading} />}
           pageSize={50}
           onEndReachedThreshold={10}
+          enableEmptySections
           />
       </View>
     )
@@ -137,7 +113,6 @@ const mapStateToProps = (state) => {
   // 監視対象はここ
   return {
     isLoggedIn: isLoggedIn(state.login),
-    isFetching: isFetching(state.home),
     programs: selectPrograms(state.home)
   }
 }
@@ -159,26 +134,7 @@ const Styles = StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
   },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
-  },
-  infos: {
-    flex: 1
-  },
-  boldLabel: {
-    fontWeight: 'bold',
-    marginVertical: Metrics.smallMargin
-  },
-  label: {
-    marginBottom: Metrics.smallMargin
-  },
   listContent: {
     marginTop: Metrics.baseMargin
-  },
-  episodeCard: {
-    ...ApplicationStyles.card,
-    flex: 2,
-    backgroundColor: Colors.snow
   }
 })

@@ -7,14 +7,14 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
-  Linking,
-  ActivityIndicator,
-  TouchableHighlight } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+  Linking
+} from 'react-native'
+import Indicator from '../Components/Indicator'
+import RecordCell from '../Components/RecordCell'
+
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
-import EpisodeActions, { selectEpisode, selectRecords, isFetching, isSomeEpisode } from '../Redux/EpisodeRedux'
-import moment from 'moment'
+import EpisodeActions, { selectEpisode, selectRecords, isSomeEpisode } from '../Redux/EpisodeRedux'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
@@ -24,7 +24,6 @@ type EpisodeScreenProps = {
   dispatch: () => any,
   logout: () => void,
   loadEpisode: () => void,
-  isFetching: boolean,
   isLoggedIn: ?boolean,
   records: Array<Record>,
   episode: Episode
@@ -33,7 +32,7 @@ type EpisodeScreenProps = {
 class EpisodeScreen extends React.Component {
   props: EpisodeScreenProps
   state: {
-    fetching: boolean,
+    loading: boolean,
     dataSourceRecords: Object
   }
 
@@ -48,24 +47,21 @@ class EpisodeScreen extends React.Component {
     }
     const ds = new ListView.DataSource({rowHasChanged})
     this.state = {
-      fetching: false,
+      loading: false,
       dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
     }
   }
 
   componentDidMount = () => {
     console.log('componentDidMount')
-    this.setState({ fetching: true })
+    this.setState({ loading: true })
     this.props.loadEpisode(this.props.episode)
   }
 
   componentWillReceiveProps = (newProps) => {
     console.log('=> Receive', newProps)
     this.forceUpdate()
-    const { isLoggedIn, isFetching, records } = newProps
-    if (isFetching) {
-      return
-    }
+    const { isLoggedIn, records } = newProps
     if (!isLoggedIn) {
       Actions.homeScreen({ type: ActionConst.RESET })
       return
@@ -73,79 +69,13 @@ class EpisodeScreen extends React.Component {
 
     const filterHasComment = (record: Record) => record.comment && record.comment !== ''
     this.setState({
-      fetching: false,
+      loading: false,
       dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
     })
   }
 
-  renderRow = (record: Record, sectionID: number, rowID: number) => {
-    const { episode } = this.props
-    const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
-    return (
-      <View>
-        <View style={Styles.recordCard}>
-          <View style={Styles.recordHead}>
-            <Text style={Styles.name}>{record.user.name}</Text>
-            <Text style={Styles.timeLabel}>{timeLabel}</Text>
-          </View>
-          <View style={Styles.recordBody}>
-            <Text style={Styles.comment}>{record.comment}</Text>
-          </View>
-          <View style={Styles.recordFooter}>
-            <View style={Styles.recordFooterActions}>
-              <TouchableHighlight onPress={() => { this.pressLike(record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='heart' color={Colors.disable} />
-                  <Text style={Styles.number}>{record.comments_count}</Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => { this.pressReply(record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='reply' color={Colors.disable} />
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => { this.pressGlobe(episode, record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='globe' color={Colors.steel} />
-                </View>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  pressLike = (record: Record) => {
-    console.log(`like action: ${record.id}`)
-  }
-
-  pressReply = (record: Record) => {
-    console.log(`reply action: ${record.id}`)
-  }
-
-  pressGlobe = (episode: Episode, record: Record) => {
-    console.log(`open action: ${record.id}`)
-    // HACK: move to model
-    Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
-  }
-
   noRowData = () => {
     return this.state.dataSourceRecords.getRowCount() === 0
-  }
-
-  renderFooter () {
-    console.log(`fetching => ${this.state.fetching}`)
-    if (!this.state.fetching) {
-      return null
-    }
-    return (
-      <ActivityIndicator
-        animating
-        style={ApplicationStyles.indicator}
-        size='large'
-        />
-    )
   }
 
   render () {
@@ -164,12 +94,37 @@ class EpisodeScreen extends React.Component {
             contentContainerStyle={Styles.listContent}
             dataSource={this.state.dataSourceRecords}
             renderRow={this.renderRow}
-            renderFooter={this.renderFooter.bind(this)}
+            renderFooter={() => <Indicator loading={this.state.loading} />}
             pageSize={50}
+            enableEmptySections
             />
         </View>
       </ScrollView>
     )
+  }
+
+  renderRow = (record: Record, sectionID: number, rowID: number) => (
+    <RecordCell
+      episode={this.props.episode}
+      record={record}
+      onPressLike={this.pressLike}
+      onPressReply={this.pressReply}
+      onPressGlobe={this.pressGlobe}
+      />
+  )
+
+  pressLike = (record: Record) => {
+    console.log(`like action: ${record.id}`)
+  }
+
+  pressReply = (record: Record) => {
+    console.log(`reply action: ${record.id}`)
+  }
+
+  pressGlobe = (episode: Episode, record: Record) => {
+    console.log(`open action: ${record.id}`)
+    // HACK: move to model
+    Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
   }
 
   componentWillUnmount = () => {
@@ -184,8 +139,7 @@ const mapStateToProps = (state) => {
     isLoggedIn: isLoggedIn(state.login),
     records: selectRecords(state.episode),
     episode: selectEpisode(state.episode),
-    isSomeEpisode: isSomeEpisode(state.episode),
-    isFetching: isFetching(state.episode)
+    isSomeEpisode: isSomeEpisode(state.episode)
   }
 }
 
@@ -224,46 +178,5 @@ const Styles = StyleSheet.create({
   },
   listContent: {
     marginTop: Metrics.baseMargin
-  },
-  recordCard: {
-    ...ApplicationStyles.card,
-    flex: 3,
-    flexDirection: 'column',
-    backgroundColor: Colors.snow
-  },
-  recordHead: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  name: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
-  },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.steel,
-    textAlign: 'right'
-  },
-  recordBody: {
-    marginVertical: Metrics.smallMargin,
-    lineHeight: Fonts.size.input
-  },
-  recordFooter: {
-    paddingTop: Metrics.smallMargin
-  },
-  recordFooterActions: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  footerAction: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  number: {
-    marginLeft: Metrics.smallMargin,
-    fontSize: Fonts.size.small
   }
 })

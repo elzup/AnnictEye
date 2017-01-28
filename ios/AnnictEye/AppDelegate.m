@@ -9,16 +9,10 @@
 
 #import "AppDelegate.h"
 
-#import "RCTBundleURLProvider.h"
-#import "RCTRootView.h"
-// #import "RCTLinkingManager.h"
-
-// #import <React/RCTBundleURLProvider.h>
-// #import <React/RCTRootView.h>
-// #import <React/RCTLinkingManager.h>
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

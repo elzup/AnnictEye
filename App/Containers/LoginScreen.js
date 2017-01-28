@@ -19,7 +19,7 @@ import { CLIENT_ID } from 'react-native-dotenv'
 
 type LoginScreenProps = {
   dispatch: () => any,
-  fetching: boolean,
+  loading: boolean,
   attemptLogin: () => void,
   loggedIn: boolean
 }
@@ -48,8 +48,8 @@ class LoginScreen extends React.Component {
 
   componentWillReceiveProps = (newProps) => {
     this.forceUpdate()
-    const {loggedIn, fetching} = newProps
-    if (!this.isAttempting || fetching) {
+    const { loggedIn } = newProps
+    if (!this.isAttempting) {
       return
     }
     if (loggedIn) {
@@ -111,8 +111,7 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: isLoggedIn(state.login),
-    fetching: state.login.fetching
+    loggedIn: isLoggedIn(state.login)
   }
 }
 
