@@ -4,11 +4,10 @@ import React from 'react'
 import moment from 'moment'
 import {
   View,
-  Text,
-  TouchableOpacity
+  Text
 } from 'react-native'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import IconButton from './IconButton'
 
 import type { Record } from '../Services/Type'
 
@@ -32,23 +31,14 @@ const RecordCell = (props: RecordCellProps) => {
         <Text style={Styles.comment}>{record.comment}</Text>
       </View>
       <View style={Styles.footer}>
-        <View style={Styles.footerActions}>
-          <TouchableOpacity onPress={onPressLike}>
-            <View style={Styles.footerAction} >
-              <Icon name='heart' color={Colors.disable} />
-              <Text style={Styles.number}>{record.comments_count}</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPressReply}>
-            <View style={Styles.footerAction} >
-              <Icon name='reply' color={Colors.disable} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPressGlobe}>
-            <View style={Styles.footerAction} >
-              <Icon name='globe' color={Colors.steel} />
-            </View>
-          </TouchableOpacity>
+        <View style={Styles.buttons}>
+          <IconButton
+            iconName='heart'
+            count={record.comments_count}
+            onPress={onPressLike}
+            />
+          <IconButton iconName='reply' onPress={onPressReply} />
+          <IconButton iconName='globe' onPress={onPressGlobe} />
         </View>
       </View>
     </View>
@@ -85,19 +75,10 @@ const Styles = {
   footer: {
     paddingTop: Metrics.smallMargin
   },
-  footerActions: {
+  buttons: {
     flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around'
-  },
-  footerAction: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  number: {
-    marginLeft: Metrics.smallMargin,
-    fontSize: Fonts.size.small
   }
 }
 
