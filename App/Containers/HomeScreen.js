@@ -3,12 +3,12 @@
 import React from 'react'
 import {
   View,
-  Text,
   ListView,
-  StyleSheet,
-  TouchableHighlight } from 'react-native'
+  StyleSheet } from 'react-native'
 
+import ProgramCell from '../Components/ProgramCell'
 import Indicator from '../Components/Indicator'
+
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
@@ -16,7 +16,7 @@ import EpisodeActions from '../Redux/EpisodeRedux'
 import moment from 'moment'
 
 import { Actions } from 'react-native-router-flux'
-import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
+import { ApplicationStyles, Metrics, Colors } from '../Themes/'
 import type { Program, Episode } from '../Services/Type'
 
 type HomeScreenProps = {
@@ -75,18 +75,10 @@ class HomeScreen extends React.Component {
   }
 
   renderRow = (program: Program, sectionID: number, rowID: number) => {
-    const label = program.episode.number_text + ' | ' + (program.episode.title || '---')
-    const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
     return (
-      <TouchableHighlight onPress={() => { this.pressRow(rowID, program) }} >
-        <View style={Styles.episodeCard}>
-          <View style={Styles.infos}>
-            <Text style={Styles.timeLabel}>{timeLabel}</Text>
-            <Text style={Styles.boldLabel}>{program.work.title}</Text>
-            <Text style={Styles.label}>{label}</Text>
-          </View>
-        </View>
-      </TouchableHighlight>
+      <ProgramCell
+        program={program}
+        onPress={() => { this.pressRow(rowID, program) }} />
     )
   }
 
@@ -142,26 +134,7 @@ const Styles = StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
   },
-  timeLabel: {
-    fontSize: Fonts.size.small,
-    color: Colors.green
-  },
-  infos: {
-    flex: 1
-  },
-  boldLabel: {
-    fontWeight: 'bold',
-    marginVertical: Metrics.smallMargin
-  },
-  label: {
-    marginBottom: Metrics.smallMargin
-  },
   listContent: {
     marginTop: Metrics.baseMargin
-  },
-  episodeCard: {
-    ...ApplicationStyles.card,
-    flex: 2,
-    backgroundColor: Colors.snow
   }
 })
