@@ -7,14 +7,14 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
-  Linking,
-  TouchableOpacity } from 'react-native'
+  Linking
+} from 'react-native'
 import Indicator from '../Components/Indicator'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import RecordCell from '../Components/RecordCell'
+
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import EpisodeActions, { selectEpisode, selectRecords, isSomeEpisode } from '../Redux/EpisodeRedux'
-import moment from 'moment'
 
 import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
@@ -74,58 +74,6 @@ class EpisodeScreen extends React.Component {
     })
   }
 
-  renderRow = (record: Record, sectionID: number, rowID: number) => {
-    const { episode } = this.props
-    const timeLabel = moment(record.created_at).format('MM/DD HH:mm')
-    return (
-      <View>
-        <View style={Styles.recordCard}>
-          <View style={Styles.recordHead}>
-            <Text style={Styles.name}>{record.user.name}</Text>
-            <Text style={Styles.timeLabel}>{timeLabel}</Text>
-          </View>
-          <View style={Styles.recordBody}>
-            <Text style={Styles.comment}>{record.comment}</Text>
-          </View>
-          <View style={Styles.recordFooter}>
-            <View style={Styles.recordFooterActions}>
-              <TouchableOpacity onPress={() => { this.pressLike(record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='heart' color={Colors.disable} />
-                  <Text style={Styles.number}>{record.comments_count}</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.pressReply(record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='reply' color={Colors.disable} />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.pressGlobe(episode, record) }}>
-                <View style={Styles.footerAction} >
-                  <Icon name='globe' color={Colors.steel} />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  pressLike = (record: Record) => {
-    console.log(`like action: ${record.id}`)
-  }
-
-  pressReply = (record: Record) => {
-    console.log(`reply action: ${record.id}`)
-  }
-
-  pressGlobe = (episode: Episode, record: Record) => {
-    console.log(`open action: ${record.id}`)
-    // HACK: move to model
-    Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
-  }
-
   noRowData = () => {
     return this.state.dataSourceRecords.getRowCount() === 0
   }
@@ -153,6 +101,30 @@ class EpisodeScreen extends React.Component {
         </View>
       </ScrollView>
     )
+  }
+
+  renderRow = (record: Record, sectionID: number, rowID: number) => (
+    <RecordCell
+      episode={this.props.episode}
+      record={record}
+      onPressLike={this.pressLike}
+      onPressReply={this.pressReply}
+      onPressGlobe={this.pressGlobe}
+      />
+  )
+
+  pressLike = (record: Record) => {
+    console.log(`like action: ${record.id}`)
+  }
+
+  pressReply = (record: Record) => {
+    console.log(`reply action: ${record.id}`)
+  }
+
+  pressGlobe = (episode: Episode, record: Record) => {
+    console.log(`open action: ${record.id}`)
+    // HACK: move to model
+    Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
   }
 
   componentWillUnmount = () => {
