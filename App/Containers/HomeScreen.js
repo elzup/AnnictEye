@@ -6,9 +6,9 @@ import {
   Text,
   ListView,
   StyleSheet,
-  ActivityIndicator,
   TouchableHighlight } from 'react-native'
 
+import Indicator from '../Components/Indicator'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 import HomeActions, { selectPrograms } from '../Redux/HomeRedux'
@@ -69,7 +69,7 @@ class HomeScreen extends React.Component {
     // 放送済みのみ
     const finishFilter = (program: Program) => moment(program.started_at).isBefore()
     this.setState({
-      loading: false,
+      loading: programs.length === 0,
       dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
     })
   }
@@ -100,19 +100,6 @@ class HomeScreen extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
-  renderFooter () {
-    if (!this.state.loading) {
-      return null
-    }
-    return (
-      <ActivityIndicator
-        animating
-        style={ApplicationStyles.indicator}
-        size='large'
-        />
-    )
-  }
-
   render () {
     return (
       <View style={Styles.container}>
@@ -120,7 +107,7 @@ class HomeScreen extends React.Component {
           contentContainerStyle={Styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
-          renderFooter={this.renderFooter.bind(this)}
+          renderFooter={() => <Indicator loading={this.state.loading} />}
           pageSize={50}
           onEndReachedThreshold={10}
           enableEmptySections

@@ -8,8 +8,8 @@ import {
   StyleSheet,
   ScrollView,
   Linking,
-  ActivityIndicator,
   TouchableOpacity } from 'react-native'
+import Indicator from '../Components/Indicator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
@@ -130,19 +130,6 @@ class EpisodeScreen extends React.Component {
     return this.state.dataSourceRecords.getRowCount() === 0
   }
 
-  renderFooter () {
-    if (!this.state.loading) {
-      return null
-    }
-    return (
-      <ActivityIndicator
-        animating
-        style={ApplicationStyles.indicator}
-        size='large'
-        />
-    )
-  }
-
   render () {
     const { episode } = this.props
     const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
@@ -159,7 +146,7 @@ class EpisodeScreen extends React.Component {
             contentContainerStyle={Styles.listContent}
             dataSource={this.state.dataSourceRecords}
             renderRow={this.renderRow}
-            renderFooter={this.renderFooter.bind(this)}
+            renderFooter={() => <Indicator loading={this.state.loading} />}
             pageSize={50}
             enableEmptySections
             />
