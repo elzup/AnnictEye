@@ -1150,6 +1150,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.elzup.AnnictEye;
 				PRODUCT_NAME = AnnictEye;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1169,6 +1170,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.elzup.AnnictEye;
 				PRODUCT_NAME = AnnictEye;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
