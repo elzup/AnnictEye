@@ -83,7 +83,6 @@ class EpisodeScreen extends React.Component {
 
   render () {
     const { episode } = this.props
-    const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
     return (
       <ScrollView
         ref='scrollView'
@@ -91,10 +90,10 @@ class EpisodeScreen extends React.Component {
         <View style={Styles.container}>
           <View style={Styles.episodeHeader}>
             <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-            <Text style={Styles.boldLabel}>{episodeLabel}</Text>
+            <Text style={Styles.boldLabel}>{episode.number_text} {episode.title || '---'}</Text>
           </View>
           <DrawerButton text={'記録する'} onPress={() => { this._modal.setVisible(true) }} />
-          <RecordCreateModal episode={null} visible ref={(child) => { this._modal = child }} />
+          <RecordCreateModal episode={episode} visible ref={(child) => { this._modal = child }} />
           <ListView
             contentContainerStyle={Styles.listContent}
             dataSource={this.state.dataSourceRecords}
