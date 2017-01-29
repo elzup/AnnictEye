@@ -8,7 +8,6 @@ import {
 
 import ProgramCell from '../Components/ProgramCell'
 import Indicator from '../Components/Indicator'
-import RecordCreateModal from '../Components/RecordCreateModal'
 
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
@@ -105,7 +104,6 @@ class HomeScreen extends React.Component {
           onEndReachedThreshold={10}
           enableEmptySections
           />
-        <RecordCreateModal episode={null} visible />
       </View>
     )
   }

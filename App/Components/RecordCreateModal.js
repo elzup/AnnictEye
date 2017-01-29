@@ -17,31 +17,29 @@ type RecordModalProps = {
 class RecordCreateModal extends Component {
   props: RecordModalProps
   state = {
-    modalVisible: true
+    visible: false
   }
 
-  setModalVisible (visible) {
-    this.setState({ modalVisible: visible })
+  setVisible (visible) {
+    this.setState({ visible: visible })
   }
 
   render () {
     return (
-      <View style={Styles.wrap}>
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          style={Styles.modal}
-          visible={this.state.modalVisible}
-          onRequestClose={() => { console.log('Modal has been closed.') }}
-          >
-          <View>
-            <Text>Hello World!</Text>
-            <TouchableOpacity onPress={() => { this.setModalVisible(!this.state.modalVisible) }}>
-              <Text>Hide Modal</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
+      <Modal
+        animationType={'slide'}
+        transparent={false}
+        style={Styles.modal}
+        visible={this.state.visible}
+        onRequestClose={() => { console.log('Modal has been closed.') }}
+        >
+        <View>
+          <Text>Hello World!</Text>
+          <TouchableOpacity onPress={() => { this.setVisible(!this.state.visible) }}>
+            <Text>Hide Modal</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     )
   }
 }
