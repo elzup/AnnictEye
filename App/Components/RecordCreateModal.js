@@ -206,6 +206,7 @@ const Styles = {
   submitButton: {
     height: Metrics.footerRowHeight,
     flex: 3,
+    alignItems: 'flex-end',
     justifyContent: 'center'
   },
   toggle: {
