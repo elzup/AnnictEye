@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   Modal
 } from 'react-native'
-import { MKIconToggle } from 'react-native-material-kit'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import { Episode } from '../Services/Type'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 import NavigatorDummy from '../Components/NavigatorDummy'
+import ToggleIconButton from '../Components/ToggleIconButton'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 type RecordModalProps = {
@@ -86,23 +86,22 @@ class RecordCreateModal extends Component {
             </View>
 
             <View style={Styles.footerBottom}>
-              <MKIconToggle
-                style={Styles.toggle}
-                checked={this.state.share_twitter}
-                onCheckedChange={() => { this.setState({ share_twitter: !this.state.share_twitter }) }}
-                >
-                <FAIcon state_checked style={Styles.twitterOn} name='twitter' />
-                <FAIcon style={Styles.twitterOff} name='twitter' />
-              </MKIconToggle>
-
-              <MKIconToggle
-                style={Styles.toggle}
-                checked={this.state.share_facebook}
-                onCheckedChange={() => { this.setState({ share_facebook: !this.state.share_facebook }) }}
-                >
-                <FAIcon state_checked style={Styles.twitterOn} name='facebook-official' />
-                <FAIcon style={Styles.twitterOff} name='facebook-official' />
-              </MKIconToggle>
+              <View style={Styles.toggle} >
+                <ToggleIconButton
+                  iconName='twitter'
+                  size={Fonts.size.h4}
+                  active={this.state.shareTwitter}
+                  colorActive={Colors.twitter}
+                  onPress={this.toggleTwitter} />
+              </View>
+              <View style={Styles.toggle} >
+                <ToggleIconButton
+                  iconName='facebook'
+                  size={Fonts.size.h4}
+                  active={this.state.shareFacebook}
+                  colorActive={Colors.facebook}
+                  onPress={this.toggleFacebook} />
+              </View>
               <TouchableOpacity style={Styles.submitButton} onPress={this.props.handlerSubmit}>
                 <Text style={Styles.buttonInner}>記録</Text>
               </TouchableOpacity>
@@ -112,6 +111,15 @@ class RecordCreateModal extends Component {
         <KeyboardSpacer />
       </Modal>
     )
+  }
+
+  toggleTwitter = () => {
+    console.log('share twitter toggle')
+    this.setState({ shareTwitter: !this.state.shareTwitter })
+  }
+  toggleFacebook = () => {
+    console.log('share facebook toggle')
+    this.setState({ shareFacebook: !this.state.shareFacebook })
   }
 
   handlerChangeRating = (value) => {
@@ -128,15 +136,6 @@ class RecordCreateModal extends Component {
 
   handlerSubmit = () => {
     console.log('submit')
-  }
-}
-
-const iconStyles = {
-  icon: {
-    fontSize: Fonts.size.h4
-  },
-  iconOff: {
-    color: Colors.disable
   }
 }
 
@@ -217,24 +216,15 @@ const Styles = {
   toggle: {
     height: Metrics.footerRowHeight,
     flex: 1,
-    borderWidth: 0
+    borderWidth: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  ...iconStyles,
-  twitterOn: {
-    ...iconStyles.icon,
-    color: Colors.twitter
+  icon: {
+    fontSize: Fonts.size.h4
   },
-  twitterOff: {
-    ...iconStyles.icon,
-    ...iconStyles.iconOff
-  },
-  facebookOn: {
-    ...iconStyles.icon,
-    color: Colors.facebook
-  },
-  facebookOff: {
-    ...iconStyles.icon,
-    ...iconStyles.iconOff
+  iconOff: {
+    color: Colors.disable
   }
 }
 
