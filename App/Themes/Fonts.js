@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 const type = {
   base: 'HelveticaNeue',
@@ -60,4 +60,3 @@ export default {
   size,
   style
 }
-

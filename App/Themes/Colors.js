@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 const colors = {
   background: '#1F0808',
@@ -7,9 +7,11 @@ const colors = {
   silver: '#F7F7F7',
   disable: '#CCCCCC',
   steel: '#888888',
+  twitter: '#00aced',
+  facebook: '#3b5998',
+  star: '#ff9800',
 
   clear: 'rgba(0,0,0,0)',
-  facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
   error: 'rgba(200, 0, 0, 0.8)',
   ricePaper: 'rgba(255,255,255, 0.75)',

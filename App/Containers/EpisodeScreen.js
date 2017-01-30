@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import React from 'react'
 import {
@@ -11,6 +11,8 @@ import {
 } from 'react-native'
 import Indicator from '../Components/Indicator'
 import RecordCell from '../Components/RecordCell'
+import RecordCreateModal from '../Components/RecordCreateModal'
+import DrawerButton from '../Components/DrawerButton'
 
 import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
@@ -35,6 +37,7 @@ class EpisodeScreen extends React.Component {
     loading: boolean,
     dataSourceRecords: Object
   }
+  _modal: RecordCreateModal
 
   constructor (props) {
     super(props)
@@ -80,7 +83,6 @@ class EpisodeScreen extends React.Component {
 
   render () {
     const { episode } = this.props
-    const episodeLabel = episode.number_text + ' | ' + (episode.title || '---')
     return (
       <ScrollView
         ref='scrollView'
@@ -88,8 +90,10 @@ class EpisodeScreen extends React.Component {
         <View style={Styles.container}>
           <View style={Styles.episodeHeader}>
             <Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-            <Text style={Styles.boldLabel}>{episodeLabel}</Text>
+            <Text style={Styles.boldLabel}>{episode.number_text} {episode.title || '---'}</Text>
           </View>
+          <DrawerButton text={'記録する'} onPress={() => { this._modal.setVisible(true) }} />
+          <RecordCreateModal episode={episode} visible ref={(child) => { this._modal = child }} />
           <ListView
             contentContainerStyle={Styles.listContent}
             dataSource={this.state.dataSourceRecords}

@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import { combineReducers } from 'redux'
 import configureStore from './CreateStore'

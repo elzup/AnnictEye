@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 export type Program = {
   id: number,

@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import React from 'react'
 import {
@@ -12,15 +12,16 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 type IconButtonProps = {
   iconName: string,
   count: number,
+  color: Colors.disable,
   onPress: () => void
 }
 
 const IconButton = (props: IconButtonProps) => {
-  const { iconName, onPress } = props
+  const { iconName, color, onPress } = props
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={Styles.action}>
-        <Icon name={iconName} color={Colors.disable} />
+        <Icon name={iconName} color={color} />
         <Text style={Styles.count}>{props.count}</Text>
       </View>
     </TouchableOpacity>

@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import { createActions } from 'reduxsauce'
 
