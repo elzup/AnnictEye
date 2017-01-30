@@ -42,6 +42,11 @@ const ApplicationStyles = {
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin
+    },
+    buttonInner: {
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      paddingHorizontal: 16
     }
   },
   darkLabelContainer: { backgroundColor: Colors.cloud,

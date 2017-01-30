@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TextInput,
+  Slider,
   TouchableOpacity,
   Modal
 } from 'react-native'
@@ -13,6 +14,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome'
 import { Episode } from '../Services/Type'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 import NavigatorDummy from '../Components/NavigatorDummy'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 type RecordModalProps = {
   episode: Episode
@@ -63,35 +65,54 @@ class RecordCreateModal extends Component {
             onSubmitEditing={this.handlerSubmit}
             onChangeText={this.handlerChangeText}
             placeholder='コメント' />
-          <View style={Styles.options}>
-            <MKIconToggle
-              style={Styles.toggle}
-              checked={this.state.share_twitter}
-              onCheckedChange={() => { this.setState({ share_twitter: !this.state.share_twitter }) }}
-              >
-              <FAIcon state_checked style={Styles.twitterOn} name='twitter' />
-              <FAIcon style={Styles.twitterOff} name='twitter' />
-            </MKIconToggle>
 
-            <MKIconToggle
-              style={Styles.toggle}
-              checked={this.state.share_facebook}
-              onCheckedChange={() => { this.setState({ share_facebook: !this.state.share_facebook }) }}
-              >
-              <FAIcon state_checked style={Styles.twitterOn} name='facebook-official' />
-              <FAIcon style={Styles.twitterOff} name='facebook-official' />
-            </MKIconToggle>
-
-            <View style={{justifyContent: 'center'}}>
-              <Text style={{width: 22, color: '#666'}}>{this.state.rating}</Text>
-            </View>
-            <TouchableOpacity onPress={this.props.onCancel}>
-              <View style={{alignItems: 'flex-end', justifyContent: 'center', paddingHorizontal: 16}}>
-                <Text style={{color: '#f85b73'}}>記録</Text>
+          <View style={Styles.footer}>
+            <View style={Styles.footerSlider}>
+              <View style={Styles.rating}>
+                <Text>{this.state.rating}</Text>
               </View>
-            </TouchableOpacity>
+              <Slider
+                style={Styles.slider}
+                thumbImage={this.state.sliderThumb}
+                minimumValue={0}
+                maximumValue={5}
+                step={0.1}
+                onValueChange={value => {
+                  const color = (value > 0.9) ? '#ff9800' : '#ccc'
+                  FAIcon.getImageSource('star', 22, color)
+                  .then(source => {
+                    this.setState({ sliderThumb: source, rating: value })
+                  })
+                  .done()
+                }}
+                />
+            </View>
+
+            <View style={Styles.footerBottom}>
+              <MKIconToggle
+                style={Styles.toggle}
+                checked={this.state.share_twitter}
+                onCheckedChange={() => { this.setState({ share_twitter: !this.state.share_twitter }) }}
+                >
+                <FAIcon state_checked style={Styles.twitterOn} name='twitter' />
+                <FAIcon style={Styles.twitterOff} name='twitter' />
+              </MKIconToggle>
+
+              <MKIconToggle
+                style={Styles.toggle}
+                checked={this.state.share_facebook}
+                onCheckedChange={() => { this.setState({ share_facebook: !this.state.share_facebook }) }}
+                >
+                <FAIcon state_checked style={Styles.twitterOn} name='facebook-official' />
+                <FAIcon style={Styles.twitterOff} name='facebook-official' />
+              </MKIconToggle>
+              <TouchableOpacity style={Styles.submitButton} onPress={this.props.handlerSubmit}>
+                <Text style={Styles.buttonInner}>記録</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+        <KeyboardSpacer />
       </Modal>
     )
   }
@@ -146,17 +167,51 @@ const Styles = {
   modal: {
     paddingTop: Metrics.doubleBaseMargin
   },
-  slider: {
-  },
-  toggle: {
+
+  footer: {
     height: Metrics.footerHeight,
-    width: Metrics.footerHeight,
-    borderWidth: 0
-  },
-  options: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     borderTopWidth: 1,
     borderTopColor: '#ddd'
+  },
+  footerSlider: {
+    ...Metrics.footerRow,
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    flexDirection: 'row',
+    paddingHorizontal: Metrics.baseMargin
+  },
+  rating: {
+    flex: 1,
+    height: Metrics.footerRowHeight,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  ratingText: {
+    color: '#666',
+    justifyContent: 'center'
+  },
+  slider: {
+    flex: 6,
+    height: Metrics.footerRowHeight,
+    justifyContent: 'center'
+  },
+  footerBottom: {
+    paddingVertical: 5,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  submitButton: {
+    height: Metrics.footerRowHeight,
+    flex: 3,
+    justifyContent: 'center'
+  },
+  toggle: {
+    height: Metrics.footerRowHeight,
+    flex: 1,
+    borderWidth: 0
   },
   ...iconStyles,
   twitterOn: {
