@@ -9,6 +9,7 @@ const colors = {
   steel: '#888888',
   twitter: '#00aced',
   facebook: '#3b5998',
+  star: '#ff9800',
 
   clear: 'rgba(0,0,0,0)',
   transparent: 'rgba(0,0,0,0)',

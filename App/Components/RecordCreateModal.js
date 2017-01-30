@@ -35,6 +35,10 @@ class RecordCreateModal extends Component {
       shareTwitter: false,
       shareFacebook: false
     }
+    FAIcon.getImageSource('star', 22, Colors.disable)
+    .then(source => {
+      this.setState({ sliderThumb: source })
+    })
   }
 
   setVisible (visible) {
@@ -77,14 +81,7 @@ class RecordCreateModal extends Component {
                 minimumValue={0}
                 maximumValue={5}
                 step={0.1}
-                onValueChange={value => {
-                  const color = (value > 0.9) ? '#ff9800' : '#ccc'
-                  FAIcon.getImageSource('star', 22, color)
-                  .then(source => {
-                    this.setState({ sliderThumb: source, rating: value })
-                  })
-                  .done()
-                }}
+                onValueChange={this.handlerChangeRating}
                 />
             </View>
 
@@ -115,6 +112,14 @@ class RecordCreateModal extends Component {
         <KeyboardSpacer />
       </Modal>
     )
+  }
+
+  handlerChangeRating = (value) => {
+    const color = value === 0 ? Colors.disable : Colors.star
+    FAIcon.getImageSource('star', 22, color)
+    .then(source => {
+      this.setState({ sliderThumb: source, rating: value })
+    }).done()
   }
 
   handlerChangeText = (text) => {
