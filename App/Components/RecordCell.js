@@ -9,7 +9,7 @@ import {
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 import IconButton from './IconButton'
 
-import type { Record } from '../Services/Type'
+import { Record } from '../Services/Type'
 
 type RecordCellProps = {
   record: Record,

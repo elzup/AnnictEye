@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 
-import type { Program } from '../Services/Type'
+import { Program } from '../Services/Type'
 
 const ProgramCell = (props: { program: Program, onPress: () => void }) => {
   const { program, onPress } = props

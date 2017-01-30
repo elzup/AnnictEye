@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "standard --verbose | snazzy",
-    "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
-    "fixcode": "standard --fix",
+    "lint": "xo",
+    "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs xo | snazzy",
+    "fixcode": "xo --fix",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && react-native run-android",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
@@ -65,8 +65,7 @@
     "reactotron-react-native": "^1.6.0",
     "reactotron-redux": "^1.5.2",
     "reactotron-redux-saga": "^1.5.2",
-    "snazzy": "^6.0.0",
-    "standard": "8.6.0"
+    "snazzy": "^6.0.0"
   },
   "ava": {
     "files": [
@@ -81,22 +80,6 @@
     ],
     "babel": "inherit"
   },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "describe",
-      "it",
-      "fetch",
-      "navigator",
-      "__DEV__",
-      "XMLHttpRequest",
-      "FormData",
-      "React$Element"
-    ]
-  },
   "config": {
-    "ghooks": {
-      "pre-commit": "if [ -d 'ignite-base' ]; then cd ignite-base; fi; npm run lint"
-    }
   }
 }

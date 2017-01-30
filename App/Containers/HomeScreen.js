@@ -17,7 +17,7 @@ import moment from 'moment'
 
 import { Actions } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors } from '../Themes/'
-import type { Program, Episode } from '../Services/Type'
+import { Program, Episode } from '../Services/Type'
 
 type HomeScreenProps = {
   dispatch: () => any,

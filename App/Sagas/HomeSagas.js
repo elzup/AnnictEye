@@ -3,7 +3,7 @@
 import { call, put } from 'redux-saga/effects'
 import HomeActions from '../Redux/HomeRedux'
 import LoginActions from '../Redux/LoginRedux'
-import type { Program } from '../Services/Type'
+import { Program } from '../Services/Type'
 import { AsyncStorage } from 'react-native'
 
 export function * getPrograms (api: any) {

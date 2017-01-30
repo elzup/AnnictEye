@@ -3,7 +3,7 @@
 import { call, put } from 'redux-saga/effects'
 import EpisodeActions from '../Redux/EpisodeRedux'
 import LoginActions from '../Redux/LoginRedux'
-import type { Record } from '../Services/Type'
+import { Record } from '../Services/Type'
 import { AsyncStorage } from 'react-native'
 
 export function * loadEpisode (api: any, { episode }) {

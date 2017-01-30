@@ -20,7 +20,7 @@ import EpisodeActions, { selectEpisode, selectRecords, isSomeEpisode } from '../
 
 import { Actions, ActionConst } from 'react-native-router-flux'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import type { Record, Episode } from '../Services/Type'
+import { Record, Episode } from '../Services/Type'
 
 type EpisodeScreenProps = {
   dispatch: () => any,

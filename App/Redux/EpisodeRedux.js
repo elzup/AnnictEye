@@ -2,7 +2,7 @@
 
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import type { Record, Episode } from '../Services/Type'
+import { Record, Episode } from '../Services/Type'
 
 /* ------------- Types and Action Creators ------------- */
 
