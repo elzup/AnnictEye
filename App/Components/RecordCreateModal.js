@@ -8,12 +8,11 @@ import {
   TouchableOpacity,
   Modal
 } from 'react-native'
-import { MKIconToggle, Slider } from 'react-native-material-kit'
+import { MKIconToggle } from 'react-native-material-kit'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import { Episode } from '../Services/Type'
 import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
 import NavigatorDummy from '../Components/NavigatorDummy'
-import DrawerButton from '../Components/DrawerButton'
 
 type RecordModalProps = {
   episode: Episode
@@ -64,49 +63,34 @@ class RecordCreateModal extends Component {
             onSubmitEditing={this.handlerSubmit}
             onChangeText={this.handlerChangeText}
             placeholder='コメント' />
-          <DrawerButton text='記録' onPress={this.handlerSubmit} />
-          <View style={{flexDirection: 'row', borderTopWidth: 1, borderTopColor: '#ddd'}}>
+          <View style={Styles.options}>
             <MKIconToggle
+              style={Styles.toggle}
               checked={this.state.share_twitter}
               onCheckedChange={() => { this.setState({ share_twitter: !this.state.share_twitter }) }}
               >
-              <FAIcon state_checked style={{fontSize: 22, color: '#00aced'}} name='twitter' />
-              <FAIcon style={{fontSize: 22, color: '#ccc'}} name='twitter' />
+              <FAIcon state_checked style={Styles.twitterOn} name='twitter' />
+              <FAIcon style={Styles.twitterOff} name='twitter' />
             </MKIconToggle>
-            <MKIconToggle
 
+            <MKIconToggle
+              style={Styles.toggle}
               checked={this.state.share_facebook}
               onCheckedChange={() => { this.setState({ share_facebook: !this.state.share_facebook }) }}
               >
-              <FAIcon state_checked style={{fontSize: 22, color: '#305097'}} name='facebook-official' />
-              <FAIcon style={{fontSize: 22, color: '#ccc'}} name='facebook-official' />
+              <FAIcon state_checked style={Styles.twitterOn} name='facebook-official' />
+              <FAIcon style={Styles.twitterOff} name='facebook-official' />
             </MKIconToggle>
 
             <View style={{justifyContent: 'center'}}>
               <Text style={{width: 22, color: '#666'}}>{this.state.rating}</Text>
             </View>
-
-            <View style={{flex: 1, justifyContent: 'center', paddingHorizontal: 8}}>
-              <Slider
-                styles={Styles.slider}
-                thumbRadius={6}
-                min={0}
-                max={5}
-                step={0.1}
-                onChange={value => {
-                  const color = (value > 0.9) ? '#ff9800' : '#ccc'
-                  FAIcon.getImageSource('star', 22, color)
-                  .then(source => {
-                    this.setState({ sliderThumb: source, rating: value })
-                  })
-                  .done()
-                }}
-                />
-            </View>
+            <TouchableOpacity onPress={this.props.onCancel}>
+              <View style={{alignItems: 'flex-end', justifyContent: 'center', paddingHorizontal: 16}}>
+                <Text style={{color: '#f85b73'}}>記録</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => { this.setVisible(!this.state.visible) }}>
-            <Text>キャンセル</Text>
-          </TouchableOpacity>
         </View>
       </Modal>
     )
@@ -118,6 +102,15 @@ class RecordCreateModal extends Component {
 
   handlerSubmit = () => {
     console.log('submit')
+  }
+}
+
+const iconStyles = {
+  icon: {
+    fontSize: Fonts.size.h4
+  },
+  iconOff: {
+    color: Colors.disable
   }
 }
 
@@ -154,6 +147,33 @@ const Styles = {
     paddingTop: Metrics.doubleBaseMargin
   },
   slider: {
+  },
+  toggle: {
+    height: Metrics.footerHeight,
+    width: Metrics.footerHeight,
+    borderWidth: 0
+  },
+  options: {
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd'
+  },
+  ...iconStyles,
+  twitterOn: {
+    ...iconStyles.icon,
+    color: Colors.twitter
+  },
+  twitterOff: {
+    ...iconStyles.icon,
+    ...iconStyles.iconOff
+  },
+  facebookOn: {
+    ...iconStyles.icon,
+    color: Colors.facebook
+  },
+  facebookOff: {
+    ...iconStyles.icon,
+    ...iconStyles.iconOff
   }
 }
 
