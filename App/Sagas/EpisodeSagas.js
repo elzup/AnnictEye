@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import { call, put } from 'redux-saga/effects'
 import EpisodeActions from '../Redux/EpisodeRedux'

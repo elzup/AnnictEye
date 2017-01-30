@@ -1,4 +1,4 @@
-// @flow
+'use strict'
 
 import './App/Config/ReactotronConfig'
 import { AppRegistry } from 'react-native'
