@@ -194,7 +194,10 @@ class RecordCreateModal extends Component {
 									onPress={this.handleToggleFacebook}
 									/>
 							</View>
-							<TouchableOpacity style={Styles.submitButton} onPress={this.props.handleSubmit}>
+							<TouchableOpacity
+								onPress={this.handleSubmit}
+								style={Styles.submitButton}
+								>
 								<Text style={Styles.buttonInner}>記録</Text>
 							</TouchableOpacity>
 						</View>
@@ -233,6 +236,7 @@ class RecordCreateModal extends Component {
 			comment: this.state.comment,
 			rating: this.state.rating
 		})
+		console.log(record)
 		this.props.postRecord(record, this.state.shareTwitter, this.state.shareFacebook)
 	}
 }

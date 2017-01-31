@@ -24,6 +24,6 @@ export default function * root() {
 		takeLatest(LoginTypes.LOGOUT, logout, api),
 		takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api),
 		takeLatest(EpisodeTypes.EPISODE_REQUEST, loadEpisode, api),
-		takeLatest(EpisodeTypes.POST_RECORD, postRecord, api)
+		takeLatest(EpisodeTypes.POST_RECORD_REQUEST, postRecord, api)
 	]
 }
