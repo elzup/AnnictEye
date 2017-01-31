@@ -10,7 +10,7 @@ import {
   Modal
 } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
-import {Episode} from '../Services/Type'
+import {Episode, Record} from '../Services/Type'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import NavigatorDummy from '../Components/NavigatorDummy'
 import ToggleIconButton from '../Components/ToggleIconButton'
@@ -106,7 +106,8 @@ const Styles = {
 }
 
 type RecordModalProps = {
-  episode: Episode
+  episode: Episode,
+	postRecord: (record, st, sf) => void
 }
 
 class RecordCreateModal extends Component {
@@ -222,11 +223,17 @@ class RecordCreateModal extends Component {
 	}
 
 	handleText = text => {
-		this.setState({text: text})
+		this.setState({comment: text})
 	}
 
+	/* eslint camelcase: 0 */
 	handleSubmit = () => {
-		console.log('submit')
+		const record = new Record({
+			episode: this.props.episode,
+			comment: this.state.comment,
+			rating: this.state.rating
+		})
+		this.props.postRecord(record, this.state.shareTwitter, this.state.shareFacebook)
 	}
 }
 

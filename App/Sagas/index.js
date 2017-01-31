@@ -11,7 +11,7 @@ import {EpisodeTypes} from '../Redux/EpisodeRedux'
 
 import {login, logout} from './LoginSagas'
 import {getPrograms} from './HomeSagas'
-import {loadEpisode} from './EpisodeSagas'
+import {loadEpisode, postRecord} from './EpisodeSagas'
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -23,6 +23,7 @@ export default function * root() {
 		takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
 		takeLatest(LoginTypes.LOGOUT, logout, api),
 		takeLatest(HomeTypes.PROGRAM_REQUEST, getPrograms, api),
-		takeLatest(EpisodeTypes.EPISODE_REQUEST, loadEpisode, api)
+		takeLatest(EpisodeTypes.EPISODE_REQUEST, loadEpisode, api),
+		takeLatest(EpisodeTypes.POST_RECORD, postRecord, api)
 	]
 }
