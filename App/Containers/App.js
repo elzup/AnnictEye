@@ -1,7 +1,7 @@
 'use strict'
 
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import React, {Component} from 'react'
+import {Provider} from 'react-redux'
 import RootContainer from './RootContainer'
 import applyConfigSettings from '../Config'
 import createStore from '../Redux'
@@ -21,13 +21,13 @@ const store = createStore()
  * We separate like this to play nice with React Native's hot reloading.
  */
 class App extends Component {
-  render () {
-    return (
-      <Provider store={store}>
-        <RootContainer />
-      </Provider>
-    )
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<RootContainer/>
+			</Provider>
+		)
+	}
 }
 
 export default App

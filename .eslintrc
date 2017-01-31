@@ -1,9 +1,10 @@
 {
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["xo", "xo-react", "plugin:flowtype/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
@@ -11,7 +12,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "flowtype"],
   "rules": {
     "indent": [
       "error", "tab"
@@ -22,6 +23,13 @@
     "quotes": [
       "error", "single"
     ],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "react/prop-types": 0,
+    "react/forbid-component-props": 0,
+    "forbid-component-props": 0,
+    "no-redeclare": 0,
+    "no-alert": 0,
+    "react/jsx-no-bind": 0,
+    'no-unused-prop-types': 0
   }
 }

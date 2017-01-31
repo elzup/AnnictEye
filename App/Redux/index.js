@@ -1,16 +1,16 @@
 'use strict'
 
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas/'
 
 export default () => {
   /* ------------- Assemble The Reducers ------------- */
-  const rootReducer = combineReducers({
-    login: require('./LoginRedux').reducer,
-    home: require('./HomeRedux').reducer,
-    episode: require('./EpisodeRedux').reducer
-  })
+	const rootReducer = combineReducers({
+		login: require('./LoginRedux').reducer,
+		home: require('./HomeRedux').reducer,
+		episode: require('./EpisodeRedux').reducer
+	})
 
-  return configureStore(rootReducer, rootSaga)
+	return configureStore(rootReducer, rootSaga)
 }
