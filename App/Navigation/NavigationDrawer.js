@@ -7,50 +7,51 @@ import {connect} from 'react-redux'
 import {Colors} from '../Themes/'
 
 class NavigationDrawer extends Component {
-  render () {
-    const state = this.props.navigationState
-    const children = state.children
-    return (
-      <Drawer
-        ref='navigation'
-        type='displace'
-        open={state.open}
-        onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
-        onClose={() => NavigationActions.refresh({key: state.key, open: false})}
-        styles={Styles}
-        ftapToClose openDrawerOffset={0.2}
-        panCloseMask={0.2}
-        negotiatePan
-        tweenHandler={(ratio) => ({
-          main: {
-            opacity: Math.max(0.54, 1 - ratio)
-          }
-        })}>
-        <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
-      </Drawer>
-    )
-  }
+	render() {
+		const state = this.props.navigationState
+		const children = state.children
+		return (
+			<Drawer
+				ref={'navigation'}
+				type="displace"
+				open={state.open}
+				onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
+				onClose={() => NavigationActions.refresh({key: state.key, open: false})}
+				styles={Styles}
+				ftapToClose openDrawerOffset={0.2}
+				panCloseMask={0.2}
+				negotiatePan
+				tweenHandler={ratio => ({
+					main: {
+						opacity: Math.max(0.54, 1 - ratio)
+					}
+				})}
+				>
+				<DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate}/>
+			</Drawer>
+		)
+	}
 }
 
 NavigationDrawer.propTypes = {
-  navigationState: PropTypes.object
+	navigationState: PropTypes.object
 }
 
-const mapStateToProps = (state) => {
-  return {}
+const mapStateToProps = state => {
+	return {}
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
+const mapDispatchToProps = dispatch => {
+	return {}
 }
 
 const Styles = {
-  drawer: {
-    backgroundColor: Colors.background
-  },
-  main: {
-    backgroundColor: Colors.clear
-  }
+	drawer: {
+		backgroundColor: Colors.background
+	},
+	main: {
+		backgroundColor: Colors.clear
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer)

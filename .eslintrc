@@ -28,6 +28,7 @@
     "react/forbid-component-props": 0,
     "forbid-component-props": 0,
     "no-redeclare": 0,
-    "no-alert": 0
+    "no-alert": 0,
+    "react/jsx-no-bind": 0
   }
 }
