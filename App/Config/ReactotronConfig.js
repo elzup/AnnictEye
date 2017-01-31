@@ -30,7 +30,7 @@ if (Config.useReactotron) {
 
       // Fires when Reactotron uploads a new copy of the state tree.  Since our reducers are
       // immutable with `seamless-immutable`, we ensure we convert to that format.
-	 onRestore: state => Immutable(state)
+		onRestore: state => new Immutable(state)
 	}))
 
   // register the redux-saga plugin so we can use the monitor in CreateStore.js
