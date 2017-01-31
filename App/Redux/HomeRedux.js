@@ -17,7 +17,7 @@ export default Creators
 
 /* ------------- Initial State ------------- */
 
-export const INITIAL_STATE = Immutable({
+export const INITIAL_STATE = new Immutable({
 	programs: ([]: Array<Program>),
 	error: null
 })

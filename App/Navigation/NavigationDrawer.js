@@ -6,13 +6,21 @@ import {DefaultRenderer, Actions as NavigationActions} from 'react-native-router
 import {connect} from 'react-redux'
 import {Colors} from '../Themes/'
 
+const Styles = {
+	drawer: {
+		backgroundColor: Colors.background
+	},
+	main: {
+		backgroundColor: Colors.clear
+	}
+}
+
 class NavigationDrawer extends Component {
 	render() {
 		const state = this.props.navigationState
 		const children = state.children
 		return (
 			<Drawer
-				ref={'navigation'}
 				type="displace"
 				open={state.open}
 				onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
@@ -37,21 +45,12 @@ NavigationDrawer.propTypes = {
 	navigationState: PropTypes.object
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = () => {
 	return {}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
 	return {}
-}
-
-const Styles = {
-	drawer: {
-		backgroundColor: Colors.background
-	},
-	main: {
-		backgroundColor: Colors.clear
-	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer)

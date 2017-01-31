@@ -1,9 +1,18 @@
 'use strict'
 
-import React, {PropTypes as T} from 'react'
+import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import {Colors} from '../Themes'
 import Icon from 'react-native-vector-icons/FontAwesome'
+
+type ToggleIconButton = {
+	iconName: string,
+	colorActive: string,
+	colorDisable: string,
+	size: integer,
+	active: boolean,
+	onPress: () => void
+}
 
 const ToggleIconButton = props => {
 	const {iconName, colorActive, colorDisable, active, size, onPress} = props
@@ -13,15 +22,6 @@ const ToggleIconButton = props => {
 			<Icon name={iconName} color={color} size={size}/>
 		</TouchableOpacity>
 	)
-}
-
-ToggleIconButton.propTypes = {
-	iconName: T.string,
-	colorActive: T.string,
-	colorDisable: T.string,
-	size: T.integer,
-	active: T.boolean,
-	onPress: T.func
 }
 
 ToggleIconButton.defaultProps = {

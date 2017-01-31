@@ -90,7 +90,7 @@ class EpisodeScreen extends React.Component {
 	componentWillReceiveProps = newProps => {
 		console.log('=> Receive', newProps)
 		this.forceUpdate()
-		const {isLoggedIn, records} = this.props
+		const {isLoggedIn, records} = newProps
 		if (!isLoggedIn) {
 			Actions.homeScreen({type: ActionConst.RESET})
 			return
