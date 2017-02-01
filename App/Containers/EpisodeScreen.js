@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import Indicator from '../Components/Indicator'
 import RecordCell from '../Components/RecordCell'
-import RecordCreateModal from '../Components/RecordCreateModal'
 import DrawerButton from '../Components/DrawerButton'
 
 import {connect} from 'react-redux'
@@ -64,7 +63,6 @@ class EpisodeScreen extends React.Component {
     loading: boolean,
     dataSourceRecords: Object
   }
-	_modal: RecordCreateModal
 
 	constructor(props) {
 		super(props)
@@ -119,12 +117,6 @@ class EpisodeScreen extends React.Component {
 						<Text style={Styles.boldLabel}>{episode.number_text} {episode.title || '---'}</Text>
 					</View>
 					<DrawerButton text={'記録する'} onPress={this.handleOpenModal}/>
-					<RecordCreateModal
-						episode={episode}
-						postRecord={this.postRecord}
-						ref={this.refModal}
-						visible
-						/>
 					<ListView
 						contentContainerStyle={Styles.listContent}
 						dataSource={this.state.dataSourceRecords}
@@ -142,12 +134,9 @@ class EpisodeScreen extends React.Component {
 		<Indicator loading={this.state.loading}/>
   )
 
-	refModal = child => {
-		this._modal = child
-	}
-
 	handleOpenModal = () => {
-		this._modal.setVisible(true)
+		const {episode} = this.props
+		Actions.recordCreateModal({title: `記録する ${episode.number_text}`})
 	}
 
 	renderRow = (record: Record) => (
@@ -193,8 +182,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		logout: () => dispatch(LoginActions.logout()),
-		loadEpisode: episode => dispatch(EpisodeActions.episodeRequest(episode)),
-		postRecord: (episode, st, sf) => dispatch(EpisodeActions.postRecordRequest(episode, st, sf))
+		loadEpisode: episode => dispatch(EpisodeActions.episodeRequest(episode))
 	}
 }
 

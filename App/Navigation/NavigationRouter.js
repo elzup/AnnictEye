@@ -8,6 +8,7 @@ import {Colors} from '../Themes'
 import LoginScreen from '../Containers/LoginScreen'
 import HomeScreen from '../Containers/HomeScreen'
 import EpisodeScreen from '../Containers/EpisodeScreen'
+import RecordCreateModal from '../Containers/RecordCreateModal'
 
 const Styles = {
 	container: {
@@ -36,6 +37,7 @@ class NavigationRouter extends Component {
 						<Scene initial key="homeScreen" component={HomeScreen} title="ホーム"/>
 						<Scene key="loginScreen" component={LoginScreen} title="ログイン" hideBackImage/>
 						<Scene key="episodeScreen" component={EpisodeScreen} title="エピソード"/>
+						<Scene key="recordCreateModal" component={RecordCreateModal} title="記録"/>
 					</Scene>
 				</Scene>
 			</Router>

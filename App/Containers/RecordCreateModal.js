@@ -1,25 +1,28 @@
 'use strict'
 
 import React, {Component} from 'react'
+import {Actions} from 'react-native-router-flux'
 import {
   View,
   Text,
   TextInput,
   Slider,
-  TouchableOpacity,
-  Modal
+  TouchableOpacity
 } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import {Episode, Record} from '../Services/Type'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import NavigatorDummy from '../Components/NavigatorDummy'
+import {connect} from 'react-redux'
 import ToggleIconButton from '../Components/ToggleIconButton'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
+import EpisodeActions, {selectEpisode, selectPosting, selectResultEpisode, selectError} from '../Redux/EpisodeRedux'
 
 const Styles = {
 	...ApplicationStyles.screen,
 	container: {
 		flex: 1,
+		marginTop: Metrics.navBarHeight,
 		backgroundColor: Colors.silver
 	},
 	wrap: {
@@ -106,8 +109,7 @@ const Styles = {
 }
 
 type RecordModalProps = {
-  episode: Episode,
-	postRecord: (record, st, sf) => void
+  episode: Episode
 }
 
 class RecordCreateModal extends Component {
@@ -117,7 +119,6 @@ class RecordCreateModal extends Component {
 		super(props)
 		this.state = {
 			sliderThumb: null,
-			visible: false,
 
       // request parameters
 			comment: '',
@@ -126,85 +127,92 @@ class RecordCreateModal extends Component {
 			shareFacebook: false
 		}
 		FAIcon.getImageSource('star', 22, Colors.disable)
-    .then(source => {
-	this.setState({sliderThumb: source})
-})
+		.then(source => {
+			this.setState({sliderThumb: source})
+		})
 	}
 
-	setVisible(visible) {
-		this.setState({visible: visible})
+	componentWillReceiveProps = (newProps: HomeScreenProps) => {
+		console.log('=> Receive', newProps)
+		this.forceUpdate()
+		if (!newProps.isLoggedIn) {
+			Actions.loginScreen()
+			return
+		}
+
+		if (newProps.posting) {
+			return
+		}
+		if (newProps.resultEpisode !== null) {
+			window.alert('記録しました！')
+			Actions.pop()
+			return
+		}
+		if (newProps.error !== null) {
+			window.alert(newProps.error)
+		}
 	}
 
 	render() {
-		const {episode} = this.props
-		console.log(episode.title)
 		return (
-			<Modal
-				animationType={'slide'}
-				transparent={false}
-				style={Styles.modal}
-				visible={this.state.visible}
-				>
-				<NavigatorDummy text={'記録する'}/>
-				<View style={Styles.container}>
-					<TextInput
-						multiline
-						style={Styles.commentForm}
-						keyboardType="default"
-						returnKeyType="next"
-						autoCapitalize="none"
-						autoCorrect={false}
-						underlineColorAndroid="transparent"
-						onSubmitEditing={this.handleSubmit}
-						onChangeText={this.handleText}
-						placeholder="コメント"
-						/>
+			<View style={Styles.container}>
+				<TextInput
+					multiline
+					style={Styles.commentForm}
+					keyboardType="default"
+					returnKeyType="next"
+					autoCapitalize="none"
+					autoCorrect={false}
+					underlineColorAndroid="transparent"
+					onSubmitEditing={this.handleSubmit}
+					onChangeText={this.handleText}
+					placeholder="コメント"
+					/>
 
-					<View style={Styles.footer}>
-						<View style={Styles.footerSlider}>
-							<View style={Styles.rating}>
-								<Text>{this.state.rating}</Text>
-							</View>
-							<Slider
-								style={Styles.slider}
-								thumbImage={this.state.sliderThumb}
-								minimumValue={0}
-								maximumValue={5}
-								step={0.1}
-								onValueChange={this.handleChangeRate}
+				<View style={Styles.footer}>
+					<View style={Styles.footerSlider}>
+						<View style={Styles.rating}>
+							<Text>{this.state.rating}</Text>
+						</View>
+						<Slider
+							style={Styles.slider}
+							thumbImage={this.state.sliderThumb}
+							minimumValue={0}
+							maximumValue={5}
+							step={0.1}
+							onValueChange={this.handleChangeRate}
+							/>
+					</View>
+
+					<View style={Styles.footerBottom}>
+						<View style={Styles.toggle} >
+							<ToggleIconButton
+								iconName="twitter"
+								size={Fonts.size.h4}
+								active={this.state.shareTwitter}
+								colorActive={Colors.twitter}
+								onPress={this.handleToggleTwitter}
 								/>
 						</View>
-
-						<View style={Styles.footerBottom}>
-							<View style={Styles.toggle} >
-								<ToggleIconButton
-									iconName="twitter"
-									size={Fonts.size.h4}
-									active={this.state.shareTwitter}
-									colorActive={Colors.twitter}
-									onPress={this.handleToggleTwitter}
-									/>
-							</View>
-							<View style={Styles.toggle} >
-								<ToggleIconButton
-									iconName="facebook"
-									size={Fonts.size.h4}
-									active={this.state.shareFacebook}
-									colorActive={Colors.facebook}
-									onPress={this.handleToggleFacebook}
-									/>
-							</View>
-							<TouchableOpacity
-								onPress={this.handleSubmit}
-								style={Styles.submitButton}
-								>
-								<Text style={Styles.buttonInner}>記録</Text>
-							</TouchableOpacity>
+						<View style={Styles.toggle} >
+							<ToggleIconButton
+								iconName="facebook"
+								size={Fonts.size.h4}
+								active={this.state.shareFacebook}
+								colorActive={Colors.facebook}
+								onPress={this.handleToggleFacebook}
+								/>
 						</View>
+						<TouchableOpacity
+							onPress={this.handleSubmit}
+							style={Styles.submitButton}
+							>
+							<Text style={Styles.buttonInner}>記録</Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<KeyboardSpacer/>
-			</Modal>
+			</View>
 		)
 	}
 
@@ -220,9 +228,9 @@ class RecordCreateModal extends Component {
 	handleChangeRate = value => {
 		const color = value === 0 ? Colors.disable : Colors.star
 		FAIcon.getImageSource('star', 22, color)
-    .then(source => {
-	this.setState({sliderThumb: source, rating: value})
-}).done()
+		.then(source => {
+			this.setState({sliderThumb: source, rating: value})
+		}).done()
 	}
 
 	handleText = text => {
@@ -236,9 +244,24 @@ class RecordCreateModal extends Component {
 			comment: this.state.comment,
 			rating: this.state.rating
 		})
-		console.log(record)
 		this.props.postRecord(record, this.state.shareTwitter, this.state.shareFacebook)
 	}
 }
 
-export default RecordCreateModal
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: isLoggedIn(state.login),
+		episode: selectEpisode(state.episode),
+		posting: selectPosting(state.episode),
+		resultEpisode: selectResultEpisode(state.episode),
+		error: selectError(state.episode)
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		postRecord: (episode, st, sf) => dispatch(EpisodeActions.postRecordRequest(episode, st, sf))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(RecordCreateModal)

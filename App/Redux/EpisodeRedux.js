@@ -25,7 +25,8 @@ export const INITIAL_STATE = new Immutable({
 	records: ([]: Array<Record>),
 	episode: (null: ?Episode),
 	prevEpisode: (null: ?Episode),
-	postResultRecord: (null: ?Record),
+	resultRecord: (null: ?Record),
+	posting: false,
 	error: null
 })
 
@@ -42,13 +43,13 @@ export const episodeSuccess = (state: Object, {records}: Object) =>
 export const episodeFailure = (state: Object, {error}: Object) =>
   state.merge({error})
 
-export const postRecordRequest = (state: Object) => state
+export const postRecordRequest = (state: Object) => state.merge({posting: true})
 
-export const postRecordSuccess = (state: Object, {postResultRecord}: Object) =>
-  state.merge({error: null, postResultRecord})
+export const postRecordSuccess = (state: Object, {resultRecord}: Object) =>
+  state.merge({error: null, posting: false, resultRecord})
 
 export const postRecordFailure = (state: Object, {error}: Object) =>
-  state.merge({error})
+  state.merge({posting: false, error})
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -64,5 +65,8 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 /* ------------- Selectors ------------- */
 export const selectEpisode = (episodeState: Object) => episodeState.episode
+export const selectError = (episodeState: Object) => episodeState.error
 export const selectRecords = (episodeState: Object) => episodeState.records
 export const isSomeEpisode = (episodeState: Object) => episodeState.prevEpisode === null || episodeState.episode.id === episodeState.prevEpisode.id
+export const selectPosting = (episodeState: Object) => episodeState.posting
+export const selectResultEpisode = (episodeState: Object) => episodeState.resultRecord
