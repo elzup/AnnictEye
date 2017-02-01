@@ -3,15 +3,85 @@ import API from '../Services/Api'
 
 /* ------------- Types ------------- */
 
-import {LoginTypes} from '../Redux/LoginRedux'
-import {HomeTypes} from '../Redux/HomeRedux'
-import {EpisodeTypes} from '../Redux/EpisodeRedux'
+import LoginActions, {LoginTypes} from '../Redux/LoginRedux'
+import HomeActions, {HomeTypes} from '../Redux/HomeRedux'
+import EpisodeActions, {EpisodeTypes} from '../Redux/EpisodeRedux'
 
 /* ------------- Sagas ------------- */
+import {call, put} from 'redux-saga/effects'
+import {AsyncStorage} from 'react-native'
+import {Program} from '../Services/Type'
 
-import {login, logout} from './LoginSagas'
-import {getPrograms} from './HomeSagas'
-import {loadEpisode, postRecord} from './EpisodeSagas'
+function * login(api, {code}) {
+	const response = yield call(api.oauthToken, code)
+	if (response.ok) {
+		const token = response.data.access_token
+		yield call(AsyncStorage.setItem, 'access_token', token)
+		yield call(AsyncStorage.setItem, 'application_code', code)
+		yield put(LoginActions.loginSuccess())
+	} else {
+		yield put(LoginActions.loginFailure('WRONG'))
+	}
+}
+
+function * logout(api) {
+	yield call(api.oauthRevoke)
+	yield call(AsyncStorage.removeItem, 'access_token')
+	yield call(AsyncStorage.removeItem, 'application_code')
+	yield put(LoginActions.logoutSuccess())
+}
+
+function * getPrograms(api: any) {
+	const token = yield call(AsyncStorage.getItem, 'access_token')
+	if (token === null) {
+		yield put(LoginActions.loginFailure('WRONG'))
+		return
+	}
+	yield put(LoginActions.loginSuccess())
+	api.setToken(token)
+
+	const response = yield call(api.mePrograms)
+	if (response.ok) {
+		const programs: Array<Program> = response.data.programs
+		yield put(HomeActions.programSuccess(programs))
+	} else {
+		yield put(HomeActions.programFailure('WRONG'))
+	}
+}
+
+function * loadEpisode(api: any, {episode}) {
+	const token = yield call(AsyncStorage.getItem, 'access_token')
+	if (token === null) {
+		yield put(LoginActions.loginFailure())
+		return
+	}
+	yield put(LoginActions.loginSuccess())
+	api.setToken(token)
+
+	const response = yield call(api.records, episode.id)
+	if (response.ok) {
+		yield put(EpisodeActions.episodeSuccess(response.data.records))
+	} else {
+		yield put(EpisodeActions.episodeFailure('WRONG'))
+	}
+}
+
+function * postRecord(api: any, {record, shareTwitter, shareFacebook}) {
+	const token = yield call(AsyncStorage.getItem, 'access_token')
+	if (token === null) {
+		yield put(LoginActions.loginFailure())
+		return
+	}
+	yield put(LoginActions.loginSuccess())
+	api.setToken(token)
+
+	const response = yield call(api.postMeRecord, record, shareTwitter, shareFacebook)
+	if (response.ok) {
+		yield put(EpisodeActions.postRecordSuccess(response.data))
+	} else {
+		yield put(EpisodeActions.postRecordFailure('WRONG'))
+	}
+}
 
 /* ------------- Connect Types To Sagas ------------- */
 
