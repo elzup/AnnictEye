@@ -30,6 +30,6 @@
     "no-redeclare": 0,
     "no-alert": 0,
     "react/jsx-no-bind": 0,
-    'no-unused-prop-types': 0
+    'react/no-unused-prop-types': 0
   }
 }

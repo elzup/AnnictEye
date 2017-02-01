@@ -72,7 +72,7 @@ class LoginScreen extends React.Component {
 		}
 	}
 
-	handlerPressOauth = () => {
+	handlePressOauth = () => {
 		Linking.openURL([
 			'https://api.annict.com/oauth/authorize',
 			'?response_type=code',
@@ -82,16 +82,6 @@ class LoginScreen extends React.Component {
 		].join(''))
 	}
 
-	handleChangeCode = text => {
-		this.setState({code: text})
-	}
-
-	handlerSubmitCode = () => {
-		const {code} = this.state
-		this.isAttempting = true
-		this.props.attemptLogin(code)
-	}
-
 	render() {
 		const {code} = this.state
 		return (
@@ -99,11 +89,10 @@ class LoginScreen extends React.Component {
 				<ScrollView style={Styles.container}>
 					<View style={Styles.section} >
 						<Text>
-              認証画面から Annict にログインし、認証コードをコピーしてください。
-            </Text>
-						<DrawerButton text="認証画面を開く" onPress={this.handlerPressOauth}/>
+							認証画面から Annict にログインし、認証コードをコピーしてください。
+						</Text>
+						<DrawerButton text="認証画面を開く" onPress={this.handlePressOauth}/>
 						<TextInput
-							ref="code"
 							value={code}
 							style={Styles.textInput}
 							keyboardType="default"
@@ -112,14 +101,24 @@ class LoginScreen extends React.Component {
 							autoCorrect={false}
 							onChangeText={this.handleChangeCode}
 							underlineColorAndroid="transparent"
-							onSubmitEditing={this.handlerSubmitCode}
+							onSubmitEditing={this.handleSubmitCode}
 							placeholder="認証コード"
 							/>
-						<DrawerButton text="ログイン" onPress={this.handlerSubmitCode}/>
+						<DrawerButton text="ログイン" onPress={this.handleSubmitCode}/>
 					</View>
 				</ScrollView>
 			</View>
 		)
+	}
+
+	handleChangeCode = text => {
+		this.setState({code: text})
+	}
+
+	handleSubmitCode = () => {
+		const {code} = this.state
+		this.isAttempting = true
+		this.props.attemptLogin(code)
 	}
 }
 
