@@ -15,7 +15,7 @@ import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import {connect} from 'react-redux'
 import ToggleIconButton from '../Components/ToggleIconButton'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
+import {isLoggedIn} from '../Redux/LoginRedux'
 import EpisodeActions, {selectEpisode, selectPosting, selectResultEpisode, selectError} from '../Redux/EpisodeRedux'
 
 const Styles = {

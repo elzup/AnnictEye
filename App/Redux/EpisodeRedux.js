@@ -11,7 +11,7 @@ const {Types, Creators} = createActions({
 	episodeRequest: ['episode'],
 	episodeSuccess: ['records'],
 	episodeFailure: ['error'],
-	postRecordRequest: ['record'],
+	postRecordRequest: ['record', 'st', 'sf'],
 	postRecordSuccess: ['record'],
 	postRecordFailure: ['error']
 })
@@ -43,10 +43,11 @@ export const episodeSuccess = (state: Object, {records}: Object) =>
 export const episodeFailure = (state: Object, {error}: Object) =>
   state.merge({error})
 
-export const postRecordRequest = (state: Object) => state.merge({posting: true})
+export const postRecordRequest = (state: Object) =>
+	state.merge({error: null, posting: true, resultRecord: null})
 
 export const postRecordSuccess = (state: Object, {resultRecord}: Object) =>
-  state.merge({error: null, posting: false, resultRecord})
+	state.merge({posting: false, resultRecord})
 
 export const postRecordFailure = (state: Object, {error}: Object) =>
   state.merge({posting: false, error})
