@@ -7,6 +7,7 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
+  Animated,
   Linking
 } from 'react-native'
 import Indicator from '../Components/Indicator'
@@ -149,8 +150,12 @@ class EpisodeScreen extends React.Component {
 			/>
   )
 
-	handlePressLike = (record: Record) => {
+	handlePressLike = (record: Record, progress) => {
 		console.log(`like action: ${record.id}`)
+		Animated.timing(progress, {
+			toValue: 1,
+			duration: 5000
+		}).start()
 	}
 
 	handlePressReply = (record: Record) => {

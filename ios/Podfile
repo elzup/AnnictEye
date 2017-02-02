@@ -1,0 +1,18 @@
+
+platform :ios, '10.2'
+use_frameworks!
+
+project './AnnictEye.xcodeproj'
+
+target 'AnnictEye' do
+  pod 'React', :subspecs => [
+    'Core',
+    'RCTImage',
+    'RCTNetwork',
+    'RCTText',
+    'RCTWebSocket',
+    'RCTAnimation',
+  ], :path => '../node_modules/react-native'
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+  # pod 'RNVectorIcons', :path => './node_modules/react-native-vector-icons'
+end

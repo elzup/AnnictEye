@@ -1,0 +1,49 @@
+PODS:
+  - lottie-ios (1.0.0)
+  - lottie-react-native (1.0.0):
+    - lottie-ios
+    - React
+  - React (0.40.0):
+    - React/Core (= 0.40.0)
+  - React/Core (0.40.0):
+    - React/cxxreact
+    - React/yoga
+  - React/cxxreact (0.40.0):
+    - React/jschelpers
+  - React/jschelpers (0.40.0)
+  - React/RCTAnimation (0.40.0):
+    - React/Core
+  - React/RCTImage (0.40.0):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTNetwork (0.40.0):
+    - React/Core
+  - React/RCTText (0.40.0):
+    - React/Core
+  - React/RCTWebSocket (0.40.0):
+    - React/Core
+  - React/yoga (0.40.0)
+
+DEPENDENCIES:
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - React/Core (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+
+EXTERNAL SOURCES:
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
+  React:
+    :path: "../node_modules/react-native"
+
+SPEC CHECKSUMS:
+  lottie-ios: c40d67c1481d6fb9fa24fe46731ac823f5f6675b
+  lottie-react-native: 401270b7ebbbdeffeb1b4ca43e1fc1430ee9ed8f
+  React: 6dfb2f72edb1d74a800127ae157af038646673ce
+
+PODFILE CHECKSUM: c7e55efbf667c0fd33eb67423106e053580de582
+
+COCOAPODS: 1.2.0
