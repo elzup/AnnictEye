@@ -3,6 +3,9 @@ platform :ios, '10.2'
 use_frameworks!
 
 project './AnnictEye.xcodeproj'
+install! 'cocoapods',
+         :deterministic_uuids => false,
+         :integrate_targets => false
 
 target 'AnnictEye' do
   pod 'React', :subspecs => [
