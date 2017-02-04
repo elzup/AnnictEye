@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -27,7 +28,6 @@
 		1C18B53B7FBA4ED5AA7CF155 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DD209206184408AAA431E1 /* libyoga.a */; };
 		2377C1FCE2214DCCB42A2888 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD64660E7CF4320AA67BE38 /* libjschelpers.a */; };
 		2F18B13B47AC435D83CF0664 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C85A70D091A3445797E8B8E9 /* EvilIcons.ttf */; };
-		390628CFA949DD943B4C5E86 /* Pods_AnnictEye.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A78B76BB15403BEF5E5E588 /* Pods_AnnictEye.framework */; };
 		3FD53157CDA344849F1838FA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4351ACE58A94B3C84673A7D /* Entypo.ttf */; };
 		411179A03DA34A8A91F5FF65 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CFF76DE4307437CAFFFAE38 /* Ionicons.ttf */; };
 		4B47692B355A4B819FA94804 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 889AF352FB9B49A7850429F5 /* libRNVectorIcons.a */; };
@@ -207,13 +207,6 @@
 			remoteGlobalIDString = 8A1B8E771B22E4E300DB45C2;
 			remoteInfo = RCTMaterialKit;
 		};
-		45962C481E44BECE004F1C36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3456855EC9334A138F87082D /* LottieReactNative.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = LottieReactNative;
-		};
 		45B4D6D41E3C4070009E4585 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 23E3C6B8A97B4084B68579E4 /* ReactNativeConfig.xcodeproj */;
@@ -290,7 +283,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AnnictEyeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnictEyeTests.m; sourceTree = "<group>"; };
 		02D5EDB5045849CF9ED9E041 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		0A78B76BB15403BEF5E5E588 /* Pods_AnnictEye.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnnictEye.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AnnictEye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnnictEye.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,13 +296,10 @@
 		1698B23D9ECF4E6681A13BBA /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		16EBF449FC0A4A35975E6351 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		1B18E5275814426A8D3582B6 /* libRCTMaterialKit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTMaterialKit.a; sourceTree = "<group>"; };
-		219DEA1D2E8532E56FCC6EB2 /* Pods-AnnictEye.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnnictEye.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-AnnictEye/Pods-AnnictEye.debug.xcconfig"; sourceTree = "<group>"; };
 		23E3C6B8A97B4084B68579E4 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
-		24AE23C0189E5C5425715B91 /* Pods-AnnictEye.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnnictEye.release.xcconfig"; path = "../Pods/Target Support Files/Pods-AnnictEye/Pods-AnnictEye.release.xcconfig"; sourceTree = "<group>"; };
 		2585AEB4BB8F4B2E9BDEBA6A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReact.a; sourceTree = "<group>"; };
 		26A7B1A16E5D433C8E755DDF /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
 		29FC2D38BBAA4A1F8B3EF24D /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
-		3456855EC9334A138F87082D /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/lib/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		70E41D5465BB4A469BFF4E9F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -363,7 +352,6 @@
 				095F91559FA044F3949EA9DC /* libcxxreact.a in Frameworks */,
 				2377C1FCE2214DCCB42A2888 /* libjschelpers.a in Frameworks */,
 				4B47692B355A4B819FA94804 /* libRNVectorIcons.a in Frameworks */,
-				390628CFA949DD943B4C5E86 /* Pods_AnnictEye.framework in Frameworks */,
 				F5263EE96F8341D78F335390 /* libLottieReactNative.a in Frameworks */,
 				B995845E65024C2093B73664 /* libRCTMaterialKit.a in Frameworks */,
 			);
@@ -478,27 +466,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		37DA981F9C64772373569A06 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				219DEA1D2E8532E56FCC6EB2 /* Pods-AnnictEye.debug.xcconfig */,
-				24AE23C0189E5C5425715B91 /* Pods-AnnictEye.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		45962C221E44BECD004F1C36 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				45962C2E1E44BECD004F1C36 /* libRCTMaterialKit.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		45962C451E44BECE004F1C36 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				45962C491E44BECE004F1C36 /* libLottieReactNative.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -572,7 +543,6 @@
 				862A3FF7342C41218ABA68E3 /* RNDeviceInfo.xcodeproj */,
 				E0D80E30D5A94CBCAC26AB5B /* RNI18n.xcodeproj */,
 				29FC2D38BBAA4A1F8B3EF24D /* RNVectorIcons.xcodeproj */,
-				3456855EC9334A138F87082D /* LottieReactNative.xcodeproj */,
 				C63972ECD9624575AA16EAEA /* RCTMaterialKit.xcodeproj */,
 			);
 			name = Libraries;
@@ -612,8 +582,6 @@
 				00E356EF1AD99517003FC87E /* AnnictEyeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				83C7EA21CC23480497DBB74B /* Resources */,
-				37DA981F9C64772373569A06 /* Pods */,
-				E4CA678EDBDCFD88F80C8A13 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -626,14 +594,6 @@
 				00E356EE1AD99517003FC87E /* AnnictEyeTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E4CA678EDBDCFD88F80C8A13 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0A78B76BB15403BEF5E5E588 /* Pods_AnnictEye.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -661,13 +621,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AnnictEye" */;
 			buildPhases = (
-				9B1051A6379EB9DFD8C2F5AF /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				4E69E844B1F1C77DF40F4406 /* [CP] Embed Pods Frameworks */,
-				8A8B81A78EB2407CA65CC7A3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -709,10 +666,6 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 45962C451E44BECE004F1C36 /* Products */;
-					ProjectRef = 3456855EC9334A138F87082D /* LottieReactNative.xcodeproj */;
-				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -941,13 +894,6 @@
 			remoteRef = 45962C2D1E44BECD004F1C36 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		45962C491E44BECE004F1C36 /* libLottieReactNative.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libLottieReactNative.a;
-			remoteRef = 45962C481E44BECE004F1C36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		45B4D6D51E3C4070009E4585 /* libReactNativeConfig.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1057,51 +1003,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
-		4E69E844B1F1C77DF40F4406 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AnnictEye/Pods-AnnictEye-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A8B81A78EB2407CA65CC7A3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AnnictEye/Pods-AnnictEye-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9B1051A6379EB9DFD8C2F5AF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1202,7 +1103,6 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 219DEA1D2E8532E56FCC6EB2 /* Pods-AnnictEye.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1212,8 +1112,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native/ReactCommon/yoga",
-					"$(SRCROOT)/../node_modules/react-native/ReactCommon/yoga/yoga",
 				);
 				INFOPLIST_FILE = AnnictEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1230,7 +1128,6 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24AE23C0189E5C5425715B91 /* Pods-AnnictEye.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1239,8 +1136,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native/ReactCommon/yoga",
-					"$(SRCROOT)/../node_modules/react-native/ReactCommon/yoga/yoga",
 				);
 				INFOPLIST_FILE = AnnictEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
