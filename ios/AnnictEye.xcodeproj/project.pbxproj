@@ -42,7 +42,6 @@
 		D7FC93A627B6450B91B3704D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1698B23D9ECF4E6681A13BBA /* MaterialIcons.ttf */; };
 		E30A355F15B4448EBB5B71B8 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2585AEB4BB8F4B2E9BDEBA6A /* libReact.a */; };
 		F2FE221E403344D6B5F678EA /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F717A19A2C6844179D2C6A0F /* SimpleLineIcons.ttf */; };
-		F5263EE96F8341D78F335390 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCB3023055A4B9FBE297CB0 /* libLottieReactNative.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,7 +306,6 @@
 		862A3FF7342C41218ABA68E3 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		889AF352FB9B49A7850429F5 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		8CFF76DE4307437CAFFFAE38 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		8FCB3023055A4B9FBE297CB0 /* libLottieReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottieReactNative.a; sourceTree = "<group>"; };
 		A4351ACE58A94B3C84673A7D /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		AF01F040CB8942BD92969171 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		B9D3CC7C301E475AA61BB9D5 /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
@@ -352,7 +350,6 @@
 				095F91559FA044F3949EA9DC /* libcxxreact.a in Frameworks */,
 				2377C1FCE2214DCCB42A2888 /* libjschelpers.a in Frameworks */,
 				4B47692B355A4B819FA94804 /* libRNVectorIcons.a in Frameworks */,
-				F5263EE96F8341D78F335390 /* libLottieReactNative.a in Frameworks */,
 				B995845E65024C2093B73664 /* libRCTMaterialKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

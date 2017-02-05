@@ -9,8 +9,6 @@ import {
 } from 'react-native'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import IconButton from './IconButton'
-import Animation from 'lottie-react-native'
-import LikeAnimation from '../Animations/like.json'
 
 import {Record} from '../Services/Type'
 
@@ -53,9 +51,9 @@ const Styles = {
 
 type RecordCellProps = {
   record: Record,
-  onPressLike: (record) => void,
+  onPressLike: () => void,
   onPressReply: () => void,
-  onPressGlobe: () => void
+  onPressGlobe: (record) => void
 }
 
 class RecordCell extends Component {
@@ -69,7 +67,7 @@ class RecordCell extends Component {
 	}
 
 	render() {
-		const {record, onPressLike, onPressReply, onPressGlobe} = props
+		const {record, onPressLike, onPressReply, onPressGlobe} = this.props
 		const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
 		return (
 			<View style={Styles.root}>
@@ -82,17 +80,7 @@ class RecordCell extends Component {
 				</View>
 				<View style={Styles.footer}>
 					<View style={Styles.buttons}>
-						<Animation
-							style={{
-								width: 200,
-								height: 200
-							}}
-							progress={this.state.progress}
-							source={LikeAnimation}
-							onPress={() => {
-								onPressLike(record, this.state.progress)
-							}}
-							/>
+						<IconButton iconName="heart" onPress={onPressLike}/>
 						<IconButton iconName="reply" onPress={onPressReply}/>
 						<IconButton iconName="globe" onPress={onPressGlobe}/>
 					</View>

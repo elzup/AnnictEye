@@ -150,12 +150,8 @@ class EpisodeScreen extends React.Component {
 			/>
   )
 
-	handlePressLike = (record: Record, progress) => {
+	handlePressLike = (record: Record) => {
 		console.log(`like action: ${record.id}`)
-		Animated.timing(progress, {
-			toValue: 1,
-			duration: 5000
-		}).start()
 	}
 
 	handlePressReply = (record: Record) => {
