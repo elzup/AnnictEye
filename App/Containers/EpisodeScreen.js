@@ -7,7 +7,6 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
-  Animated,
   Linking
 } from 'react-native'
 import Indicator from '../Components/Indicator'
@@ -16,7 +15,7 @@ import DrawerButton from '../Components/DrawerButton'
 
 import {connect} from 'react-redux'
 import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import EpisodeActions, {selectEpisode, selectRecords, isSomeEpisode} from '../Redux/EpisodeRedux'
+import EpisodeActions, {selectEpisode, selectCommentRecords, isSomeEpisode} from '../Redux/EpisodeRedux'
 
 import {Actions, ActionConst} from 'react-native-router-flux'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
@@ -95,10 +94,9 @@ class EpisodeScreen extends React.Component {
 			return
 		}
 
-		const filterHasComment = (record: Record) => record.comment && record.comment !== ''
 		this.setState({
 			loading: false,
-			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records.filter(filterHasComment))
+			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
 		})
 	}
 
@@ -174,7 +172,7 @@ class EpisodeScreen extends React.Component {
 const mapStateToProps = state => {
 	return {
 		isLoggedIn: isLoggedIn(state.login),
-		records: selectRecords(state.episode),
+		records: selectCommentRecords(state.episode),
 		episode: selectEpisode(state.episode),
 		isSomeEpisode: isSomeEpisode(state.episode)
 	}
