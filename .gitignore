@@ -58,3 +58,4 @@ Pods/
 flow-typed/
 android/app/src/main/assets/fonts/
 .tmp/
+ios/errors.log

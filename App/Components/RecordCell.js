@@ -1,10 +1,11 @@
 'use strict'
 
-import React from 'react'
+import React, {Component} from 'react'
 import moment from 'moment'
 import {
   View,
-  Text
+  Text,
+	Animated
 } from 'react-native'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import IconButton from './IconButton'
@@ -52,34 +53,41 @@ type RecordCellProps = {
   record: Record,
   onPressLike: () => void,
   onPressReply: () => void,
-  onPressGlobe: () => void
+  onPressGlobe: (record) => void
 }
 
-const RecordCell = (props: RecordCellProps) => {
-	const {record, onPressLike, onPressReply, onPressGlobe} = props
-	const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
-	return (
-		<View style={Styles.root}>
-			<View style={Styles.head}>
-				<Text style={Styles.userName}>{record.user.name}</Text>
-				<Text style={Styles.postTime}>{timeLabel}</Text>
-			</View>
-			<View style={Styles.body}>
-				<Text style={Styles.comment}>{record.comment}</Text>
-			</View>
-			<View style={Styles.footer}>
-				<View style={Styles.buttons}>
-					<IconButton
-						iconName="heart"
-						count={record.comments_count}
-						onPress={onPressLike}
-						/>
-					<IconButton iconName="reply" onPress={onPressReply}/>
-					<IconButton iconName="globe" onPress={onPressGlobe}/>
+class RecordCell extends Component {
+	props: RecordCellProps
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			progress: new Animated.Value(0)
+		}
+	}
+
+	render() {
+		const {record, onPressLike, onPressReply, onPressGlobe} = this.props
+		const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
+		return (
+			<View style={Styles.root}>
+				<View style={Styles.head}>
+					<Text style={Styles.userName}>{record.user.name}</Text>
+					<Text style={Styles.postTime}>{timeLabel}</Text>
+				</View>
+				<View style={Styles.body}>
+					<Text style={Styles.comment}>{record.comment}</Text>
+				</View>
+				<View style={Styles.footer}>
+					<View style={Styles.buttons}>
+						<IconButton iconName="heart" onPress={onPressLike}/>
+						<IconButton iconName="reply" onPress={onPressReply}/>
+						<IconButton iconName="globe" onPress={onPressGlobe}/>
+					</View>
 				</View>
 			</View>
-		</View>
-	)
+		)
+	}
 }
 
 export default RecordCell

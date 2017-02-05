@@ -10,6 +10,9 @@
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && react-native run-android",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
+    "packager": "./node_modules/react-native/packager/packager.sh",
+    "ios": "react-native run-ios --project-path ./ios",
+    "build:ios": "(cd ios;pod install)",
     "test": "NODE_ENV=production ava",
     "test:watch": "ava --watch",
     "coverage": "nyc ava && nyc report --reporter=html && open coverage/index.html || xdg-open coverage/index.html",
@@ -21,6 +24,10 @@
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82"
   },
+  "peerDependencies": {
+    "react": ">=15.3.1",
+    "react-native": ">=0.35"
+  },
   "dependencies": {
     "apisauce": "^0.8.0",
     "format-json": "^1.0.3",
@@ -28,10 +35,10 @@
     "moment": "^2.17.1",
     "querystringify": "0.0.4",
     "ramda": "^0.23.0",
-    "react": "^15.4.2",
-    "react-native": "^0.40.0",
+    "react": "^15.4.1",
+    "react-native": "^0.41.0",
     "react-native-animatable": "^1.1.0",
-    "react-native-config": "^0.2.2",
+    "react-native-config": "^0.3.1",
     "react-native-device-info": "^0.9.6",
     "react-native-drawer": "^2.3.0",
     "react-native-i18n": "^1.0.0",

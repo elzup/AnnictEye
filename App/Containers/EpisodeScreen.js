@@ -7,6 +7,7 @@ import {
   ListView,
   StyleSheet,
   ScrollView,
+  Animated,
   Linking
 } from 'react-native'
 import Indicator from '../Components/Indicator'
