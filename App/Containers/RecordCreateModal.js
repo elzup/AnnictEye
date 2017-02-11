@@ -148,7 +148,7 @@ class RecordCreateModal extends Component {
 			Actions.pop()
 			return
 		}
-		if (newProps.error !== null) {
+		if (newProps.error) {
 			window.alert(newProps.error)
 		}
 	}
