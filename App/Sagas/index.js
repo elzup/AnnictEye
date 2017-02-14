@@ -76,7 +76,6 @@ function * postRecord(api: any, {record, st, sf}) {
 	api.setToken(token)
 
 	const response = yield call(api.postMeRecord, record, st, sf)
-	console.log(response)
 	if (response.ok) {
 		yield put(EpisodeActions.postRecordSuccess(response.data))
 	} else {

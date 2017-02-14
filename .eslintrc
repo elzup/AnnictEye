@@ -4,7 +4,12 @@
     "node": true,
     "browser": true
   },
-  "extends": ["xo", "xo-react", "plugin:flowtype/recommended"],
+  "extends": [
+    "xo",
+    "xo-react",
+    "eslint:recommended",
+    "plugin:flowtype/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
@@ -14,9 +19,6 @@
   },
   "plugins": ["react", "flowtype"],
   "rules": {
-    "indent": [
-      "error", "tab"
-    ],
     "linebreak-style": [
       "error", "unix"
     ],

@@ -2,9 +2,9 @@
 
 import React from 'react'
 import {
-  View,
-  ListView,
-  StyleSheet} from 'react-native'
+	View,
+	ListView,
+	StyleSheet} from 'react-native'
 
 import ProgramCell from '../Components/ProgramCell'
 import Indicator from '../Components/Indicator'
@@ -32,30 +32,39 @@ const Styles = StyleSheet.create({
 })
 
 type HomeScreenProps = {
-  loading: boolean,
-  isLoggedIn: ?boolean,
-  programs: Array<Program>,
-  logout: () => void,
-  loadProgram: () => void,
-  setupEpisode: () => void
+	loading: boolean,
+	isLoggedIn: ?boolean,
+	programs: Array<Program>,
+	logout: () => void,
+	loadProgram: () => void,
+	setupEpisode: () => void,
+}
+
+type HomeScreenProps = {
+	loading: boolean,
+	isLoggedIn: ?boolean,
+	programs: Array<Program>,
+	logout: () => void,
+	loadProgram: () => void,
+	setupEpisode: () => void
 }
 
 class HomeScreen extends React.Component {
 	props: HomeScreenProps
 	state: {
-    dataSource: Object,
-    loading: boolean
-  }
+		dataSource: Object,
+		loading: boolean
+	}
 
 	constructor(props) {
 		super(props)
 
 		const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id
 
-    // DataSource configured
+		// DataSource configured
 		const ds = new ListView.DataSource({rowHasChanged})
 
-    // Datasource is always in state
+		// Datasource is always in state
 		this.state = {
 			loading: false,
 			dataSource: ds.cloneWithRows(props.programs)
@@ -63,20 +72,18 @@ class HomeScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		console.log('componentDidMount')
 		this.setState({loading: true})
 		this.props.loadProgram()
 	}
 
 	componentWillReceiveProps = (newProps: HomeScreenProps) => {
-		console.log('=> Receive', newProps)
 		this.forceUpdate()
 		if (!newProps.isLoggedIn) {
 			Actions.loginScreen()
 			return
 		}
 
-    // 放送済みのみ
+		// 放送済みのみ
 		const finishFilter = (program: Program) => moment(program.started_at).isBefore()
 		this.setState({
 			loading: newProps.programs.length === 0,
@@ -123,11 +130,11 @@ class HomeScreen extends React.Component {
 
 	renderFooter = () => (
 		<Indicator loading={this.state.loading}/>
-  )
+	)
 }
 
 const mapStateToProps = state => {
-  // 監視対象はここ
+	// 監視対象はここ
 	return {
 		isLoggedIn: isLoggedIn(state.login),
 		programs: selectPrograms(state.home)
