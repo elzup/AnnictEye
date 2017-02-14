@@ -35,8 +35,8 @@ const create = (baseURL: string = 'https://api.annict.com/') => {
 		episode_id: record.episode.id,
 		comment: record.comment,
 		rating: record.rating,
-		share_twitter: shareTwitter,
-		share_facebook: shareFacebook
+		share_twitter: shareTwitter ? 'true' : 'false',
+		share_facebook: shareFacebook ? 'true' : 'false'
 	})
 
 	const records = (episodeID: number) => api.get('v1/records', {

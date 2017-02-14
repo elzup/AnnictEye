@@ -66,7 +66,7 @@ function * loadEpisode(api: any, {episode}) {
 	}
 }
 
-function * postRecord(api: any, {record, shareTwitter, shareFacebook}) {
+function * postRecord(api: any, {record, st, sf}) {
 	const token = yield call(AsyncStorage.getItem, 'access_token')
 	if (token === null) {
 		yield put(LoginActions.loginFailure())
@@ -75,7 +75,8 @@ function * postRecord(api: any, {record, shareTwitter, shareFacebook}) {
 	yield put(LoginActions.loginSuccess())
 	api.setToken(token)
 
-	const response = yield call(api.postMeRecord, record, shareTwitter, shareFacebook)
+	const response = yield call(api.postMeRecord, record, st, sf)
+	console.log(response)
 	if (response.ok) {
 		yield put(EpisodeActions.postRecordSuccess(response.data))
 	} else {
