@@ -2,23 +2,33 @@
 'use strict'
 
 import type moment$Moment from 'moment'
+import moment from 'moment'
+
+type ProgramScheme = {
+	id: string,
+	started_at: string,
+	is_rebroadcast: string,
+	channel: Channel,
+	work: WorkScheme,
+	episode: EpisodeScheme
+}
 
 /* eslint camelcase: 0 */
 export class Program {
 	id: number
 	startedAt: moment$Moment
 	isRebroadcast: boolean
-	channel: string
+	channel: Channel
 	work: Work
 	episode: Episode
 
-	constructor(obj: any) {
-		this.id = obj.id
-		this.startedAt = obj.started_at
-		this.isRebroadcast = obj.is_rebroadcast
-		this.channel = obj.channel
-		this.work = obj.work
-		this.episode = obj.episode
+	constructor(obj: ProgramScheme) {
+		this.id = parseInt(obj.id)
+		this.channel = new Channel(obj.channel)
+		this.work = new Work(obj.work)
+		this.episode = new Episode(obj.episode)
+		this.startedAt = moment(obj.started_at)
+		this.isRebroadcast = obj.is_rebroadcast == 'true'
 	}
 }
 
@@ -26,9 +36,27 @@ export class Channel {
 	id: number
 	name: string
 
-	constructor(obj: any) {
+	constructor(obj: { id: number, name: string }) {
 		Object.assign(this, obj)
 	}
+}
+
+type WorkScheme = {
+	id: string,
+	title: string,
+	title_kana: string,
+	media: string,
+	media_text: string,
+	season_name: string,
+	season_name_text: string,
+	released_on: string,
+	released_on_about: string,
+	official_site_url: string,
+	wikipedia_url: string,
+	twitter_username: string,
+	twitter_hashtag: string,
+	episodes_count: string,
+	watchers_count: string
 }
 
 export class Work {
@@ -38,9 +66,9 @@ export class Work {
 	media: string
 	mediaText: string
 	seasonName: string
-	seasonName_text: string
-	releasedOn: string
-	releasedOn_about: string
+	seasonNameText: string
+	releasedOn: moment$Moment
+	releasedOnAbout: string
 	officialSiteUrl: string
 	wikipediaUrl: string
 	twitterUsername: string
@@ -48,47 +76,75 @@ export class Work {
 	episodesCount: number
 	watchersCount: number
 
-	constructor(obj: any) {
-		this.id = obj.id
+	constructor(obj: WorkScheme) {
+		this.id = parseInt(obj.id)
 		this.title = obj.title
 		this.titleKana = obj.title_kana
 		this.media = obj.media
 		this.mediaText = obj.media_text
 		this.seasonName = obj.season_name
-		this.seasonName_text = obj.season_name_text
-		this.releasedOn = obj.released_on
-		this.releasedOn_about = obj.released_on_about
+		this.seasonNameText = obj.season_name_text
+		this.releasedOn = moment(obj.released_on)
+		this.releasedOnAbout = obj.released_on_about
 		this.officialSiteUrl = obj.official_site_url
 		this.wikipediaUrl = obj.wikipedia_url
 		this.twitterUsername = obj.twitter_username
 		this.twitterHashtag = obj.twitter_hashtag
-		this.episodesCount = obj.episodes_count
-		this.watchersCount = obj.watchers_count
+		this.episodesCount = parseInt(obj.episodes_count)
+		this.watchersCount = parseInt(obj.watchers_count)
 	}
 }
 
-export class Episode {
-	id: string
-	number: string
-	number_text: string
-	sort_number: string
-	title: string
-	records_count: string
-	work: string
-	prev_episode: string
-	next_episode: string
+type EpisodeScheme = {
+	id: string,
+	number: string,
+	number_text: string,
+	sort_number: string,
+	title: string,
+	records_count: string,
+	work: WorkScheme,
+	prev_episode: ?EpisodeScheme,
+	next_episode: ?EpisodeScheme
+}
 
-	constructor(obj: any) {
-		this.id = obj.id
-		this.number = obj.number
-		this.number_text = obj.number_text
-		this.sort_number = obj.sort_number
-		this.title = obj.title
-		this.records_count = obj.records_count
-		this.work = obj.work
-		this.prev_episode = obj.prev_episode
-		this.next_episode = obj.next_episode
+export class Episode {
+	id: number
+	number: number
+	numberText: string
+	sortNumber: number
+	title: string
+	recordsCount: number
+	work: Work
+	prevEpisode: ?Episode
+	nextEpisode: ?Episode
+
+	constructor(obj: EpisodeScheme) {
+		this.id = parseInt(obj.id)
+		this.numberText = obj.number_text
+		this.sortNumber = parseInt(obj.sort_number)
+		this.recordsCount = parseInt(obj.records_count)
+		this.work = new Work(obj.work)
+		if (obj.prev_episode != null) {
+			this.prevEpisode = new Episode(obj.prev_episode)
+		} else {
+			this.prevEpisode = null
+		}
+		if (obj.next_episode != null) {
+			this.nextEpisode = new Episode(obj.next_episode)
+		} else {
+			this.nextEpisode = null
+		}
 	}
+}
+
+type UserScheme = {
+	id: string,
+	username: string,
+	name: string,
+	description: string,
+	url: string,
+	records_count: string,
+	created_at: string
 }
 
 export class User {
@@ -97,42 +153,54 @@ export class User {
 	name: string
 	description: string
 	url: string
-	records_count: string
-	created_at: string
+	recordsCount: number
+	createdAt: moment$Moment
 
-	constructor(obj: any) {
+	constructor(obj: UserScheme) {
 		this.id = obj.id
 		this.username = obj.username
 		this.name = obj.name
 		this.description = obj.description
-		this.url = obj.url
-		this.records_count = obj.records_count
-		this.created_at = obj.created_at
+		this.recordsCount = parseInt(obj.records_count)
+		this.createdAt = moment(obj.created_at)
 	}
 }
 
-export class Record {
-	id: string
-	comment: string
-	rating: string
-	is_modified: string
-	likes_count: string
-	comments_count: string
-	created_at: string
-	user: string
-	work: string
-	episode: string
+type RecordScheme = {
+	id: string,
+	comment: string,
+	rating: string,
+	is_modified: string,
+	likes_count: string,
+	comments_count: string,
+	created_at: string,
+	user: UserScheme,
+	work: WorkScheme,
+	episode: EpisodeScheme
+}
 
-	constructor(obj: any) {
-		this.id = obj.id
+export class Record {
+	id: number
+	comment: string
+	rating: number
+	isModified: boolean
+	likesCount: number
+	commentsCount: number
+	createdAt: moment$Moment
+	user: User
+	work: Work
+	episode: Episode
+
+	constructor(obj: RecordScheme) {
+		this.id = parseInt(obj.id)
 		this.comment = obj.comment
-		this.rating = obj.rating
-		this.is_modified = obj.is_modified
-		this.likes_count = obj.likes_count
-		this.comments_count = obj.comments_count
-		this.created_at = obj.created_at
-		this.user = obj.user
-		this.work = obj.work
-		this.episode = obj.episode
+		this.rating = parseFloat(obj.rating)
+		this.isModified = obj.is_modified == 'true'
+		this.likesCount = parseInt(obj.likes_count)
+		this.commentsCount = parseInt(obj.comments_count)
+		this.createdAt = moment(obj.created_at)
+		this.user = new User(obj.user)
+		this.work = new Work(obj.work)
+		this.episode = new Episode(obj.episode)
 	}
 }
