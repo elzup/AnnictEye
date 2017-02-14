@@ -16,21 +16,10 @@ const Styles = {
 	}
 }
 
-/* @flow */
-type DrawerButton = {
-	onPress: () => void,
-	text: string
-}
-
-const DrawerButton = props => (
+const DrawerButton = (props: { onPress: () => void, text: string }) => (
 	<TouchableOpacity onPress={props.onPress}>
 		<Text style={Styles.text}>{props.text}</Text>
 	</TouchableOpacity>
 )
-
-DrawerButton.defaultProps = {
-	onPress: T.func,
-	text: T.string
-}
 
 export default DrawerButton

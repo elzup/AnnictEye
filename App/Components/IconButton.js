@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native'
-import {Metrics, Colors, Fonts} from '../Themes'
+import { Metrics, Colors, Fonts } from '../Themes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const Styles = {
@@ -22,19 +22,31 @@ const Styles = {
 	}
 }
 
-type IconButtonProps = {
-  iconName: string,
-  count: number,
-  color: Colors.disable,
-  onPress: () => void
+function Echo({ message, times = 2 }: { message: string, times?: number }) {
+  var messages = new Array(times).fill(<p>{message}</p>);
+
+  return (
+    <div>
+      {messages}
+    </div>
+  );
 }
 
-const IconButton = (props: IconButtonProps) => {
+
+type IconButtonProps = {
+	iconName: string,
+	onPress: () => void,
+	text?: string,
+	color?: string
+}
+
+function IconButton({ iconName, onPress, text, color = Colors.disable }
+	: IconButtonProps) {
 	return (
-		<TouchableOpacity onPress={props.onPress}>
+		<TouchableOpacity onPress={onPress}>
 			<View style={Styles.action}>
-				<Icon name={props.iconName} color={props.color}/>
-				<Text style={Styles.count}>{props.count}</Text>
+				<Icon name={iconName} color={color}/>
+				<Text style={Styles.count}>{text}</Text>
 			</View>
 		</TouchableOpacity>
 	)

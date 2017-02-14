@@ -54,17 +54,14 @@ type RecordCellProps = {
   record: Record,
   onPressLike: () => void,
   onPressReply: () => void,
-  onPressGlobe: (record) => void
+  onPressGlobe: Record => void
 }
 
 class RecordCell extends Component {
 	props: RecordCellProps
 
-	constructor(props) {
+	constructor(props: RecordCellProps) {
 		super(props)
-		this.state = {
-			progress: new Animated.Value(0)
-		}
 	}
 
 	render() {

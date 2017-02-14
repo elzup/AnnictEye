@@ -52,7 +52,7 @@ const ProgramCell = (props: { program: Program, onPress: () => void }) => {
 				</View>
 				<View style={Styles.footer}>
 					<View>
-						<Icon name="bookmark" color={Colors.broccori}/>
+						<Icon name="bookmark" color={Colors.broccoli}/>
 						<Text style={Styles.number}>{program.episode}</Text>
 					</View>
 					<View>
