@@ -7,6 +7,13 @@
 
 ; Ignore unexpected extra "@providesModule"
 .*/node_modules/.*/node_modules/fbjs/.*
+.*/node_modules/react-native-experimental-navigation/.*
+.*/node_modules/react-native/packager/src/Server/.*
+.*/node_modules/react-static-container/lib/.*
+.*/node_modules/react-native/local-cli/.*
+.*/node_modules/react-native/packager/.*
+.*/node_modules/react-native/lib/.*
+
 
 ; Ignore duplicate module providers
 ; For RN Apps installed via npm, "Libraries" folder is inside
@@ -41,4 +48,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 unsafe.enable_getters_and_setters=true
 
 [version]
-^0.36.0
+^0.39.0

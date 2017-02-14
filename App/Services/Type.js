@@ -1,11 +1,21 @@
+/* @flow */
 'use strict'
+
+import type moment$Moment from 'moment'
 
 /* eslint camelcase: 0 */
 export class Program {
-	constructor(obj) {
+	id: number
+	startedAt: moment$Moment
+	isRebroadcast: boolean
+	channel: string
+	work: Work
+	episode: Episode
+
+	constructor(obj: any) {
 		this.id = obj.id
-		this.started_at = obj.started_at
-		this.is_rebroadcast = obj.is_rebroadcast
+		this.startedAt = obj.started_at
+		this.isRebroadcast = obj.is_rebroadcast
 		this.channel = obj.channel
 		this.work = obj.work
 		this.episode = obj.episode
@@ -13,34 +23,62 @@ export class Program {
 }
 
 export class Channel {
-	constructor(obj) {
-		this.id = obj.id
-		this.name = obj.name
+	id: number
+	name: string
+
+	constructor(obj: any) {
+		Object.assign(this, obj)
 	}
 }
 
 export class Work {
-	constructor(obj) {
+	id: number
+	title: string
+	titleKana: string
+	media: string
+	mediaText: string
+	seasonName: string
+	seasonName_text: string
+	releasedOn: string
+	releasedOn_about: string
+	officialSiteUrl: string
+	wikipediaUrl: string
+	twitterUsername: string
+	twitterHashtag: string
+	episodesCount: number
+	watchersCount: number
+
+	constructor(obj: any) {
 		this.id = obj.id
 		this.title = obj.title
-		this.title_kana = obj.title_kana
+		this.titleKana = obj.title_kana
 		this.media = obj.media
-		this.media_text = obj.media_text
-		this.season_name = obj.season_name
-		this.season_name_text = obj.season_name_text
-		this.released_on = obj.released_on
-		this.released_on_about = obj.released_on_about
-		this.official_site_url = obj.official_site_url
-		this.wikipedia_url = obj.wikipedia_url
-		this.twitter_username = obj.twitter_username
-		this.twitter_hashtag = obj.twitter_hashtag
-		this.episodes_count = obj.episodes_count
-		this.watchers_count = obj.watchers_count
+		this.mediaText = obj.media_text
+		this.seasonName = obj.season_name
+		this.seasonName_text = obj.season_name_text
+		this.releasedOn = obj.released_on
+		this.releasedOn_about = obj.released_on_about
+		this.officialSiteUrl = obj.official_site_url
+		this.wikipediaUrl = obj.wikipedia_url
+		this.twitterUsername = obj.twitter_username
+		this.twitterHashtag = obj.twitter_hashtag
+		this.episodesCount = obj.episodes_count
+		this.watchersCount = obj.watchers_count
 	}
 }
 
 export class Episode {
-	constructor(obj) {
+	id: string
+	number: string
+	number_text: string
+	sort_number: string
+	title: string
+	records_count: string
+	work: string
+	prev_episode: string
+	next_episode: string
+
+	constructor(obj: any) {
 		this.id = obj.id
 		this.number = obj.number
 		this.number_text = obj.number_text
@@ -54,7 +92,15 @@ export class Episode {
 }
 
 export class User {
-	constructor(obj) {
+	id: string
+	username: string
+	name: string
+	description: string
+	url: string
+	records_count: string
+	created_at: string
+
+	constructor(obj: any) {
 		this.id = obj.id
 		this.username = obj.username
 		this.name = obj.name
@@ -66,7 +112,18 @@ export class User {
 }
 
 export class Record {
-	constructor(obj) {
+	id: string
+	comment: string
+	rating: string
+	is_modified: string
+	likes_count: string
+	comments_count: string
+	created_at: string
+	user: string
+	work: string
+	episode: string
+
+	constructor(obj: any) {
 		this.id = obj.id
 		this.comment = obj.comment
 		this.rating = obj.rating

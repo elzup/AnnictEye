@@ -32,21 +32,9 @@ const Styles = StyleSheet.create({
 })
 
 type HomeScreenProps = {
-	loading: boolean,
-	isLoggedIn: ?boolean,
 	programs: Array<Program>,
-	logout: () => void,
 	loadProgram: () => void,
 	setupEpisode: () => void,
-}
-
-type HomeScreenProps = {
-	loading: boolean,
-	isLoggedIn: ?boolean,
-	programs: Array<Program>,
-	logout: () => void,
-	loadProgram: () => void,
-	setupEpisode: () => void
 }
 
 class HomeScreen extends React.Component {
@@ -76,7 +64,7 @@ class HomeScreen extends React.Component {
 		this.props.loadProgram()
 	}
 
-	componentWillReceiveProps = (newProps: HomeScreenProps) => {
+	componentWillReceiveProps = (newProps: any) => {
 		this.forceUpdate()
 		if (!newProps.isLoggedIn) {
 			Actions.loginScreen()

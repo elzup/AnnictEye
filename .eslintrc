@@ -17,21 +17,29 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "flowtype"],
+  "plugins": [
+    "react",
+    "flowtype"
+  ],
   "rules": {
     "linebreak-style": [
-      "error", "unix"
+      "error",
+      "unix"
     ],
     "quotes": [
-      "error", "single"
+      "error",
+      "single"
     ],
-    "semi": ["error", "never"],
+    "semi": [
+      "error",
+      "never"
+    ],
     "react/prop-types": 0,
     "react/forbid-component-props": 0,
     "forbid-component-props": 0,
     "no-redeclare": 0,
     "no-alert": 0,
-    "react/jsx-no-bind": 0,
-    'react/no-unused-prop-types': 0
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-no-bind": 0
   }
 }

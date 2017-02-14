@@ -1,8 +1,8 @@
 'use strict'
 
 import React from 'react'
-import {TouchableOpacity} from 'react-native'
-import {Colors} from '../Themes'
+import { TouchableOpacity } from 'react-native'
+import { Colors } from '../Themes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 type ToggleIconButton = {
@@ -14,12 +14,12 @@ type ToggleIconButton = {
 	onPress: () => void
 }
 
-const ToggleIconButton = props => {
+const ToggleIconButton = (props: ToggleIconButton) => {
 	const {iconName, colorActive, colorDisable, active, size, onPress} = props
 	const color = active ? colorActive : colorDisable
 	return (
 		<TouchableOpacity onPress={onPress}>
-			<Icon name={iconName} color={color} size={size}/>
+			<Icon name={iconName} color={color} size={size} />
 		</TouchableOpacity>
 	)
 }
@@ -29,7 +29,7 @@ ToggleIconButton.defaultProps = {
 	colorActive: Colors.black,
 	colorDisable: Colors.disable,
 	size: 22,
-	onPress: () => {}
+	onPress: () => { }
 }
 
 export default ToggleIconButton
