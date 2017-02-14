@@ -61,7 +61,7 @@ export const reducer = createReducer(INITIAL_STATE, {
 	[Types.EPISODE_FAILURE]: episodeFailure,
 	[Types.POST_RECORD_REQUEST]: postRecordRequest,
 	[Types.POST_RECORD_SUCCESS]: postRecordSuccess,
-	[Types.POST_RECORD_REQUEST]: postRecordFailure
+	[Types.POST_RECORD_FAILURE]: postRecordFailure
 })
 
 /* ------------- Selectors ------------- */
