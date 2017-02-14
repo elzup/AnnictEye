@@ -4522,11 +4522,11 @@ react-addons-perf@^15.4.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-addons-pure-render-mixin@15.0.2, react-addons-pure-render-mixin@^15.0.2:
+react-addons-pure-render-mixin@15.0.2:
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.0.2.tgz#b7731c5cc7f21214d68a78c84f40df3aefdf462f"
 
-react-addons-pure-render-mixin@^15.4.0:
+react-addons-pure-render-mixin@^15.0.2, react-addons-pure-render-mixin@^15.4.0:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.4.2.tgz#a8433c71c45e2368503721921dc47bdaf1fbabcd"
   dependencies:
@@ -4649,9 +4649,9 @@ react-native-vector-icons@^4.0.0:
     lodash "^4.0.0"
     yargs "^6.3.0"
 
-react-native@^0.41.0:
-  version "0.41.2"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.41.2.tgz#c6f486b8450a9909e6fed2dfd2c2af946563bf4f"
+react-native@0.42.0-rc.1:
+  version "0.42.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.42.0-rc.1.tgz#1ba1346c7a0789b8c3fec2cfc3f19fc74eb17ff3"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
