@@ -1,3 +1,4 @@
+/* @flow */
 'use strict'
 
 import {createReducer, createActions} from 'reduxsauce'
@@ -18,7 +19,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = new Immutable({
-	programs: ([]: Array<Program>),
+	programs: [],
 	error: null
 })
 
@@ -44,4 +45,5 @@ export const reducer = createReducer(INITIAL_STATE, {
 })
 
 /* ------------- Selectors ------------- */
-export const selectPrograms = (homeState: Object) => homeState.programs
+export const selectPrograms = (homeState: Object)
+	=> homeState.programs.map((e) => new Program(e))

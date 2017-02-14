@@ -1,3 +1,5 @@
+/* @flow */
+'use strict'
 import {call} from 'redux-saga/effects'
 import {Actions as NavigationActions, ActionConst} from 'react-native-router-flux'
 

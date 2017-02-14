@@ -1,3 +1,4 @@
+/* @flow */
 'use strict'
 
 // leave off @2x/@3x

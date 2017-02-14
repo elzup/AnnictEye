@@ -1,3 +1,5 @@
+/* @flow */
+'use strict'
 import {takeLatest} from 'redux-saga'
 import API from '../Services/Api'
 

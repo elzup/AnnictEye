@@ -1,3 +1,5 @@
+/* @flow */
+'use strict'
 /* global __DEV__ */
 
 import {put, select} from 'redux-saga/effects'

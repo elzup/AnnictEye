@@ -1,3 +1,4 @@
+/* @flow */
 'use strict'
 
 // a library to wrap and simplify api calls
