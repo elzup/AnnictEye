@@ -203,4 +203,6 @@ export class Record {
 		this.work = new Work(obj.work)
 		this.episode = new Episode(obj.episode)
 	}
+
+	postTimeLabel() { this.createdAt.format('MM/DD HH:mm') }
 }

@@ -52,9 +52,9 @@ const Styles = {
 
 type RecordCellProps = {
   record: Record,
-  onPressLike: () => void,
-  onPressReply: () => void,
-  onPressGlobe: Record => void
+  onPressLike: void,
+  onPressReply: void,
+  onPressGlobe: void
 }
 
 class RecordCell extends Component {
@@ -66,12 +66,11 @@ class RecordCell extends Component {
 
 	render() {
 		const {record, onPressLike, onPressReply, onPressGlobe} = this.props
-		const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
 		return (
 			<View style={Styles.root}>
 				<View style={Styles.head}>
 					<Text style={Styles.userName}>{record.user.name}</Text>
-					<Text style={Styles.postTime}>{timeLabel}</Text>
+					<Text style={Styles.postTime}>{record.postTimeLabel()}</Text>
 				</View>
 				<View style={Styles.body}>
 					<Text style={Styles.comment}>{record.comment}</Text>

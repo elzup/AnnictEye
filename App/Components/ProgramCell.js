@@ -38,9 +38,13 @@ const Styles = {
 	}
 }
 
-const ProgramCell = (props: { program: Program, onPress: () => void }) => {
-	const { program, onPress } = props
-	const label = `${program.episode.number_text}|${program.episode.title}`
+type Prop = {
+	program: Program,
+	onPress: () => void
+}
+
+const ProgramCell = ({program, onPress}: Prop) => {
+	const label = `${program.episode.numberText}|${program.episode.title}`
 	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm')
 	return (
 		<TouchableOpacity onPress={onPress} >
