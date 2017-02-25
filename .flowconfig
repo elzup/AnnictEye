@@ -5,14 +5,14 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-.*/node_modules/.*
-
 [include]
+.*/src/.*
 
 [libs]
 node_modules/react-native/Libraries/react-native/react-native-interface.js
 node_modules/react-native/flow
 flow/
+lib/
 
 [options]
 module.system=haste

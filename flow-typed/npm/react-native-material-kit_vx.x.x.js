@@ -1,4 +1,4 @@
-// flow-typed signature: 59bb632aecbd9daf5c867d7234d24440
+// flow-typed signature: a3385c4bddfbab08103c7a1c249f18d1
 // flow-typed version: <<STUB>>/react-native-material-kit_v^0.4.1/flow_v0.40.0
 
 /**
@@ -22,6 +22,10 @@ declare module 'react-native-material-kit' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'react-native-material-kit/gulpfile' {
+  declare module.exports: any;
+}
+
 declare module 'react-native-material-kit/lib/builder' {
   declare module.exports: any;
 }
@@ -115,6 +119,9 @@ declare module 'react-native-material-kit/lib/utils' {
 }
 
 // Filename aliases
+declare module 'react-native-material-kit/gulpfile.js' {
+  declare module.exports: $Exports<'react-native-material-kit/gulpfile'>;
+}
 declare module 'react-native-material-kit/lib/builder.js' {
   declare module.exports: $Exports<'react-native-material-kit/lib/builder'>;
 }

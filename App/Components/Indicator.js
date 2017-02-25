@@ -1,8 +1,8 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React from 'react'
-import {ActivityIndicator} from 'react-native'
+import React from 'react';
+import {ActivityIndicator} from 'react-native';
 
 const Styles = {
 	indicator: {
@@ -10,7 +10,7 @@ const Styles = {
 		justifyContent: 'center',
 		padding: 8
 	}
-}
+};
 
 const Indicator = (props: { loading: boolean }) => props.loading ? (
 	<ActivityIndicator
@@ -18,6 +18,6 @@ const Indicator = (props: { loading: boolean }) => props.loading ? (
 		style={Styles.indicator}
 		size="large"
 		/>
-) : null
+) : null;
 
-export default Indicator
+export default Indicator;

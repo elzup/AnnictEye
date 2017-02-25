@@ -1,4 +1,4 @@
-// flow-typed signature: 496e45058dda92b100ce3a6d0bd50f6d
+// flow-typed signature: 39a4e7bf1045815ba121d8762c718d8a
 // flow-typed version: <<STUB>>/react-native-router-flux_v^3.37.0/flow_v0.40.0
 
 /**
@@ -74,6 +74,18 @@ declare module 'react-native-router-flux/src/Util' {
   declare module.exports: any;
 }
 
+declare module 'react-native-router-flux/test/Actions.test' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-router-flux/test/Reducer.popAndReplace.test' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-router-flux/test/Reducer.test' {
+  declare module.exports: any;
+}
+
 // Filename aliases
 declare module 'react-native-router-flux/index' {
   declare module.exports: $Exports<'react-native-router-flux'>;
@@ -119,4 +131,13 @@ declare module 'react-native-router-flux/src/TabbedView.js' {
 }
 declare module 'react-native-router-flux/src/Util.js' {
   declare module.exports: $Exports<'react-native-router-flux/src/Util'>;
+}
+declare module 'react-native-router-flux/test/Actions.test.js' {
+  declare module.exports: $Exports<'react-native-router-flux/test/Actions.test'>;
+}
+declare module 'react-native-router-flux/test/Reducer.popAndReplace.test.js' {
+  declare module.exports: $Exports<'react-native-router-flux/test/Reducer.popAndReplace.test'>;
+}
+declare module 'react-native-router-flux/test/Reducer.test.js' {
+  declare module.exports: $Exports<'react-native-router-flux/test/Reducer.test'>;
 }

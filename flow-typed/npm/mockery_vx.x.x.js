@@ -1,4 +1,4 @@
-// flow-typed signature: e2739bb17e7f9aab94d93b67721bc5ba
+// flow-typed signature: 670f5bf4d1ddb85fc33aab23d077771a
 // flow-typed version: <<STUB>>/mockery_v^2.0.0/flow_v0.40.0
 
 /**
@@ -22,11 +22,116 @@ declare module 'mockery' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'mockery/examples/example1' {
+  declare module.exports: any;
+}
+
 declare module 'mockery/mockery' {
   declare module.exports: any;
 }
 
+declare module 'mockery/test/1-general' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/allowable-unhook' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/fixtures/fake_module_2' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/fixtures/fake_module' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/fixtures/intermediary' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/fixtures/substitute_fake_module' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/intermediary' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/logging-allow-array' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/logging-allowable' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/logging' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/registered' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/self-register' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/substitute' {
+  declare module.exports: any;
+}
+
+declare module 'mockery/test/warn-replace' {
+  declare module.exports: any;
+}
+
 // Filename aliases
+declare module 'mockery/examples/example1.js' {
+  declare module.exports: $Exports<'mockery/examples/example1'>;
+}
 declare module 'mockery/mockery.js' {
   declare module.exports: $Exports<'mockery/mockery'>;
+}
+declare module 'mockery/test/1-general.js' {
+  declare module.exports: $Exports<'mockery/test/1-general'>;
+}
+declare module 'mockery/test/allowable-unhook.js' {
+  declare module.exports: $Exports<'mockery/test/allowable-unhook'>;
+}
+declare module 'mockery/test/fixtures/fake_module_2.js' {
+  declare module.exports: $Exports<'mockery/test/fixtures/fake_module_2'>;
+}
+declare module 'mockery/test/fixtures/fake_module.js' {
+  declare module.exports: $Exports<'mockery/test/fixtures/fake_module'>;
+}
+declare module 'mockery/test/fixtures/intermediary.js' {
+  declare module.exports: $Exports<'mockery/test/fixtures/intermediary'>;
+}
+declare module 'mockery/test/fixtures/substitute_fake_module.js' {
+  declare module.exports: $Exports<'mockery/test/fixtures/substitute_fake_module'>;
+}
+declare module 'mockery/test/intermediary.js' {
+  declare module.exports: $Exports<'mockery/test/intermediary'>;
+}
+declare module 'mockery/test/logging-allow-array.js' {
+  declare module.exports: $Exports<'mockery/test/logging-allow-array'>;
+}
+declare module 'mockery/test/logging-allowable.js' {
+  declare module.exports: $Exports<'mockery/test/logging-allowable'>;
+}
+declare module 'mockery/test/logging.js' {
+  declare module.exports: $Exports<'mockery/test/logging'>;
+}
+declare module 'mockery/test/registered.js' {
+  declare module.exports: $Exports<'mockery/test/registered'>;
+}
+declare module 'mockery/test/self-register.js' {
+  declare module.exports: $Exports<'mockery/test/self-register'>;
+}
+declare module 'mockery/test/substitute.js' {
+  declare module.exports: $Exports<'mockery/test/substitute'>;
+}
+declare module 'mockery/test/warn-replace.js' {
+  declare module.exports: $Exports<'mockery/test/warn-replace'>;
 }

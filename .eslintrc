@@ -5,20 +5,17 @@
     "browser": true
   },
   "extends": [
-    "xo",
+    "xo/esnext",
     "xo-react",
-    "eslint:recommended",
     "plugin:flowtype/recommended"
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
-    },
-    "sourceType": "module"
-  },
   "plugins": [
+    "babel",
     "react",
-    "flowtype"
-  ]
+    "flowtype",
+    "promise",
+    "import"
+  ],
+  "rules": {
+  }
 }

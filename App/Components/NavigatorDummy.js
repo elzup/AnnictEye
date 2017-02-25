@@ -15,7 +15,7 @@ const Styles = {
 	text: {
 		textAlign: 'center',
 		color: Colors.snow
-	}
+    }
 }
 
 type NavigationDummyProps = {

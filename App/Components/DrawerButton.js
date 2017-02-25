@@ -1,7 +1,7 @@
 /* @flow */
 'use strict'
 
-import React, {PropTypes as T} from 'react'
+import React, { PureComponent } from 'react'
 import {Text, TouchableOpacity} from 'react-native'
 import {Metrics, Colors, Fonts} from '../Themes'
 
@@ -16,10 +16,18 @@ const Styles = {
 	}
 }
 
-const DrawerButton = (props: { onPress: () => void, text: string }) => (
-	<TouchableOpacity onPress={props.onPress}>
-		<Text style={Styles.text}>{props.text}</Text>
-	</TouchableOpacity>
-)
+type Props = {
+	onPress: () => void,
+	 text: string
+}
+
+class DrawerButton extends PureComponent {
+	props: Props
+	render = (
+		<TouchableOpacity onPress={props.onPress}>
+			<Text style={Styles.text}>{props.text}</Text>
+		</TouchableOpacity>
+	)
+}
 
 export default DrawerButton

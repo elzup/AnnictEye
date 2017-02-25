@@ -17,12 +17,12 @@ type Props = {
 
 class ToggleIconButton extends Component {
 	props: Props = {
-		iconName = 'shield',
-		colorActive = Colors.black,
-		colorDisable = Colors.disable,
-		active = false,
-		size = 22,
-		onPress = () => {}
+		iconName: 'shield',
+		colorActive: Colors.black,
+		colorDisable: Colors.disable,
+		active: false,
+		size: 22,
+		onPress: () => {}
 	}
 	render = (
 		<TouchableOpacity onPress={onPress}>
