@@ -35,7 +35,7 @@ function Echo({ message, times = 2 }: { message: string, times?: number }) {
 
 type IconButtonProps = {
 	iconName: string,
-	onPress: void,
+	onPress: () => void,
 	text?: string,
 	color?: string
 }

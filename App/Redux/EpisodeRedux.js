@@ -1,9 +1,10 @@
 /* @flow */
 'use strict'
 
-import {createReducer, createActions} from 'reduxsauce'
+import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import {Episode, Record} from '../Services/Type'
+import { Episode, Record } from '../Services/Type'
+import type { EpisodeScheme, RecordScheme } from '../Services/Type'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -23,10 +24,10 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = new Immutable({
-	records: ([]: Array<Record>),
-	episode: (null: ?Episode),
-	prevEpisode: (null: ?Episode),
-	resultRecord: (null: ?Record),
+	records: ([]: Array<RecordScheme>),
+	episode: (null: ?EpisodeScheme),
+	prevEpisode: (null: ?EpisodeScheme),
+	resultRecord: (null: ?RecordScheme),
 	posting: false,
 	error: null
 })
@@ -66,11 +67,12 @@ export const reducer = createReducer(INITIAL_STATE, {
 })
 
 /* ------------- Selectors ------------- */
-export const selectEpisode = (episodeState: Object) => episodeState.episode
+export const selectEpisode = (episodeState: Object) => new Episode(episodeState.episode)
 export const selectError = (episodeState: Object) => episodeState.error
 export const selectCommentRecords = (episodeState: Object) => {
-	const filterHasComment = (record: Record) => record.comment && record.comment !== ''
-	return episodeState.records.filter(filterHasComment)
+	return episodeState.records
+	.map((r: RecordScheme) => new Record(r))
+	.filter((r: Record) => r.hasComment())
 }
 export const isSomeEpisode = (episodeState: Object) => episodeState.prevEpisode === null || episodeState.episode.id === episodeState.prevEpisode.id
 export const selectPosting = (episodeState: Object) => episodeState.posting

@@ -4,7 +4,7 @@
 import type moment$Moment from 'moment'
 import moment from 'moment'
 
-type ProgramScheme = {
+export type ProgramScheme = {
 	id: string,
 	started_at: string,
 	is_rebroadcast: string,
@@ -41,7 +41,7 @@ export class Channel {
 	}
 }
 
-type WorkScheme = {
+export type WorkScheme = {
 	id: string,
 	title: string,
 	title_kana: string,
@@ -95,7 +95,7 @@ export class Work {
 	}
 }
 
-type EpisodeScheme = {
+export type EpisodeScheme = {
 	id: string,
 	number: string,
 	number_text: string,
@@ -137,7 +137,7 @@ export class Episode {
 	}
 }
 
-type UserScheme = {
+export type UserScheme = {
 	id: string,
 	username: string,
 	name: string,
@@ -166,7 +166,7 @@ export class User {
 	}
 }
 
-type RecordScheme = {
+export type RecordScheme = {
 	id: string,
 	comment: string,
 	rating: string,
@@ -205,4 +205,5 @@ export class Record {
 	}
 
 	postTimeLabel() { this.createdAt.format('MM/DD HH:mm') }
+	hasComment() { this.comment && this.comment !== '' }
 }

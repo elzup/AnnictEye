@@ -114,7 +114,7 @@ class EpisodeScreen extends React.Component {
 				<View style={Styles.container}>
 					<View style={Styles.episodeHeader}>
 						<Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-						<Text style={Styles.boldLabel}>{episode.number_text} {episode.title || '---'}</Text>
+						<Text style={Styles.boldLabel}>{episode.numberText} {episode.title || '---'}</Text>
 					</View>
 					<DrawerButton text={'記録する'} onPress={this.handleOpenModal}/>
 					<ListView
@@ -135,18 +135,23 @@ class EpisodeScreen extends React.Component {
   )
 
 	handleOpenModal = () => {
-		const {episode} = this.props
-		Actions.recordCreateModal({title: `記録する ${episode.number_text}`})
+		const { episode } = this.props
+		Actions.recordCreateModal({title: `記録する ${episode.numberText}`})
 	}
 
 	renderRow = (record: Record) => (
 		<RecordCell
-			episode={this.props.episode}
 			record={record}
-			onPressLike={this.handlePressLike}
-			onPressReply={this.handlePressReply}
-			onPressGlobe={this.handlePressGlobe}
-			/>
+			onPressLike={() => {
+				this.handlePressLike(record)
+			}}
+			onPressReply={() => {
+				this.handlePressReply(record)
+			}}
+			onPressGlobe={() => {
+				this.handlePressGlobe(this.props.episode, record)
+			}}
+		/>
   )
 
 	handlePressLike = (record: Record) => {

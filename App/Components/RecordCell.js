@@ -52,9 +52,9 @@ const Styles = {
 
 type RecordCellProps = {
   record: Record,
-  onPressLike: void,
-  onPressReply: void,
-  onPressGlobe: void
+  onPressLike: () => void,
+  onPressReply: () => void,
+  onPressGlobe: () => void
 }
 
 class RecordCell extends Component {

@@ -73,7 +73,7 @@ class HomeScreen extends React.Component {
 		}
 
 		// 放送済みのみ
-		const finishFilter = (program: Program) => moment(program.started_at).isBefore()
+		const finishFilter = (program: Program) => program.startedAt.isBefore()
 		this.setState({
 			loading: newProps.programs.length === 0,
 			dataSource: this.state.dataSource.cloneWithRows(newProps.programs.filter(finishFilter))
@@ -93,8 +93,9 @@ class HomeScreen extends React.Component {
 
 	pressRow = (program: Program) => {
 		const {episode, work} = program
-		this.props.setupEpisode(episode.merge({work}))
-		Actions.episodeScreen({title: `${work.title} ${episode.number_text}`})
+		episode.work = work
+		this.props.setupEpisode(episode)
+		Actions.episodeScreen({title: `${work.title} ${episode.numberText}`})
 	}
 
 	noRowData = () => {
