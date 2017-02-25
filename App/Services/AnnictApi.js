@@ -1,13 +1,13 @@
 /* @flow */
-'use strict'
+'use strict';
 
 class AnnictApi {
-	constructor	() {
+	constructor() {
 
 	}
 
 	isLogin(): boolean {
-		return false
+		return false;
 	}
 
 	oauthToken(code: string) {
@@ -31,7 +31,7 @@ class AnnictApi {
 	}
 
 	login(code: string): boolean {
-		return false
+		return false;
 	}
 
 	programs(): Array<Program> {
@@ -39,4 +39,4 @@ class AnnictApi {
 	}
 }
 
-export default new AnnictApi()
+export default new AnnictApi();

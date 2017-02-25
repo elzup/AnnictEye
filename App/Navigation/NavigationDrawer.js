@@ -1,11 +1,10 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, {PropTypes, Component} from 'react'
-import Drawer from 'react-native-drawer'
-import {DefaultRenderer, Actions as NavigationActions} from 'react-native-router-flux'
-import {connect} from 'react-redux'
-import {Colors} from '../Themes/'
+import React, {PropTypes, Component} from 'react';
+import Drawer from 'react-native-drawer';
+import {DefaultRenderer, Actions as NavigationActions} from 'react-native-router-flux';
+import {Colors} from '../Themes/';
 
 const Styles = {
 	drawer: {
@@ -14,12 +13,12 @@ const Styles = {
 	main: {
 		backgroundColor: Colors.clear
 	}
-}
+};
 
 class NavigationDrawer extends Component {
 	render() {
-		const state = this.props.navigationState
-		const children = state.children
+		const state = this.props.navigationState;
+		const children = state.children;
 		return (
 			<Drawer
 				type="displace"
@@ -38,20 +37,20 @@ class NavigationDrawer extends Component {
 				>
 				<DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate}/>
 			</Drawer>
-		)
+		);
 	}
 }
 
 NavigationDrawer.propTypes = {
 	navigationState: PropTypes.object
-}
+};
 
 const mapStateToProps = () => {
-	return {}
-}
+	return {};
+};
 
 const mapDispatchToProps = () => {
-	return {}
-}
+	return {};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer);

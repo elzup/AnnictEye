@@ -1,10 +1,10 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, { Component } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Colors } from '../Themes'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import React, {Component} from 'react';
+import {TouchableOpacity} from 'react-native';
+import {Colors} from '../Themes';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {
 	iconName: ?string,
@@ -31,4 +31,4 @@ class ToggleIconButton extends Component {
 	)
 }
 
-export default ToggleIconButton
+export default ToggleIconButton;

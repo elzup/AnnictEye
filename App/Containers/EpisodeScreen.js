@@ -14,10 +14,6 @@ import Indicator from '../Components/Indicator'
 import RecordCell from '../Components/RecordCell'
 import DrawerButton from '../Components/DrawerButton'
 
-import {connect} from 'react-redux'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import EpisodeActions, {selectEpisode, selectCommentRecords, isSomeEpisode} from '../Redux/EpisodeRedux'
-
 import {Actions, ActionConst} from 'react-native-router-flux'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import {Record, Episode} from '../Services/Type'

@@ -10,12 +10,12 @@
     "plugin:flowtype/recommended"
   ],
   "plugins": [
-    "babel",
     "react",
     "flowtype",
     "promise",
     "import"
   ],
   "rules": {
+    "import/unresolved": 0
   }
 }

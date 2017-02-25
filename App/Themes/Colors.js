@@ -1,5 +1,5 @@
 /* @flow */
-'use strict'
+'use strict';
 
 const colors = {
 	background: '#1F0808',
@@ -29,6 +29,6 @@ const colors = {
 	fire: '#e73536',
 	drawer: 'rgba(30, 30, 29, 0.95)',
 	black: '#000'
-}
+};
 
-export default colors
+export default colors;

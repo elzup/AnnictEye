@@ -11,10 +11,6 @@ import moment from 'moment'
 import ProgramCell from '../Components/ProgramCell'
 import Indicator from '../Components/Indicator'
 
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import HomeActions, {selectPrograms} from '../Redux/HomeRedux'
-import EpisodeActions from '../Redux/EpisodeRedux'
-
 import {Actions} from 'react-native-router-flux'
 import {ApplicationStyles, Metrics, Colors} from '../Themes/'
 import {Program, Episode} from '../Services/Type'

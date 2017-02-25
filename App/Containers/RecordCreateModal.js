@@ -1,24 +1,21 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, {Component} from 'react'
-import {Actions} from 'react-native-router-flux'
+import React, {Component} from 'react';
+import {Actions} from 'react-native-router-flux';
 import {
   View,
   Text,
   TextInput,
   Slider,
   TouchableOpacity
-} from 'react-native'
-import FAIcon from 'react-native-vector-icons/FontAwesome'
-import {Episode, Record} from '../Services/Type'
-import type {RecordFields} from '../Services/Type'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import {connect} from 'react-redux'
-import ToggleIconButton from '../Components/ToggleIconButton'
-import KeyboardSpacer from 'react-native-keyboard-spacer'
-import {isLoggedIn} from '../Redux/LoginRedux'
-import EpisodeActions, {selectEpisode, selectPosting, selectResultEpisode, selectError} from '../Redux/EpisodeRedux'
+} from 'react-native';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+import {Episode, Record} from '../Services/Type';
+import type {RecordFields} from '../Services/Type';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import ToggleIconButton from '../Components/ToggleIconButton';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const Styles = {
 	...ApplicationStyles.screen,
@@ -108,7 +105,7 @@ const Styles = {
 	iconOff: {
 		color: Colors.disable
 	}
-}
+};
 
 type Props = {
   episode: Episode
@@ -124,41 +121,41 @@ type State = {
 
 class RecordCreateModal extends Component {
 	props: Props
-  state: State = {
-			sliderThumb: null,
-      comment: '',
-			rating: 0,
-			shareTwitter: false,
-			shareFacebook: false
-  }
+	state: State = {
+		sliderThumb: null,
+		comment: '',
+		rating: 0,
+		shareTwitter: false,
+		shareFacebook: false
+	}
 
-  componentDidMount () {
-    this.init()
-  }
+	componentDidMount() {
+		this.init();
+	}
 
-  async init() {
-    const sliderThumb = await FAIcon.getImageSource('star', 22, Colors.disable)
-    this.setState({ sliderThumb })
-  }
+	async init() {
+		const sliderThumb = await FAIcon.getImageSource('star', 22, Colors.disable);
+		this.setState({sliderThumb});
+	}
 
 	componentWillReceiveProps = (newProps: Props) => {
-		console.log('=> Receive', newProps)
-		this.forceUpdate()
+		console.log('=> Receive', newProps);
+		this.forceUpdate();
 		if (!newProps.isLoggedIn) {
-			Actions.loginScreen()
-			return
+			Actions.loginScreen();
+			return;
 		}
 
 		if (newProps.posting) {
-			return
+			return;
 		}
 		if (newProps.resultEpisode !== null) {
-			window.alert('記録しました！')
-			Actions.pop()
-			return
+			window.alert('記録しました！');
+			Actions.pop();
+			return;
 		}
 		if (newProps.error) {
-			window.alert(newProps.error)
+			window.alert(newProps.error);
 		}
 	}
 
@@ -222,46 +219,46 @@ class RecordCreateModal extends Component {
 				</View>
 				<KeyboardSpacer/>
 			</View>
-		)
+		);
 	}
 
 	handleToggleTwitter = () => {
-		console.log('share twitter toggle')
-		this.setState({shareTwitter: !this.state.shareTwitter})
+		console.log('share twitter toggle');
+		this.setState({shareTwitter: !this.state.shareTwitter});
 	}
 	handleToggleFacebook = () => {
-		console.log('share facebook toggle')
-		this.setState({shareFacebook: !this.state.shareFacebook})
+		console.log('share facebook toggle');
+		this.setState({shareFacebook: !this.state.shareFacebook});
 	}
 
 	handleChangeRate = value => {
-		const color = value === 0 ? Colors.disable : Colors.star
+		const color = value === 0 ? Colors.disable : Colors.star;
 		FAIcon.getImageSource('star', 22, color)
 		.then(source => {
-			this.setState({sliderThumb: source, rating: value})
-		}).done()
+			this.setState({sliderThumb: source, rating: value});
+		}).done();
 	}
 
 	handleText = text => {
-		this.setState({comment: text})
+		this.setState({comment: text});
 	}
 
 	/* eslint camelcase: 0 */
 	handleSubmit = () => {
-		const { commnet, rating, shareTwitter, shareFacebook } = this.state
+		const {commnet, rating, shareTwitter, shareFacebook} = this.state;
 		const fields: RecordFields = {
 			episode_id: this.props.episode.id,
 			comment,
 			rating,
 			share_twitter: shareTwitter,
 			share_facebook: shareFacebook
-		}
+		};
 		const record = new Record({
 			episode: this.props.episode,
 			comment: this.state.comment,
 			rating: this.state.rating
-		})
-		this.props.postRecord(fields)
+		});
+		this.props.postRecord(fields);
 	}
 }
 
@@ -272,13 +269,13 @@ const mapStateToProps = state => {
 		posting: selectPosting(state.episode),
 		resultEpisode: selectResultEpisode(state.episode),
 		error: selectError(state.episode)
-	}
-}
+	};
+};
 
 const mapDispatchToProps = dispatch => {
 	return {
 		postRecord: (fields: RecordFields) => dispatch(EpisodeActions.postRecordRequest(fields))
-	}
-}
+	};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(RecordCreateModal)
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(RecordCreateModal);

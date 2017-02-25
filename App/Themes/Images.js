@@ -1,8 +1,8 @@
 /* @flow */
-'use strict'
+'use strict';
 
 // leave off @2x/@3x
 const images = {
-}
+};
 
-export default images
+export default images;

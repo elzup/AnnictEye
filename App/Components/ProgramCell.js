@@ -1,16 +1,16 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React from 'react'
-import moment from 'moment'
+import React from 'react';
+import moment from 'moment';
 import {
 	TouchableOpacity,
 	View,
 	Text
-} from 'react-native'
-import { ApplicationStyles, Metrics, Colors, Fonts } from '../Themes/'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { Program } from '../Services/Type'
+} from 'react-native';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Program} from '../Services/Type';
 
 const Styles = {
 	card: {
@@ -36,7 +36,7 @@ const Styles = {
 	},
 	number: {
 	}
-}
+};
 
 type Prop = {
 	program: Program,
@@ -44,8 +44,8 @@ type Prop = {
 }
 
 const ProgramCell = ({program, onPress}: Prop) => {
-	const label = `${program.episode.numberText}|${program.episode.title}`
-	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm')
+	const label = `${program.episode.numberText}|${program.episode.title}`;
+	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm');
 	return (
 		<TouchableOpacity onPress={onPress} >
 			<View style={Styles.card}>
@@ -65,7 +65,7 @@ const ProgramCell = ({program, onPress}: Prop) => {
 				</View>
 			</View>
 		</TouchableOpacity>
-	)
-}
+	);
+};
 
-export default ProgramCell
+export default ProgramCell;

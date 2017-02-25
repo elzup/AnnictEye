@@ -1,10 +1,10 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, {Component} from 'react'
-import {View, StatusBar, StyleSheet} from 'react-native'
-import NavigationRouter from '../Navigation/NavigationRouter'
-import {Fonts, Metrics, Colors} from '../Themes/'
+import React, {Component} from 'react';
+import {View, StatusBar, StyleSheet} from 'react-native';
+import NavigationRouter from '../Navigation/NavigationRouter';
+import {Fonts, Metrics, Colors} from '../Themes/';
 
 const Styles = StyleSheet.create({
 	applicationView: {
@@ -26,12 +26,11 @@ const Styles = StyleSheet.create({
 		height: 200,
 		alignSelf: 'center'
 	}
-})
+});
 
 class RootContainer extends Component {
 	componentDidMount() {
-    // if redux persist is not active fire startup action
-		this.props.startup()
+		this.props.startup();
 	}
 
 	render() {
@@ -40,8 +39,8 @@ class RootContainer extends Component {
 				<StatusBar barStyle="light-content"/>
 				<NavigationRouter/>
 			</View>
-		)
+		);
 	}
 }
 
-export default RootContainer
+export default RootContainer;

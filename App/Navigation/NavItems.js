@@ -1,16 +1,16 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React from 'react'
-import {TouchableOpacity, StyleSheet} from 'react-native'
-import {Actions as NavigationActions} from 'react-native-router-flux'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import {Colors, Metrics} from '../Themes'
+import React from 'react';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import {Actions as NavigationActions} from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Colors, Metrics} from '../Themes';
 
 const navButton = {
 	backgroundColor: Colors.transparent,
 	justifyContent: 'center'
-}
+};
 
 const Styles = StyleSheet.create({
 	backButton: {
@@ -24,21 +24,21 @@ const Styles = StyleSheet.create({
 		marginRight: Metrics.baseMargin,
 		alignItems: 'center'
 	}
-})
+});
 
 const openDrawer = () => {
 	NavigationActions.refresh({
 		key: 'drawer',
 		open: true
-	})
-}
+	});
+};
 
 export default {
 	backButton() {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					NavigationActions.pop()
+					NavigationActions.pop();
 				}}
 				>
 				<Icon
@@ -48,7 +48,7 @@ export default {
 					style={Styles.backButton}
 					/>
 			</TouchableOpacity>
-		)
+		);
 	},
 
 	hamburgerButton() {
@@ -61,7 +61,7 @@ export default {
 					style={Styles.navButtonLeft}
 					/>
 			</TouchableOpacity>
-		)
+		);
 	},
 
 	searchButton(callback: Function) {
@@ -74,6 +74,6 @@ export default {
 					style={Styles.searchButton}
 					/>
 			</TouchableOpacity>
-		)
+		);
 	}
-}
+};

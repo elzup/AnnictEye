@@ -1,9 +1,9 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, {Component} from 'react'
-import {ScrollView, BackAndroid} from 'react-native'
-import DrawerButton from '../Components/DrawerButton'
+import React, {Component} from 'react';
+import {ScrollView, BackAndroid} from 'react-native';
+import DrawerButton from '../Components/DrawerButton';
 
 const Styles = {
 	container: {
@@ -13,26 +13,26 @@ const Styles = {
 	logo: {
 		alignSelf: 'center'
 	}
-}
+};
 
 class DrawerContent extends Component {
 	componentDidMount() {
 		BackAndroid.addEventListener('hardwareBackPress', () => {
 			if (this.context.drawer.props.open) {
-				this.toggleDrawer()
-				return true
+				this.toggleDrawer();
+				return true;
 			}
-			return false
-		})
+			return false;
+		});
 	}
 
 	toggleDrawer() {
-		this.context.drawer.toggle()
+		this.context.drawer.toggle();
 	}
 
 	handlePressPageA = () => {
-		this.toggleDrawer()
-		window.alert('PageA Open.')
+		this.toggleDrawer();
+		window.alert('PageA Open.');
     // NavigationActions.componentExamples()
 	}
 
@@ -41,12 +41,12 @@ class DrawerContent extends Component {
 			<ScrollView style={Styles.container}>
 				<DrawerButton text="Page A" onPress={this.handlePressPageA}/>
 			</ScrollView>
-		)
+		);
 	}
 }
 
 DrawerContent.contextTypes = {
 	drawer: React.PropTypes.object
-}
+};
 
-export default DrawerContent
+export default DrawerContent;

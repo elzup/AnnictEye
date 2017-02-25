@@ -1,23 +1,21 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, { Component } from 'react'
+import React, {Component} from 'react';
 import {
   ScrollView,
   Text,
   View,
   StyleSheet,
   Linking,
-  TextInput} from 'react-native'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import {connect} from 'react-redux'
+  TextInput} from 'react-native';
 
-import {Actions, ActionConst} from 'react-native-router-flux'
-import {Metrics, Colors, ApplicationStyles} from '../Themes/'
-import DrawerButton from '../Components/DrawerButton'
-import AnnictApi from '../Services/AnnictApi'
+import {Actions, ActionConst} from 'react-native-router-flux';
+import {Metrics, Colors, ApplicationStyles} from '../Themes/';
+import DrawerButton from '../Components/DrawerButton';
+import AnnictApi from '../Services/AnnictApi';
 
-import {CLIENT_ID} from 'react-native-dotenv'
+import {CLIENT_ID} from 'react-native-dotenv';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -33,7 +31,7 @@ const Styles = StyleSheet.create({
 		height: 40,
 		color: Colors.coal
 	}
-})
+});
 
 type LoginScreenProps = {
   attemptLogin: () => void,
@@ -51,26 +49,26 @@ class LoginScreen extends Component {
   }
 
 	constructor(props: LoginScreenProps) {
-		super(props)
+		super(props);
 		this.state = {
 			code: ''
-		}
-		this.isAttempting = false
+		};
+		this.isAttempting = false;
 	}
 
 	componentDidMount = () => {
-		this.isAttempting = true
+		this.isAttempting = true;
 	}
 
 	componentWillReceiveProps = (newProps: LoginScreenProps) => {
-		this.forceUpdate()
+		this.forceUpdate();
 		if (!this.isAttempting) {
-			return
+			return;
 		}
 		if (newProps.loggedIn) {
-			Actions.homeScreen({type: ActionConst.RESET})
+			Actions.homeScreen({type: ActionConst.RESET});
 		} else {
-			console.log('login failed.')
+			console.log('login failed.');
 		}
 	}
 
@@ -81,11 +79,11 @@ class LoginScreen extends Component {
 			'&client_id=' + CLIENT_ID,
 			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
 			'&scope=read+write'
-		].join(''))
+		].join(''));
 	}
 
 	render() {
-		const {code} = this.state
+		const {code} = this.state;
 		return (
 			<View style={Styles.mainContainer}>
 				<ScrollView style={Styles.container}>
@@ -110,8 +108,8 @@ class LoginScreen extends Component {
 					</View>
 				</ScrollView>
 			</View>
-		)
+		);
 	}
 }
 
-export default LoginScreen
+export default LoginScreen;

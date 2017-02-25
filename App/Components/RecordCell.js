@@ -1,17 +1,17 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, {Component} from 'react'
-import moment from 'moment'
+import React, {Component} from 'react';
+import moment from 'moment';
 import {
   View,
   Text,
 	Animated
-} from 'react-native'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import IconButton from './IconButton'
+} from 'react-native';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import IconButton from './IconButton';
 
-import {Record} from '../Services/Type'
+import {Record} from '../Services/Type';
 
 const Styles = {
 	root: {
@@ -48,7 +48,7 @@ const Styles = {
 		flexDirection: 'row',
 		justifyContent: 'space-around'
 	}
-}
+};
 
 type RecordCellProps = {
   record: Record,
@@ -61,11 +61,11 @@ class RecordCell extends Component {
 	props: RecordCellProps
 
 	constructor(props: RecordCellProps) {
-		super(props)
+		super(props);
 	}
 
 	render() {
-		const {record, onPressLike, onPressReply, onPressGlobe} = this.props
+		const {record, onPressLike, onPressReply, onPressGlobe} = this.props;
 		return (
 			<View style={Styles.root}>
 				<View style={Styles.head}>
@@ -83,8 +83,8 @@ class RecordCell extends Component {
 					</View>
 				</View>
 			</View>
-		)
+		);
 	}
 }
 
-export default RecordCell
+export default RecordCell;

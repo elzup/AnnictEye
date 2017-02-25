@@ -1,9 +1,9 @@
 /* @flow */
-'use strict'
+'use strict';
 
-import React, { PureComponent } from 'react'
-import {Text, TouchableOpacity} from 'react-native'
-import {Metrics, Colors, Fonts} from '../Themes'
+import React, {PureComponent} from 'react';
+import {Text, TouchableOpacity} from 'react-native';
+import {Metrics, Colors, Fonts} from '../Themes';
 
 const Styles = {
 	text: {
@@ -14,7 +14,7 @@ const Styles = {
 		paddingVertical: 5,
 		marginVertical: Metrics.baseMargin
 	}
-}
+};
 
 type Props = {
 	onPress: () => void,
@@ -30,4 +30,4 @@ class DrawerButton extends PureComponent {
 	)
 }
 
-export default DrawerButton
+export default DrawerButton;
