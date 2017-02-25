@@ -6,19 +6,19 @@ import {
 	View,
 	ListView,
 	StyleSheet} from 'react-native'
+import moment from 'moment'
 
 import ProgramCell from '../Components/ProgramCell'
 import Indicator from '../Components/Indicator'
 
-import {connect} from 'react-redux'
 import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
 import HomeActions, {selectPrograms} from '../Redux/HomeRedux'
 import EpisodeActions from '../Redux/EpisodeRedux'
-import moment from 'moment'
 
 import {Actions} from 'react-native-router-flux'
 import {ApplicationStyles, Metrics, Colors} from '../Themes/'
 import {Program, Episode} from '../Services/Type'
+import { Api } form '../Services/Api'
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -56,28 +56,29 @@ class HomeScreen extends React.Component {
 		// Datasource is always in state
 		this.state = {
 			loading: false,
-			dataSource: ds.cloneWithRows(props.programs)
+			dataSource: ds.cloneWithRows(props.programs),
 		}
 	}
 
 	componentDidMount = () => {
-		this.setState({loading: true})
-		this.props.loadProgram()
+		this.init();
 	}
 
-	componentWillReceiveProps = (newProps: any) => {
-		this.forceUpdate()
-		if (!newProps.isLoggedIn) {
-			Actions.loginScreen()
-			return
-		}
+	async init() {
+		// TODO: Actions.loginScreen()
+		await loadProgram();
+	}
 
+	async loadProgram() {
 		// 放送済みのみ
+		this.setState({loading: true})
+		const progorams = await loadProgram();
 		const finishFilter = (program: Program) => program.startedAt.isBefore()
 		this.setState({
-			loading: newProps.programs.length === 0,
-			dataSource: this.state.dataSource.cloneWithRows(newProps.programs.filter(finishFilter))
+			loading: programs.length === 0,
+			dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
 		})
+		this.setState({loading: false})
 	}
 
 	renderRow = (program: Program) => {
@@ -133,10 +134,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: () => dispatch(LoginActions.logout()),
-		loadProgram: () => dispatch(HomeActions.programRequest()),
 		setupEpisode: (episode: Episode) => dispatch(EpisodeActions.episodeSetup(episode))
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default HomeScreen

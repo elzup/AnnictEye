@@ -1,7 +1,7 @@
 /* @flow */
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
 import {
   ScrollView,
   Text,
@@ -15,6 +15,7 @@ import {connect} from 'react-redux'
 import {Actions, ActionConst} from 'react-native-router-flux'
 import {Metrics, Colors, ApplicationStyles} from '../Themes/'
 import DrawerButton from '../Components/DrawerButton'
+import AnnictApi from '../Services/AnnictApi'
 
 import {CLIENT_ID} from 'react-native-dotenv'
 
@@ -36,10 +37,10 @@ const Styles = StyleSheet.create({
 
 type LoginScreenProps = {
   attemptLogin: () => void,
-  loggedIn: boolean
+  loggedIn: boolean,
 }
 
-class LoginScreen extends React.Component {
+class LoginScreen extends Component {
 
 	props: LoginScreenProps
 
@@ -111,28 +112,6 @@ class LoginScreen extends React.Component {
 			</View>
 		)
 	}
-
-	handleChangeCode = text => {
-		this.setState({code: text})
-	}
-
-	handleSubmitCode = () => {
-		const {code} = this.state
-		this.isAttempting = true
-		this.props.attemptLogin(code)
-	}
 }
 
-const mapStateToProps = state => {
-	return {
-		loggedIn: isLoggedIn(state.login)
-	}
-}
-
-const mapDispatchToProps = dispatch => {
-	return {
-		attemptLogin: code => dispatch(LoginActions.loginRequest(code))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+export default LoginScreen

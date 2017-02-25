@@ -63,8 +63,6 @@ export class Work {
 	id: number
 	title: string
 	titleKana: string
-	media: string
-	mediaText: string
 	seasonName: string
 	seasonNameText: string
 	releasedOn: moment$Moment

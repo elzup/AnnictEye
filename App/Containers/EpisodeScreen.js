@@ -53,7 +53,6 @@ const Styles = StyleSheet.create({
 
 type EpisodeScreenProps = {
   loadEpisode: () => void,
-  isLoggedIn: ?boolean,
   records: Array<Record>,
   episode: Episode
 }
@@ -83,18 +82,7 @@ class EpisodeScreen extends React.Component {
 	componentDidMount = () => {
 		console.log('componentDidMount')
 		this.setState({loading: true})
-		this.props.loadEpisode(this.props.episode)
-	}
-
-	componentWillReceiveProps = newProps => {
-		console.log('=> Receive', newProps)
-		this.forceUpdate()
-		const {isLoggedIn, records} = newProps
-		if (!isLoggedIn) {
-			Actions.homeScreen({type: ActionConst.RESET})
-			return
-		}
-
+    // TODO: load
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
@@ -151,7 +139,7 @@ class EpisodeScreen extends React.Component {
 			onPressGlobe={() => {
 				this.handlePressGlobe(this.props.episode, record)
 			}}
-		/>
+			/>
   )
 
 	handlePressLike = (record: Record) => {
@@ -168,27 +156,11 @@ class EpisodeScreen extends React.Component {
 		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
 	}
 
-	componentWillUnmount = () => {
+	componentWillUnmount() => {
 		this.setState({
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows([])
 		})
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		isLoggedIn: isLoggedIn(state.login),
-		records: selectCommentRecords(state.episode),
-		episode: selectEpisode(state.episode),
-		isSomeEpisode: isSomeEpisode(state.episode)
-	}
-}
-
-const mapDispatchToProps = dispatch => {
-	return {
-		logout: () => dispatch(LoginActions.logout()),
-		loadEpisode: episode => dispatch(EpisodeActions.episodeRequest(episode))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EpisodeScreen)
+export default EpisodeScreen

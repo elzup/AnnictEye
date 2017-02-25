@@ -2,15 +2,10 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import applyConfigSettings from '../Config'
-import createStore from '../Redux'
 
 applyConfigSettings()
-
-// create our store
-const store = createStore()
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -24,9 +19,7 @@ const store = createStore()
 class App extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<RootContainer />
-			</Provider>
+			<RootContainer/>
 		)
 	}
 }
