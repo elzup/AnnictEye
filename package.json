@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "xo",
+
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs xo | snazzy",
+    "flow": "node_modules/.bin/flow",
     "fixcode": "xo --fix",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && react-native run-android",

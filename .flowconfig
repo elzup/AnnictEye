@@ -5,21 +5,7 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore unexpected extra "@providesModule"
-.*/node_modules/.*/node_modules/fbjs/.*
-.*/node_modules/react-native-experimental-navigation/.*
-.*/node_modules/react-native/packager/src/Server/.*
-.*/node_modules/react-static-container/lib/.*
-.*/node_modules/react-native/local-cli/.*
-.*/node_modules/react-native/packager/.*
-.*/node_modules/react-native/lib/.*
-
-
-; Ignore duplicate module providers
-; For RN Apps installed via npm, "Libraries" folder is inside
-; "node_modules/react-native" but in the source repo it is in the root
-.*/Libraries/react-native/React.js
-.*/Libraries/react-native/ReactNative.js
+.*/node_modules/.*
 
 [include]
 
@@ -34,6 +20,8 @@ module.system=haste
 experimental.strict_type_args=true
 
 munge_underscores=true
+
+module.file_ext=js
 
 module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
 
