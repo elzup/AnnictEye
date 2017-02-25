@@ -207,3 +207,11 @@ export class Record {
 	postTimeLabel() { this.createdAt.format('MM/DD HH:mm') }
 	hasComment() { this.comment && this.comment !== '' }
 }
+
+export type RecordFields {
+	episode_id: number
+	comment: string
+	rating: number
+	share_twitter: boolean
+	share_facebook: boolean
+}

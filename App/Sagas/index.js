@@ -13,6 +13,7 @@ import EpisodeActions, {EpisodeTypes} from '../Redux/EpisodeRedux'
 import {call, put} from 'redux-saga/effects'
 import {AsyncStorage} from 'react-native'
 import {Program} from '../Services/Type'
+import type {recordFields} from '../Services/Type'
 
 function * login(api, {code}) {
 	const response = yield call(api.oauthToken, code)
@@ -68,7 +69,7 @@ function * loadEpisode(api: any, {episode}) {
 	}
 }
 
-function * postRecord(api: any, {record, st, sf}) {
+function * postRecord(api: any, {recordFields: RecordFields}) {
 	const token = yield call(AsyncStorage.getItem, 'access_token')
 	if (token === null) {
 		yield put(LoginActions.loginFailure())
@@ -77,7 +78,7 @@ function * postRecord(api: any, {record, st, sf}) {
 	yield put(LoginActions.loginSuccess())
 	api.setToken(token)
 
-	const response = yield call(api.postMeRecord, record, st, sf)
+	const response = yield call(api.postMeRecord, recordFields)
 	if (response.ok) {
 		yield put(EpisodeActions.postRecordSuccess(response.data))
 	} else {

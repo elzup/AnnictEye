@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import {Episode, Record} from '../Services/Type'
+import type {RecordFields} from '../Services/Type'
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
 import {connect} from 'react-redux'
 import ToggleIconButton from '../Components/ToggleIconButton'
@@ -109,31 +110,38 @@ const Styles = {
 	}
 }
 
-type RecordModalProps = {
+type Props = {
   episode: Episode
 }
 
+type State = {
+  sliderThumb: any,
+  comment: string,
+  rating: number,
+  shareTwitter: boolean,
+  shareFacebook: boolean
+}
+
 class RecordCreateModal extends Component {
-	props: RecordModalProps
-
-	constructor(props) {
-		super(props)
-		this.state = {
+	props: Props
+  state: State = {
 			sliderThumb: null,
-
-      // request parameters
-			comment: '',
+      comment: '',
 			rating: 0,
 			shareTwitter: false,
 			shareFacebook: false
-		}
-		FAIcon.getImageSource('star', 22, Colors.disable)
-		.then(source => {
-			this.setState({sliderThumb: source})
-		})
-	}
+  }
 
-	componentWillReceiveProps = (newProps: HomeScreenProps) => {
+  componentDidMount () {
+    this.init()
+  }
+
+  async init() {
+    const sliderThumb = await FAIcon.getImageSource('star', 22, Colors.disable)
+    this.setState({ sliderThumb })
+  }
+
+	componentWillReceiveProps = (newProps: Props) => {
 		console.log('=> Receive', newProps)
 		this.forceUpdate()
 		if (!newProps.isLoggedIn) {
@@ -240,12 +248,20 @@ class RecordCreateModal extends Component {
 
 	/* eslint camelcase: 0 */
 	handleSubmit = () => {
+		const { commnet, rating, shareTwitter, shareFacebook } = this.state
+		const fields: RecordFields = {
+			episode_id: this.props.episode.id,
+			comment,
+			rating,
+			share_twitter: shareTwitter,
+			share_facebook: shareFacebook
+		}
 		const record = new Record({
 			episode: this.props.episode,
 			comment: this.state.comment,
 			rating: this.state.rating
 		})
-		this.props.postRecord(record, this.state.shareTwitter, this.state.shareFacebook)
+		this.props.postRecord(fields)
 	}
 }
 
@@ -261,7 +277,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		postRecord: (episode, st, sf) => dispatch(EpisodeActions.postRecordRequest(episode, st, sf))
+		postRecord: (fields: RecordFields) => dispatch(EpisodeActions.postRecordRequest(fields))
 	}
 }
 

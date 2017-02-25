@@ -13,7 +13,7 @@ const {Types, Creators} = createActions({
 	episodeRequest: ['episode'],
 	episodeSuccess: ['records'],
 	episodeFailure: ['error'],
-	postRecordRequest: ['record', 'st', 'sf'],
+	postRecordRequest: ['recordFields'],
 	postRecordSuccess: ['record'],
 	postRecordFailure: ['error']
 })

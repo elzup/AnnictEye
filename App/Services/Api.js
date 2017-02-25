@@ -4,7 +4,7 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv'
-import {Record} from '../Services/Type'
+import type {RecordFields} from '../Services/Type'
 
 // our "constructor"
 const create = (baseURL: string = 'https://api.annict.com/') => {
@@ -32,12 +32,12 @@ const create = (baseURL: string = 'https://api.annict.com/') => {
 	const oauthRevoke = (token: string) => api.post('oauth/revoke', {token: token})
 
 	const mePrograms = () => api.get('v1/me/programs', {sort_started_at: 'desc'})
-	const postMeRecord = (record: Record, shareTwitter: boolean, shareFacebook: boolean) => api.post('v1/me/records', {
-		episode_id: record.episode.id,
-		comment: record.comment,
-		rating: record.rating,
-		share_twitter: shareTwitter ? 'true' : 'false',
-		share_facebook: shareFacebook ? 'true' : 'false'
+	const postMeRecord = (recordFields: RecordFields) => api.post('v1/me/records', {
+		episode_id: recordFields.episode_id
+		comment: recordFields.comment,
+		rating: recordFields.rating,
+		share_twitter: recordFields.shareTwitter ? 'true' : 'false',
+		share_facebook: recordFields.shareFacebook ? 'true' : 'false'
 	})
 
 	const records = (episodeID: number) => api.get('v1/records', {
