@@ -1,5 +1,6 @@
 /* @flow */
-'use strict';
+
+import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
 
 class AnnictApi {
 	constructor() {

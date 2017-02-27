@@ -34,7 +34,7 @@ type HomeScreenProps = {
 	setupEpisode: () => void,
 }
 
-class HomeScreen extends React.Component {
+class HomeScreen extends React.PureComponent {
 	props: HomeScreenProps
 	state: {
 		dataSource: Object,
@@ -118,20 +118,6 @@ class HomeScreen extends React.Component {
 	renderFooter = () => (
 		<Indicator loading={this.state.loading}/>
 	)
-}
-
-const mapStateToProps = state => {
-	// 監視対象はここ
-	return {
-		isLoggedIn: isLoggedIn(state.login),
-		programs: selectPrograms(state.home)
-	}
-}
-
-const mapDispatchToProps = dispatch => {
-	return {
-		setupEpisode: (episode: Episode) => dispatch(EpisodeActions.episodeSetup(episode))
-	}
 }
 
 export default HomeScreen

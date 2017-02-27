@@ -34,7 +34,8 @@
     "react-native-keyboard-spacer": "^0.3.1",
     "react-native-material-kit": "^0.4.1",
     "react-native-router-flux": "^3.37.0",
-    "react-native-vector-icons": "^4.0.0"
+    "react-native-vector-icons": "^4.0.0",
+    "realm": "^1.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
