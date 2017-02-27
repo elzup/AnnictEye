@@ -1,7 +1,7 @@
 /* @flow */
 
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
-import {Program} from './Type';
+import {Program, Record} from './Type';
 import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
 import _ from 'lodash';
@@ -52,13 +52,19 @@ class AnnictApi {
 		return res.data.programs.map(e => new Program(e));
 	}
 
+	async getRecords(episodeID: number): Promise<Array<Record>> {
+		const res = await this.api.get('v1/records', {
+			filter_episode_id: episodeID,
+			filter_has_record_comment: true
+		});
+		this.errorCheck(res);
+		return res.data.records.map(e => new Record(e));
+	}
+
 	errorCheck(res: any) {
 		if (res.status == 401) {
 			throw new Error('no-auth');
 		}
-	}
-
-	getRecords(episodeID: number) {
 	}
 
 	postRecord() {

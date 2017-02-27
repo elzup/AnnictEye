@@ -77,17 +77,20 @@ class EpisodeScreen extends React.Component {
 	}
 
 	async init() {
+		this.loadRecords();
+	}
+
+	async loadRecords() {
+		let records;
 		try {
-			await this.loadRecords();
+			records = await client.getRecords(this.props.episode.id);
 		} catch (e) {
+			console.log(e.stack);
 			if (e.message == 'no-auth') {
 				store.deleteSession();
 				Actions.loginScreen();
 			}
 		}
-	}
-	async loadRecords() {
-		const records = client.getRecords(this.props.episode.id);
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
