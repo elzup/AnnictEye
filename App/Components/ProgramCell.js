@@ -34,6 +34,10 @@ const Styles = {
 	footer: {
 	},
 	number: {
+	},
+	row: {
+		flex: 2,
+		flexDirection: 'row'
 	}
 };
 
@@ -43,7 +47,7 @@ type Prop = {
 }
 
 const ProgramCell = ({program, onPress}: Prop) => {
-	const label = `${program.episode.numberText}|${program.episode.title}`;
+	const label = `${program.episode.numberText}|${program.episode.safeTilte()}`;
 	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm');
 	return (
 		<TouchableOpacity onPress={onPress} >
@@ -54,12 +58,9 @@ const ProgramCell = ({program, onPress}: Prop) => {
 					<Text style={Styles.title}>{label}</Text>
 				</View>
 				<View style={Styles.footer}>
-					<View>
-						<Icon name="bookmark" color={Colors.broccoli}/>
+					<View style={Styles.row}>
+						<Icon style={{fontSize: 15, marginRight: 5}} name="bookmark" color={Colors.broccoli}/>
 						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
-					</View>
-					<View>
-						<Text style={Styles.title}>{label}</Text>
 					</View>
 				</View>
 			</View>

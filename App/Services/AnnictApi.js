@@ -5,6 +5,7 @@ import {Program} from './Type';
 import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
 import _ from 'lodash';
+import moment from 'moment';
 
 class AnnictApi {
 	token: string
@@ -42,7 +43,11 @@ class AnnictApi {
 	}
 
 	async getPrograms(): Promise<Array<Program>> {
-		const res = await this.api.get('v1/me/programs', {sort_started_at: 'desc'});
+		const params = {
+			sort_started_at: 'desc',
+			filter_started_at_lt: moment().format('Y/MM/DD HH:mm')
+		};
+		const res = await this.api.get('v1/me/programs', params);
 		this.errorCheck(res);
 		return res.data.programs.map(e => new Program(e));
 	}

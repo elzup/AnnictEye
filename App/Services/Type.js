@@ -121,6 +121,7 @@ export class Episode {
 		this.id = parseInt(obj.id);
 		this.numberText = obj.number_text;
 		this.sortNumber = parseInt(obj.sort_number);
+		this.title = obj.title;
 		this.recordsCount = parseInt(obj.records_count);
 		if (obj.work != null) {
 			this.work = new Work(obj.work);
@@ -135,6 +136,10 @@ export class Episode {
 		} else {
 			this.nextEpisode = null;
 		}
+	}
+
+	safeTilte() {
+		return this.title || '---';
 	}
 }
 
