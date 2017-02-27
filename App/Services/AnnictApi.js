@@ -4,6 +4,7 @@ import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
 import {Program} from './Type';
 import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
+import _ from 'lodash';
 
 class AnnictApi {
 	token: string
@@ -43,7 +44,7 @@ class AnnictApi {
 	async getPrograms(): Promise<Array<Program>> {
 		const res = await this.api.get('v1/me/programs', {sort_started_at: 'desc'});
 		this.errorCheck(res);
-		return res;
+		return res.data.programs.map(e => new Program(e));
 	}
 
 	errorCheck(res: any) {

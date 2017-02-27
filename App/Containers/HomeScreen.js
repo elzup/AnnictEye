@@ -63,6 +63,8 @@ class HomeScreen extends Component {
 			if (e.message == 'no-auth') {
 				store.deleteSession();
 				Actions.loginScreen();
+			} else {
+				console.log(e.stack);
 			}
 		}
 	}
@@ -106,7 +108,6 @@ class HomeScreen extends Component {
 					contentContainerStyle={Styles.listContent}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderRow}
-					renderFooter={this.renderFooter}
 					pageSize={50}
 					onEndReachedThreshold={10}
 					enableEmptySections
@@ -114,10 +115,6 @@ class HomeScreen extends Component {
 			</View>
 		);
 	}
-
-	renderFooter = () => (
-		<Indicator loading={this.state.loading}/>
-	)
 }
 
 export default HomeScreen;

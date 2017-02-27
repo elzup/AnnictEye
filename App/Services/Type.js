@@ -18,20 +18,14 @@ export class Program {
 	startedAt: moment$Moment
 	isRebroadcast: boolean
 	channel: Channel
-	work: Work | any
-	episode: Episode | any
+	work: Work
+	episode: Episode
 
 	constructor(obj: ProgramScheme) {
 		this.id = parseInt(obj.id);
 		this.channel = new Channel(obj.channel);
-		this.work = {};
-		if (obj.work) {
-			this.work = new Work(obj.work);
-		}
-		this.episode = {};
-		if (obj.episode) {
-			this.episode = new Episode(obj.episode);
-		}
+		this.work = new Work(obj.work);
+		this.episode = new Episode(obj.episode);
 		this.startedAt = moment(obj.started_at);
 		this.isRebroadcast = obj.is_rebroadcast == 'true';
 	}
@@ -107,7 +101,7 @@ export type EpisodeScheme = {
 	sort_number: string,
 	title: string,
 	records_count: string,
-	work: WorkScheme,
+	work: ?WorkScheme,
 	prev_episode: ?EpisodeScheme,
 	next_episode: ?EpisodeScheme
 }
@@ -119,16 +113,18 @@ export class Episode {
 	sortNumber: number
 	title: string
 	recordsCount: number
-	work: Work
-	prevEpisode: Episode | any
-	nextEpisode: Episode | any
+	work: ?Work
+	prevEpisode: ?Episode
+	nextEpisode: ?Episode
 
 	constructor(obj: EpisodeScheme) {
 		this.id = parseInt(obj.id);
 		this.numberText = obj.number_text;
 		this.sortNumber = parseInt(obj.sort_number);
 		this.recordsCount = parseInt(obj.records_count);
-		this.work = new Work(obj.work);
+		if (obj.work != null) {
+			this.work = new Work(obj.work);
+		}
 		if (obj.prev_episode != null) {
 			this.prevEpisode = new Episode(obj.prev_episode);
 		} else {
