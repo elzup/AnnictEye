@@ -3,20 +3,16 @@ import Realm from 'realm';
 
 class Session {
 	access_token: string
-	schema: Object = {
-		name: 'Session',
-		properties: {
-			access_token: 'string'
-		}
-	}
 }
 
-export const realm = new Realm({
-	schema: [Session],
-	schemaVersion: 0
-});
+Session.schema = {
+	name: 'Session',
+	properties: {
+		access_token: 'string'
+	}
+};
 
-class Store {
+class RealmManager {
 	realm: Realm;
 
 	constructor(realm: Realm) {
@@ -42,4 +38,10 @@ class Store {
 	}
 }
 
-export const store = new Store(realm);
+const realm = new Realm({
+	schema: [Session],
+	schemaVersion: 0
+});
+
+const store = new RealmManager(realm);
+export {Session, store};

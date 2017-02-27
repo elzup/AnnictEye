@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react';
+import React, {Component} from 'react';
 import {
 	View,
 	ListView,
@@ -13,6 +13,8 @@ import Indicator from '../Components/Indicator';
 
 import {ApplicationStyles, Metrics, Colors} from '../Themes/';
 import {Program, Episode} from '../Services/Type';
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -26,53 +28,44 @@ const Styles = StyleSheet.create({
 	}
 });
 
-type HomeScreenProps = {
-	programs: Array<Program>,
-	loadProgram: () => void,
-	setupEpisode: () => void,
+type Props = {
 }
 
-class HomeScreen extends React.PureComponent {
-	props: HomeScreenProps
-	state: {
-		dataSource: Object,
-		loading: boolean
+type State = {
+	loading: boolean,
+	dataSource: any
+}
+
+const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id;
+
+class HomeScreen extends Component {
+	props: Props
+	state: State = {
+		loading: true,
+		dataSource: new ListView.DataSource({rowHasChanged}).cloneWithRows([])
 	}
 
-	constructor(props) {
-		super(props);
-
-		const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id;
-
-		// DataSource configured
-		const ds = new ListView.DataSource({rowHasChanged});
-
-		// Datasource is always in state
-		this.state = {
-			loading: false,
-			dataSource: ds.cloneWithRows(props.programs)
-		};
+	componentWillMount() {
+		if (!store.isLogin()) {
+			Actions.loginScreen();
+		}
 	}
 
-	componentDidMount = () => {
+	componentDidMount() {
 		this.init();
 	}
 
 	async init() {
-		// TODO: Actions.loginScreen()
-		await loadProgram();
+		await this.loadProgram();
 	}
 
 	async loadProgram() {
+		const programs = client.getPrograms();
 		// 放送済みのみ
-		this.setState({loading: true});
-		const progorams = await loadProgram();
-		const finishFilter = (program: Program) => program.startedAt.isBefore();
 		this.setState({
-			loading: programs.length === 0,
-			dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
+			loading: false,
+			dataSource: this.state.dataSource.cloneWithRows(programs)
 		});
-		this.setState({loading: false});
 	}
 
 	renderRow = (program: Program) => {
@@ -89,7 +82,6 @@ class HomeScreen extends React.PureComponent {
 	pressRow = (program: Program) => {
 		const {episode, work} = program;
 		episode.work = work;
-		this.props.setupEpisode(episode);
 		Actions.episodeScreen({title: `${work.title} ${episode.numberText}`});
 	}
 

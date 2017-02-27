@@ -9,13 +9,17 @@ import {
   ScrollView,
   Linking
 } from 'react-native';
+import {Actions, ActionConst} from 'react-native-router-flux';
+
 import Indicator from '../Components/Indicator';
 import RecordCell from '../Components/RecordCell';
 import DrawerButton from '../Components/DrawerButton';
-
-import {Actions, ActionConst} from 'react-native-router-flux';
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
 import {Record, Episode} from '../Services/Type';
+
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -46,38 +50,34 @@ const Styles = StyleSheet.create({
 	}
 });
 
-type EpisodeScreenProps = {
-  loadEpisode: () => void,
-  records: Array<Record>,
-  episode: Episode
+type Props = {
+	episode: Episode
 }
 
+type State = {
+	loading: boolean,
+	dataSourceRecords: Object
+}
+const notSomeID = (r1: Record, r2: Record) => r1.id !== r2.id;
 class EpisodeScreen extends React.Component {
-	props: EpisodeScreenProps
-	state: {
-    loading: boolean,
-    dataSourceRecords: Object
-  }
+	props: Props
+	state: State = {
+		loading: true,
+		dataSourceRecords: new ListView.DataSource({notSomeID}).cloneWithRows([])
+	}
 
-	constructor(props) {
-		super(props);
-
-		const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id;
-
-		if (props.episode === null) {
-			Actions.homeScreen({type: ActionConst.RESET});
+	componentWillMount() {
+		if (!store.isLogin()) {
+			Actions.loginScreen();
 		}
-		const ds = new ListView.DataSource({rowHasChanged});
-		this.state = {
-			loading: false,
-			dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
-		};
 	}
 
 	componentDidMount = () => {
-		console.log('componentDidMount');
-		this.setState({loading: true});
-    // TODO: load
+		this.init();
+	}
+
+	async init() {
+		const records = client.getRecords(this.props.episode.id);
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)

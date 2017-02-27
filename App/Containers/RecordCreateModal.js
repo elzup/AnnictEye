@@ -1,5 +1,4 @@
 /* @flow */
-;
 
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
@@ -16,6 +15,7 @@ import type {RecordFields} from '../Services/Type';
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
 import ToggleIconButton from '../Components/ToggleIconButton';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import {store} from '../Models/RealmManager';
 
 const Styles = {
 	...ApplicationStyles.screen,
@@ -129,6 +129,12 @@ class RecordCreateModal extends Component {
 		shareFacebook: false
 	}
 
+	componentWillMount() {
+		if (!store.isLogin()) {
+			Actions.loginScreen();
+		}
+	}
+
 	componentDidMount() {
 		this.init();
 	}
@@ -139,19 +145,7 @@ class RecordCreateModal extends Component {
 	}
 
 	componentWillReceiveProps = (newProps: Props) => {
-		console.log('=> Receive', newProps);
-		this.forceUpdate();
-		if (!newProps.isLoggedIn) {
-			Actions.loginScreen();
-			return;
-		}
-
-		if (newProps.posting) {
-			return;
-		}
 		if (newProps.resultEpisode !== null) {
-			window.alert('記録しました！');
-			Actions.pop();
 			return;
 		}
 		if (newProps.error) {
@@ -231,7 +225,7 @@ class RecordCreateModal extends Component {
 		this.setState({shareFacebook: !this.state.shareFacebook});
 	}
 
-	handleChangeRate = value => {
+	handleChangeRate(value: number) {
 		const color = value === 0 ? Colors.disable : Colors.star;
 		FAIcon.getImageSource('star', 22, color)
 		.then(source => {
@@ -239,13 +233,13 @@ class RecordCreateModal extends Component {
 		}).done();
 	}
 
-	handleText = text => {
+	handleText(text: string) {
 		this.setState({comment: text});
 	}
 
 	/* eslint camelcase: 0 */
 	handleSubmit = () => {
-		const {commnet, rating, shareTwitter, shareFacebook} = this.state;
+		const {comment, rating, shareTwitter, shareFacebook} = this.state;
 		const fields: RecordFields = {
 			episode_id: this.props.episode.id,
 			comment,
@@ -253,29 +247,9 @@ class RecordCreateModal extends Component {
 			share_twitter: shareTwitter,
 			share_facebook: shareFacebook
 		};
-		const record = new Record({
-			episode: this.props.episode,
-			comment: this.state.comment,
-			rating: this.state.rating
-		});
-		this.props.postRecord(fields);
+		// this.props.postRecord(fields);
+		window.alert('記録しました！');
+		Actions.pop();
 	}
 }
-
-const mapStateToProps = state => {
-	return {
-		isLoggedIn: isLoggedIn(state.login),
-		episode: selectEpisode(state.episode),
-		posting: selectPosting(state.episode),
-		resultEpisode: selectResultEpisode(state.episode),
-		error: selectError(state.episode)
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		postRecord: (fields: RecordFields) => dispatch(EpisodeActions.postRecordRequest(fields))
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(RecordCreateModal);
+export default RecordCreateModal;

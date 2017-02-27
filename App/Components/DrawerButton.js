@@ -16,17 +16,23 @@ const Styles = {
 };
 
 type Props = {
-	onPress: () => void,
-	 text: string
+	 text: string,
+	onPress: () => void
 }
 
 class DrawerButton extends PureComponent {
-	props: Props
-	render = (
-		<TouchableOpacity onPress={props.onPress}>
-			<Text style={Styles.text}>{props.text}</Text>
-		</TouchableOpacity>
-	)
+	props: Props = {
+		text: '',
+		onPress: () => {}
+	}
+	render() {
+		const {onPress, text} = this.props;
+		return (
+			<TouchableOpacity onPress={onPress}>
+				<Text style={Styles.text}>{text}</Text>
+			</TouchableOpacity>
+		);
+	}
 }
 
 export default DrawerButton;

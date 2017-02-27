@@ -1,5 +1,4 @@
 /* @flow */
-;
 
 import React, {Component} from 'react';
 import {View, StatusBar, StyleSheet} from 'react-native';
@@ -30,7 +29,7 @@ const Styles = StyleSheet.create({
 
 class RootContainer extends Component {
 	componentDidMount() {
-		this.props.startup();
+		// this.props.startup();
 	}
 
 	render() {

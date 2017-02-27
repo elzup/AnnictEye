@@ -1,5 +1,4 @@
 /* @flow */
-;
 
 import React, {Component} from 'react';
 import {
@@ -13,9 +12,10 @@ import {
 import {Actions, ActionConst} from 'react-native-router-flux';
 import {Metrics, Colors, ApplicationStyles} from '../Themes/';
 import DrawerButton from '../Components/DrawerButton';
-import AnnictApi from '../Services/AnnictApi';
 
 import {CLIENT_ID} from 'react-native-dotenv';
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -33,53 +33,26 @@ const Styles = StyleSheet.create({
 	}
 });
 
-type LoginScreenProps = {
+type Props = {
   attemptLogin: () => void,
   loggedIn: boolean,
 }
 
-class LoginScreen extends Component {
+type State = {
+	code: string
+}
 
-	props: LoginScreenProps
-
-	isAttempting: boolean
-
-	state: {
-    code: string
-  }
-
-	constructor(props: LoginScreenProps) {
-		super(props);
-		this.state = {
-			code: ''
-		};
-		this.isAttempting = false;
+class LoginScreen extends React.Component {
+	props: Props
+	state: State = {
+		code: ''
 	}
 
-	componentDidMount = () => {
-		this.isAttempting = true;
+	componentDidMount() {
+		this.init();
 	}
 
-	componentWillReceiveProps = (newProps: LoginScreenProps) => {
-		this.forceUpdate();
-		if (!this.isAttempting) {
-			return;
-		}
-		if (newProps.loggedIn) {
-			Actions.homeScreen({type: ActionConst.RESET});
-		} else {
-			console.log('login failed.');
-		}
-	}
-
-	handlePressOauth = () => {
-		Linking.openURL([
-			'https://api.annict.com/oauth/authorize',
-			'?response_type=code',
-			'&client_id=' + CLIENT_ID,
-			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
-			'&scope=read+write'
-		].join(''));
+	async init() {
 	}
 
 	render() {
@@ -109,6 +82,23 @@ class LoginScreen extends Component {
 				</ScrollView>
 			</View>
 		);
+	}
+
+	handlePressOauth() {
+		Linking.openURL([
+			'https://api.annict.com/oauth/authorize',
+			'?response_type=code',
+			'&client_id=' + CLIENT_ID,
+			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
+			'&scope=read+write'
+		].join(''));
+	}
+
+	handleSubmitCode() {
+		Actions.homeScreen({type: ActionConst.RESET});
+	}
+
+	handleChangeCode() {
 	}
 }
 

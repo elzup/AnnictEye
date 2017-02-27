@@ -1,6 +1,7 @@
 /* @flow */
 
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
+import {Program} from './Type';
 
 class AnnictApi {
 	constructor() {
@@ -27,7 +28,7 @@ class AnnictApi {
 
 	}
 
-	records(episodeID: number) {
+	getRecords(episodeID: number) {
 
 	}
 
@@ -35,9 +36,10 @@ class AnnictApi {
 		return false;
 	}
 
-	programs(): Array<Program> {
-
+	getPrograms(): Array<Program> {
+		return [];
 	}
 }
+const client = new AnnictApi();
 
-export default new AnnictApi();
+export {client};
