@@ -7,10 +7,10 @@ import {
   StyleSheet,
 	ScrollView,
 	Linking,
-	Button,
 	Text
 } from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
+import {Button} from 'react-native-elements';
 
 import Indicator from '../Components/Indicator';
 import RecordCell from '../Components/RecordCell';
@@ -63,7 +63,7 @@ class EpisodeScreen extends React.Component {
 	props: Props
 	state: State = {
 		loading: true,
-		dataSourceRecords: new ListView.DataSource({notSomeID}).cloneWithRows([])
+		dataSourceRecords: new ListView.DataSource({rowHasChanged: notSomeID}).cloneWithRows([])
 	}
 
 	componentWillMount() {
@@ -100,18 +100,24 @@ class EpisodeScreen extends React.Component {
 
 	render() {
 		const {episode} = this.props;
+		const title = episode.work ? episode.work.title : '---';
 		return (
 			<ScrollView
 				automaticallyAdjustContentInsets={false}
 				>
 				<View style={Styles.container}>
 					<View style={Styles.episodeHeader}>
-						<Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
+						<Text style={Styles.subLabel}>{title}</Text>
 						<Text style={Styles.boldLabel}>{episode.numberText} {episode.title || '---'}</Text>
 					</View>
-					<Button onPress={this.handleOpenModal}>
-						<Text>記録する</Text>
-					</Button>
+					<Button
+						raised
+						icon={{name: 'pencil', type: 'font-awesome'}}
+						backgroundColor={Colors.green}
+						onPress={this.handleOpenModal}
+						iconRight
+						title="記録する"
+						/>
 					<ListView
 						contentContainerStyle={Styles.listContent}
 						dataSource={this.state.dataSourceRecords}

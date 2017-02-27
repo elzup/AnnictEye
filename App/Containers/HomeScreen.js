@@ -80,7 +80,10 @@ class HomeScreen extends Component {
 	pressRow = (program: Program) => {
 		const {episode, work} = program;
 		episode.work = work;
-		Actions.episodeScreen({title: `${work.title} ${episode.numberText}`});
+		Actions.episodeScreen({
+			title: `${work.title} ${episode.numberText}`,
+			episode
+		});
 	}
 
 	noRowData = () => {
