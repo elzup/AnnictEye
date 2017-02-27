@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,14 @@ import {
   StyleSheet,
   ScrollView,
   Linking
-} from 'react-native'
-import Indicator from '../Components/Indicator'
-import RecordCell from '../Components/RecordCell'
-import DrawerButton from '../Components/DrawerButton'
+} from 'react-native';
+import Indicator from '../Components/Indicator';
+import RecordCell from '../Components/RecordCell';
+import DrawerButton from '../Components/DrawerButton';
 
-import {Actions, ActionConst} from 'react-native-router-flux'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import {Record, Episode} from '../Services/Type'
+import {Actions, ActionConst} from 'react-native-router-flux';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import {Record, Episode} from '../Services/Type';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -44,7 +44,7 @@ const Styles = StyleSheet.create({
 	listContent: {
 		marginTop: Metrics.baseMargin
 	}
-})
+});
 
 type EpisodeScreenProps = {
   loadEpisode: () => void,
@@ -60,36 +60,36 @@ class EpisodeScreen extends React.Component {
   }
 
 	constructor(props) {
-		super(props)
+		super(props);
 
-		const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id
+		const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id;
 
 		if (props.episode === null) {
-			Actions.homeScreen({type: ActionConst.RESET})
+			Actions.homeScreen({type: ActionConst.RESET});
 		}
-		const ds = new ListView.DataSource({rowHasChanged})
+		const ds = new ListView.DataSource({rowHasChanged});
 		this.state = {
 			loading: false,
 			dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
-		}
+		};
 	}
 
 	componentDidMount = () => {
-		console.log('componentDidMount')
-		this.setState({loading: true})
+		console.log('componentDidMount');
+		this.setState({loading: true});
     // TODO: load
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
-		})
+		});
 	}
 
 	noRowData = () => {
-		return this.state.dataSourceRecords.getRowCount() === 0
+		return this.state.dataSourceRecords.getRowCount() === 0;
 	}
 
 	render() {
-		const {episode} = this.props
+		const {episode} = this.props;
 		return (
 			<ScrollView
 				automaticallyAdjustContentInsets={false}
@@ -110,7 +110,7 @@ class EpisodeScreen extends React.Component {
 						/>
 				</View>
 			</ScrollView>
-		)
+		);
 	}
 
 	renderFooter = () => (
@@ -118,44 +118,38 @@ class EpisodeScreen extends React.Component {
   )
 
 	handleOpenModal = () => {
-		const { episode } = this.props
-		Actions.recordCreateModal({title: `記録する ${episode.numberText}`})
+		const {episode} = this.props;
+		Actions.recordCreateModal({title: `記録する ${episode.numberText}`});
 	}
 
 	renderRow = (record: Record) => (
 		<RecordCell
 			record={record}
 			onPressLike={() => {
-				this.handlePressLike(record)
+				this.handlePressLike(record);
 			}}
 			onPressReply={() => {
-				this.handlePressReply(record)
+				this.handlePressReply(record);
 			}}
 			onPressGlobe={() => {
-				this.handlePressGlobe(this.props.episode, record)
+				this.handlePressGlobe(this.props.episode, record);
 			}}
 			/>
   )
 
 	handlePressLike = (record: Record) => {
-		console.log(`like action: ${record.id}`)
+		console.log(`like action: ${record.id}`);
 	}
 
 	handlePressReply = (record: Record) => {
-		console.log(`reply action: ${record.id}`)
+		console.log(`reply action: ${record.id}`);
 	}
 
 	handlePressGlobe = (episode: Episode, record: Record) => {
-		console.log(`open action: ${record.id}`)
+		console.log(`open action: ${record.id}`);
     // HACK: move to model
-		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
-	}
-
-	componentWillUnmount() => {
-		this.setState({
-			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows([])
-		})
+		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`);
 	}
 }
 
-export default EpisodeScreen
+export default EpisodeScreen;

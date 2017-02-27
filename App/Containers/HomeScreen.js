@@ -1,20 +1,18 @@
 /* @flow */
 
-
-import React from 'react'
+import React from 'react';
 import {
 	View,
 	ListView,
-	StyleSheet} from 'react-native'
-import moment from 'moment'
+	StyleSheet} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import moment from 'moment';
 
-import ProgramCell from '../Components/ProgramCell'
-import Indicator from '../Components/Indicator'
+import ProgramCell from '../Components/ProgramCell';
+import Indicator from '../Components/Indicator';
 
-import {Actions} from 'react-native-router-flux'
-import {ApplicationStyles, Metrics, Colors} from '../Themes/'
-import {Program, Episode} from '../Services/Type'
-import { Api } form '../Services/Api'
+import {ApplicationStyles, Metrics, Colors} from '../Themes/';
+import {Program, Episode} from '../Services/Type';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -26,7 +24,7 @@ const Styles = StyleSheet.create({
 	listContent: {
 		marginTop: Metrics.baseMargin
 	}
-})
+});
 
 type HomeScreenProps = {
 	programs: Array<Program>,
@@ -42,18 +40,18 @@ class HomeScreen extends React.PureComponent {
 	}
 
 	constructor(props) {
-		super(props)
+		super(props);
 
-		const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id
+		const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id;
 
 		// DataSource configured
-		const ds = new ListView.DataSource({rowHasChanged})
+		const ds = new ListView.DataSource({rowHasChanged});
 
 		// Datasource is always in state
 		this.state = {
 			loading: false,
-			dataSource: ds.cloneWithRows(props.programs),
-		}
+			dataSource: ds.cloneWithRows(props.programs)
+		};
 	}
 
 	componentDidMount = () => {
@@ -67,14 +65,14 @@ class HomeScreen extends React.PureComponent {
 
 	async loadProgram() {
 		// 放送済みのみ
-		this.setState({loading: true})
+		this.setState({loading: true});
 		const progorams = await loadProgram();
-		const finishFilter = (program: Program) => program.startedAt.isBefore()
+		const finishFilter = (program: Program) => program.startedAt.isBefore();
 		this.setState({
 			loading: programs.length === 0,
 			dataSource: this.state.dataSource.cloneWithRows(programs.filter(finishFilter))
-		})
-		this.setState({loading: false})
+		});
+		this.setState({loading: false});
 	}
 
 	renderRow = (program: Program) => {
@@ -82,21 +80,21 @@ class HomeScreen extends React.PureComponent {
 			<ProgramCell
 				program={program}
 				onPress={() => {
-					this.pressRow(program)
+					this.pressRow(program);
 				}}
 				/>
-		)
+		);
 	}
 
 	pressRow = (program: Program) => {
-		const {episode, work} = program
-		episode.work = work
-		this.props.setupEpisode(episode)
-		Actions.episodeScreen({title: `${work.title} ${episode.numberText}`})
+		const {episode, work} = program;
+		episode.work = work;
+		this.props.setupEpisode(episode);
+		Actions.episodeScreen({title: `${work.title} ${episode.numberText}`});
 	}
 
 	noRowData = () => {
-		return this.state.dataSource.getRowCount() === 0
+		return this.state.dataSource.getRowCount() === 0;
 	}
 
 	render() {
@@ -112,7 +110,7 @@ class HomeScreen extends React.PureComponent {
 					enableEmptySections
 					/>
 			</View>
-		)
+		);
 	}
 
 	renderFooter = () => (
@@ -120,4 +118,4 @@ class HomeScreen extends React.PureComponent {
 	)
 }
 
-export default HomeScreen
+export default HomeScreen;

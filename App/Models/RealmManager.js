@@ -3,14 +3,13 @@ import Realm from 'realm';
 
 class Session {
 	access_token: string
-}
-
-Session.schema = {
-	name: 'Session',
-	properties: {
-		access_token: 'string'
+	schema: Object = {
+		name: 'Session',
+		properties: {
+			access_token: 'string'
+		}
 	}
-};
+}
 
 export const realm = new Realm({
 	schema: [Session],
