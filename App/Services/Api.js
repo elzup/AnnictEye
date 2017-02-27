@@ -8,28 +8,6 @@ import type {RecordFields} from '../Services/Type'
 
 // our "constructor"
 const create = (baseURL: string = 'https://api.annict.com/') => {
-	const api = apisauce.create({
-		baseURL,
-		headers: {
-			'Cache-Control': 'no-cache'
-		},
-		timeout: 10000
-	})
-
-	const setToken = (token: string) => {
-		api.setHeader('Authorization', `Bearer ${token}`)
-	}
-
-  /* eslint camelcase: 0 */
-	const oauthToken = (code: string) => api.post('oauth/token', {
-		client_id: CLIENT_ID,
-		client_secret: CLIENT_SECRET,
-		grant_type: 'authorization_code',
-		redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
-		code: code
-	})
-
-	const oauthRevoke = (token: string) => api.post('oauth/revoke', {token: token})
 
 	const mePrograms = () => api.get('v1/me/programs', {sort_started_at: 'desc'})
 	const postMeRecord = (recordFields: RecordFields) => api.post('v1/me/records', {

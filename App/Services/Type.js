@@ -19,7 +19,7 @@ export class Program {
 	isRebroadcast: boolean
 	channel: Channel
 	work: Work | any
-	episode: Episode
+	episode: Episode | any
 
 	constructor(obj: ProgramScheme) {
 		this.id = parseInt(obj.id);
@@ -120,8 +120,8 @@ export class Episode {
 	title: string
 	recordsCount: number
 	work: Work
-	prevEpisode: ?Episode
-	nextEpisode: ?Episode
+	prevEpisode: Episode | any
+	nextEpisode: Episode | any
 
 	constructor(obj: EpisodeScheme) {
 		this.id = parseInt(obj.id);

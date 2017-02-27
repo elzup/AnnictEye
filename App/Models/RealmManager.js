@@ -29,6 +29,12 @@ class RealmManager {
 		});
 	}
 
+	deleteSession() {
+		realm.write(() => {
+			realm.delete(realm.objects('Session'));
+		});
+	}
+
 	getSession(): Session {
 		const sessions = this.realm.objects('Session');
 		if (sessions.length == 0) {

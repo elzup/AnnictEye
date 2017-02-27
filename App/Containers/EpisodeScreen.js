@@ -3,17 +3,16 @@
 import React from 'react';
 import {
   View,
-  Text,
   ListView,
   StyleSheet,
   ScrollView,
   Linking
 } from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
+import {Button, Text} from 'native-base';
 
 import Indicator from '../Components/Indicator';
 import RecordCell from '../Components/RecordCell';
-import DrawerButton from '../Components/DrawerButton';
 import {Record, Episode} from '../Services/Type';
 
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
@@ -77,6 +76,16 @@ class EpisodeScreen extends React.Component {
 	}
 
 	async init() {
+		try {
+			await this.loadRecords();
+		} catch (e) {
+			if (e.message == 'no-auth') {
+				store.deleteSession();
+				Actions.loginScreen();
+			}
+		}
+	}
+	async loadRecords() {
 		const records = client.getRecords(this.props.episode.id);
 		this.setState({
 			loading: false,
@@ -99,7 +108,9 @@ class EpisodeScreen extends React.Component {
 						<Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
 						<Text style={Styles.boldLabel}>{episode.numberText} {episode.title || '---'}</Text>
 					</View>
-					<DrawerButton text={'記録する'} onPress={this.handleOpenModal}/>
+					<Button onPress={this.handleOpenModal}>
+						<Text>記録する</Text>
+					</Button>
 					<ListView
 						contentContainerStyle={Styles.listContent}
 						dataSource={this.state.dataSourceRecords}

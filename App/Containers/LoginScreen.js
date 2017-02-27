@@ -2,16 +2,13 @@
 
 import React, {Component} from 'react';
 import {
-  ScrollView,
-  Text,
-  View,
   StyleSheet,
-  Linking,
-  TextInput} from 'react-native';
+  View,
+  Linking} from 'react-native';
+import {Button, Text, Container, Content, Form, Item, Input, Header, Body, Title, Label} from 'native-base';
 
 import {Actions, ActionConst} from 'react-native-router-flux';
 import {Metrics, Colors, ApplicationStyles} from '../Themes/';
-import DrawerButton from '../Components/DrawerButton';
 
 import {CLIENT_ID} from 'react-native-dotenv';
 import {store} from '../Models/RealmManager';
@@ -19,17 +16,18 @@ import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
-	logo: {
-		height: Metrics.images.logo,
-		width: Metrics.images.logo,
-		resizeMode: 'contain'
+	warn: {
+		color: 'orange',
+		marginTop: 10,
+		marginBottom: 10
 	},
-	centered: {
-		alignItems: 'center'
+	text: {
+		marginTop: 10,
+		marginBottom: 10
 	},
-	textInput: {
-		height: 40,
-		color: Colors.coal
+	wrap: {
+		paddingLeft: 20,
+		paddingRight: 20
 	}
 });
 
@@ -48,6 +46,12 @@ class LoginScreen extends React.Component {
 		code: ''
 	}
 
+	componentWillMount() {
+		if (store.isLogin()) {
+			Actions.pop();
+		}
+	}
+
 	componentDidMount() {
 		this.init();
 	}
@@ -58,29 +62,35 @@ class LoginScreen extends React.Component {
 	render() {
 		const {code} = this.state;
 		return (
-			<View style={Styles.mainContainer}>
-				<ScrollView style={Styles.container}>
-					<View style={Styles.section} >
-						<Text>
-							認証画面から Annict にログインし、認証コードをコピーしてください。
-						</Text>
-						<DrawerButton text="認証画面を開く" onPress={this.handlePressOauth}/>
-						<TextInput
-							value={code}
-							style={Styles.textInput}
-							keyboardType="default"
-							returnKeyType="next"
-							autoCapitalize="none"
-							autoCorrect={false}
-							onChangeText={this.handleChangeCode}
-							underlineColorAndroid="transparent"
-							onSubmitEditing={this.handleSubmitCode}
-							placeholder="認証コード"
-							/>
-						<DrawerButton text="ログイン" onPress={this.handleSubmitCode}/>
+			<Container>
+				<Content>
+					<View style={Styles.mainContainer}>
+						<View style={Styles.wrap}>
+							<Text marginTop={10} marginBottom={10}>
+								Annict にログインし、認証コードをコピーしてください。
+							</Text>
+							<Text marginTop={10} marginBottom={10} color={'orange'}>
+								(ログイン後に認証コードが表示されない場合はボタンから開き直してください。)
+							</Text>
+							<Button onPress={this.handlePressOauth}>
+								<Text>認証画面を開く</Text>
+							</Button>
+							<Form>
+								<Item fixedLabel>
+									<Label>コード</Label>
+									<Input
+										placeholder="code"
+										onChangeText={this.handleChangeCode.bind(this)}
+										/>
+								</Item>
+							</Form>
+							<Button onPress={this.handleSubmitCode.bind(this)}>
+								<Text>ログイン</Text>
+							</Button>
+						</View>
 					</View>
-				</ScrollView>
-			</View>
+				</Content>
+			</Container>
 		);
 	}
 
@@ -95,10 +105,17 @@ class LoginScreen extends React.Component {
 	}
 
 	handleSubmitCode() {
-		Actions.homeScreen({type: ActionConst.RESET});
+		this.auth();
 	}
 
-	handleChangeCode() {
+	async auth() {
+		const token = await client.oauthToken(this.state.code);
+		console.log(token);
+		// Actions.homeScreen({type: ActionConst.RESET});
+	}
+
+	handleChangeCode(code: string) {
+		this.setState({code});
 	}
 }
 

@@ -2,42 +2,64 @@
 
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
 import {Program} from './Type';
+import {store} from '../Models/RealmManager';
+import {create} from 'apisauce';
 
 class AnnictApi {
-	constructor() {
+	token: string
+	api: any
 
+	constructor() {
+		this.api = create({
+			baseURL: 'https://api.annict.com/',
+			timeout: 10000
+		});
+
+		if (store.isLogin()) {
+			const session = store.getSession();
+			this.setToken(session.access_token);
+		}
 	}
 
-	isLogin(): boolean {
-		return false;
+	setToken(token: string) {
+		this.token = token;
+		this.api.setHeader('Authorization', `Bearer ${token}`);
 	}
 
 	oauthToken(code: string) {
-
+		return this.api.post('oauth/token', {
+			client_id: CLIENT_ID,
+			client_secret: CLIENT_SECRET,
+			grant_type: 'authorization_code',
+			redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+			code
+		});
 	}
 
-	oauthRevoke(token: string) {
-
+	oauthRevoke() {
+		return this.api.post('oauth/revoke', {token: this.token});
 	}
 
-	mePrograms() {
-
+	async getPrograms(): Promise<Array<Program>> {
+		const res = await this.api.get('v1/me/programs', {sort_started_at: 'desc'});
+		this.errorCheck(res);
+		return res;
 	}
 
-	postRecord() {
-
+	errorCheck(res: any) {
+		if (res.status == 401) {
+			throw new Error('no-auth');
+		}
 	}
 
 	getRecords(episodeID: number) {
+	}
 
+	postRecord() {
 	}
 
 	login(code: string): boolean {
 		return false;
-	}
-
-	getPrograms(): Array<Program> {
-		return [];
 	}
 }
 const client = new AnnictApi();

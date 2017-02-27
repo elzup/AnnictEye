@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {
 	View,
 	ListView,
+	Text,
 	StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
@@ -56,11 +57,19 @@ class HomeScreen extends Component {
 	}
 
 	async init() {
-		await this.loadProgram();
+		try {
+			await this.loadProgram();
+		} catch (e) {
+			if (e.message == 'no-auth') {
+				store.deleteSession();
+				Actions.loginScreen();
+			}
+		}
 	}
 
 	async loadProgram() {
-		const programs = client.getPrograms();
+		const programs = await client.getPrograms();
+		console.log(programs);
 		// 放送済みのみ
 		this.setState({
 			loading: false,
@@ -92,6 +101,7 @@ class HomeScreen extends Component {
 	render() {
 		return (
 			<View style={Styles.container}>
+				<Text visible={false}>ロードできませんでした。</Text>
 				<ListView
 					contentContainerStyle={Styles.listContent}
 					dataSource={this.state.dataSource}

@@ -1,5 +1,4 @@
 /* @flow */
-;
 
 import React from 'react';
 import {
@@ -28,7 +27,8 @@ type Props = {
 	text?: string,
 	color?: string
 }
-class IconButton {
+
+class IconButton extends React.PureComponent {
 	props: Props = {
 		iconName: 'star',
 		onPress: () => {},
