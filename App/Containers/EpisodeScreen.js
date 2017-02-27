@@ -5,11 +5,12 @@ import {
   View,
   ListView,
   StyleSheet,
-  ScrollView,
-  Linking
+	ScrollView,
+	Linking,
+	Button,
+	Text
 } from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
-import {Button, Text} from 'native-base';
 
 import Indicator from '../Components/Indicator';
 import RecordCell from '../Components/RecordCell';

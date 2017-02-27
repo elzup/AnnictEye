@@ -4,8 +4,9 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
+	Text,
   Linking} from 'react-native';
-import {Button, Text, Container, Content, Form, Item, Input, Header, Body, Title, Label} from 'native-base';
+import {FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-elements';
 
 import {Actions, ActionConst} from 'react-native-router-flux';
 import {Metrics, Colors, ApplicationStyles} from '../Themes/';
@@ -62,35 +63,23 @@ class LoginScreen extends React.Component {
 	render() {
 		const {code} = this.state;
 		return (
-			<Container>
-				<Content>
-					<View style={Styles.mainContainer}>
-						<View style={Styles.wrap}>
-							<Text marginTop={10} marginBottom={10}>
-								Annict にログインし、認証コードをコピーしてください。
-							</Text>
-							<Text marginTop={10} marginBottom={10} color={'orange'}>
-								(ログイン後に認証コードが表示されない場合はボタンから開き直してください。)
-							</Text>
-							<Button onPress={this.handlePressOauth}>
-								<Text>認証画面を開く</Text>
-							</Button>
-							<Form>
-								<Item fixedLabel>
-									<Label>コード</Label>
-									<Input
-										placeholder="code"
-										onChangeText={this.handleChangeCode.bind(this)}
-										/>
-								</Item>
-							</Form>
-							<Button onPress={this.handleSubmitCode.bind(this)}>
-								<Text>ログイン</Text>
-							</Button>
-						</View>
-					</View>
-				</Content>
-			</Container>
+			<View style={Styles.mainContainer}>
+				<View style={Styles.wrap}>
+					<Text style={Styles.text}>
+						Annict にログインし、認証コードをコピーしてください。
+					</Text>
+					<Text style={Styles.warn}>
+						(ログイン後に認証コードが表示されない場合はボタンから開き直してください。)
+					</Text>
+					<Button onPress={this.handlePressOauth} title="認証画面を開く"/>
+					<FormLabel>コード</FormLabel>
+					<FormInput onChangeText={this.handleChangeCode.bind(this)}/>
+					<Button
+						onPress={this.handleSubmitCode.bind(this)}
+						title="ログイン"
+						/>
+				</View>
+			</View>
 		);
 	}
 
@@ -109,9 +98,10 @@ class LoginScreen extends React.Component {
 	}
 
 	async auth() {
-		const token = await client.oauthToken(this.state.code);
-		console.log(token);
-		// Actions.homeScreen({type: ActionConst.RESET});
+		const res = await client.oauthToken(this.state.code);
+		store.saveAccessToken(res.data.access_token);
+		console.log('t: ' + res.data.access_token);
+		Actions.homeScreen({type: ActionConst.RESET});
 	}
 
 	handleChangeCode(code: string) {
