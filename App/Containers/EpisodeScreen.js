@@ -140,7 +140,10 @@ class EpisodeScreen extends React.Component {
 
 	handleOpenModal = () => {
 		const {episode} = this.props;
-		Actions.recordCreateModal({title: `記録する ${episode.numberText}`});
+		Actions.recordCreateModal({
+			title: `記録する ${episode.numberText}`,
+			episode
+		});
 	}
 
 	renderRow = (record: Record) => (

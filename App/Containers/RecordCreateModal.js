@@ -15,7 +15,9 @@ import type {RecordFields} from '../Services/Type';
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
 import ToggleIconButton from '../Components/ToggleIconButton';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = {
 	...ApplicationStyles.screen,
@@ -144,15 +146,6 @@ class RecordCreateModal extends Component {
 		this.setState({sliderThumb});
 	}
 
-	componentWillReceiveProps = (newProps: Props) => {
-		if (newProps.resultEpisode !== null) {
-			return;
-		}
-		if (newProps.error) {
-			window.alert(newProps.error);
-		}
-	}
-
 	render() {
 		return (
 			<View style={Styles.container}>
@@ -164,8 +157,8 @@ class RecordCreateModal extends Component {
 					autoCapitalize="none"
 					autoCorrect={false}
 					underlineColorAndroid="transparent"
-					onSubmitEditing={this.handleSubmit}
-					onChangeText={this.handleText}
+					onSubmitEditing={this.handleSubmit.bind(this)}
+					onChangeText={this.handleText.bind(this)}
 					placeholder="コメント"
 					/>
 
@@ -180,7 +173,7 @@ class RecordCreateModal extends Component {
 							minimumValue={0}
 							maximumValue={5}
 							step={0.1}
-							onValueChange={this.handleChangeRate}
+							onValueChange={this.handleChangeRate.bind(this)}
 							/>
 					</View>
 
@@ -191,7 +184,7 @@ class RecordCreateModal extends Component {
 								size={Fonts.size.h4}
 								active={this.state.shareTwitter}
 								colorActive={Colors.twitter}
-								onPress={this.handleToggleTwitter}
+								onPress={this.handleToggleTwitter.bind(this)}
 								/>
 						</View>
 						<View style={Styles.toggle} >
@@ -200,11 +193,11 @@ class RecordCreateModal extends Component {
 								size={Fonts.size.h4}
 								active={this.state.shareFacebook}
 								colorActive={Colors.facebook}
-								onPress={this.handleToggleFacebook}
+								onPress={this.handleToggleFacebook.bind(this)}
 								/>
 						</View>
 						<TouchableOpacity
-							onPress={this.handleSubmit}
+							onPress={this.handleSubmit.bind(this)}
 							style={Styles.submitButton}
 							>
 							<Text style={Styles.buttonInner}>記録</Text>
@@ -216,21 +209,20 @@ class RecordCreateModal extends Component {
 		);
 	}
 
-	handleToggleTwitter = () => {
+	handleToggleTwitter() {
 		console.log('share twitter toggle');
 		this.setState({shareTwitter: !this.state.shareTwitter});
 	}
-	handleToggleFacebook = () => {
+
+	handleToggleFacebook() {
 		console.log('share facebook toggle');
 		this.setState({shareFacebook: !this.state.shareFacebook});
 	}
 
-	handleChangeRate(value: number) {
+	async handleChangeRate(value: number) {
 		const color = value === 0 ? Colors.disable : Colors.star;
-		FAIcon.getImageSource('star', 22, color)
-		.then(source => {
-			this.setState({sliderThumb: source, rating: value});
-		}).done();
+		const source = await FAIcon.getImageSource('star', 22, color);
+		this.setState({sliderThumb: source, rating: value});
 	}
 
 	handleText(text: string) {
@@ -238,15 +230,17 @@ class RecordCreateModal extends Component {
 	}
 
 	/* eslint camelcase: 0 */
-	handleSubmit = () => {
+	async handleSubmit() {
 		const {comment, rating, shareTwitter, shareFacebook} = this.state;
 		const fields: RecordFields = {
 			episode_id: this.props.episode.id,
 			comment,
 			rating,
-			share_twitter: shareTwitter,
-			share_facebook: shareFacebook
+			share_twitter: shareTwitter ? 'true' : 'false',
+			share_facebook: shareFacebook ? 'true' : 'false'
 		};
+		const res = await client.postRecord(fields);
+		console.log(res);
 		// this.props.postRecord(fields);
 		window.alert('記録しました！');
 		Actions.pop();

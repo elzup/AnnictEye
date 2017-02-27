@@ -4,8 +4,9 @@ import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
 import {Program, Record} from './Type';
 import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
-import _ from 'lodash';
 import moment from 'moment';
+
+import type {RecordFields} from '../Services/Type';
 
 class AnnictApi {
 	token: string
@@ -67,7 +68,10 @@ class AnnictApi {
 		}
 	}
 
-	postRecord() {
+	async postRecord(fields: RecordFields) {
+		const res = await this.api.post('v1/me/records', fields);
+		this.errorCheck(res);
+		return res;
 	}
 
 	login(code: string): boolean {
