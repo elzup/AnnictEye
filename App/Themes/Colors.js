@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 
 const colors = {
 	background: '#1F0808',

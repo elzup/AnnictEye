@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 
 import Fonts from './Fonts';
 import Metrics from './Metrics';

@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 
 import React, {Component} from 'react';
 import {ScrollView, BackAndroid} from 'react-native';

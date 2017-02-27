@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 
 const type = {
 	base: 'HelveticaNeue',

@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 import API from '../Services/Api';
 
 /* ------------- Types ------------- */

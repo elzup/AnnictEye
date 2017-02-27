@@ -1,5 +1,5 @@
 /* @flow */
-'use strict';
+;
 
 import React, {PropTypes, Component} from 'react';
 import Drawer from 'react-native-drawer';

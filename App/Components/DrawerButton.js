@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import React, {PureComponent} from 'react';
 import {Text, TouchableOpacity} from 'react-native';

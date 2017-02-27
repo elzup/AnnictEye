@@ -1,5 +1,5 @@
 /* @flow */
-'use strict'
+
 
 import type moment$Moment from 'moment'
 import moment from 'moment'
