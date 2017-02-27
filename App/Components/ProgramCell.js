@@ -56,7 +56,7 @@ const ProgramCell = ({program, onPress}: Prop) => {
 				<View style={Styles.footer}>
 					<View>
 						<Icon name="bookmark" color={Colors.broccoli}/>
-						<Text style={Styles.number}>{program.episode}</Text>
+						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
 					</View>
 					<View>
 						<Text style={Styles.title}>{label}</Text>
