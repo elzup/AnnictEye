@@ -32,6 +32,8 @@ const Styles = {
 		marginBottom: Metrics.smallMargin
 	},
 	footer: {
+		flex: 3,
+		flexDirection: 'row'
 	},
 	number: {
 	},
@@ -61,6 +63,10 @@ const ProgramCell = ({program, onPress}: Prop) => {
 					<View style={Styles.row}>
 						<Icon style={{fontSize: 15, marginRight: 5}} name="bookmark" color={Colors.broccoli}/>
 						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
+					</View>
+					<View style={Styles.row}>
+						<Icon style={{fontSize: 15, marginRight: 5}} name="comment" color={Colors.broccoli}/>
+						<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
 					</View>
 				</View>
 			</View>

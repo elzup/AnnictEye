@@ -98,9 +98,10 @@ export type EpisodeScheme = {
 	id: string,
 	number: string,
 	number_text: string,
-	sort_number: string,
+	sort_number: number,
 	title: string,
-	records_count: string,
+	records_count: number,
+	record_comments_count: number,
 	work: ?WorkScheme,
 	prev_episode: ?EpisodeScheme,
 	next_episode: ?EpisodeScheme
@@ -113,6 +114,8 @@ export class Episode {
 	sortNumber: number
 	title: string
 	recordsCount: number
+	recordCommentsCount: number
+
 	work: ?Work
 	prevEpisode: ?Episode
 	nextEpisode: ?Episode
@@ -120,9 +123,10 @@ export class Episode {
 	constructor(obj: EpisodeScheme) {
 		this.id = parseInt(obj.id);
 		this.numberText = obj.number_text;
-		this.sortNumber = parseInt(obj.sort_number);
+		this.sortNumber = obj.sort_number;
 		this.title = obj.title;
-		this.recordsCount = parseInt(obj.records_count);
+		this.recordsCount = obj.records_count;
+		this.recordCommentsCount = obj.record_comments_count;
 		if (obj.work != null) {
 			this.work = new Work(obj.work);
 		}
@@ -222,6 +226,6 @@ export type RecordFields = {
 	episode_id: number,
 	comment: string,
 	rating: number,
-	share_twitter: boolean,
-	share_facebook: boolean
+	share_twitter: 'true' | 'false',
+	share_facebook: 'true' | 'false'
 }
