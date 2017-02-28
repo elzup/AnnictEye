@@ -33,7 +33,7 @@ const TabIcon = (props: any) => (
 		<Text
 			style={{color: props.selected ? Colors.snow : Colors.disable}}
 			>
-			{props.selected ? props.title : ''}
+			{props.selected ? props.tabTitle : ''}
 		</Text>
 	</View>
   );

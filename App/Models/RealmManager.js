@@ -1,5 +1,6 @@
 /* @flow */
 import Realm from 'realm';
+import type {Profile} from '../Services/Type';
 
 class Session {
 	access_token: string
@@ -31,6 +32,14 @@ class RealmManager {
 		realm.write(() => {
 			realm.create('Session', {access_token});
 		});
+	}
+
+	getUser(): Profile {
+		const session = this.getSession();
+		return {
+			id: session.user_id,
+			username: session.username
+		};
 	}
 
 	saveUser(user_id: number, username: string) {

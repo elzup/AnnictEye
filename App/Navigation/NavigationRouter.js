@@ -7,6 +7,7 @@ import {Colors} from '../Themes';
 // screens identified by the router
 import LoginScreen from '../Containers/LoginScreen';
 import HomeScreen from '../Containers/HomeScreen';
+import ProfileScreen from '../Containers/ProfileScreen';
 import EpisodeScreen from '../Containers/EpisodeScreen';
 import RecordCreateModal from '../Containers/RecordCreateModal';
 import TabIcon from '../Components/TabIcon';
@@ -45,6 +46,7 @@ class NavigationRouter extends Component {
 								titleStyle={Styles.title}
 								component={HomeScreen}
 								title="Home"
+								tabTitle="Home"
 								iconName="home"
 								icon={TabIcon}
 								/>
@@ -52,8 +54,9 @@ class NavigationRouter extends Component {
 								key="profileScreen"
 								navigationBarStyle={Styles.navBar}
 								titleStyle={Styles.title}
-								component={HomeScreen}
-								title="('ω')"
+								component={ProfileScreen}
+								title="Profile"
+								tabTitle="('ω')"
 								iconName="person"
 								icon={TabIcon}
 								/>
