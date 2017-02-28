@@ -120,6 +120,8 @@ export class Episode {
 	prevEpisode: ?Episode
 	nextEpisode: ?Episode
 
+	isWatched: boolean
+
 	constructor(obj: EpisodeScheme) {
 		this.id = parseInt(obj.id);
 		this.numberText = obj.number_text;
@@ -140,6 +142,7 @@ export class Episode {
 		} else {
 			this.nextEpisode = null;
 		}
+		this.isWatched = false;
 	}
 
 	safeTilte() {

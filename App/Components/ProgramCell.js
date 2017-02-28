@@ -8,7 +8,7 @@ import {
 	Text
 } from 'react-native';
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {Icon} from 'react-native-elements';
 import {Program} from '../Services/Type';
 
 const Styles = {
@@ -57,15 +57,28 @@ const ProgramCell = ({program, onPress}: Prop) => {
 				<View style={Styles.infos}>
 					<Text style={Styles.time}>{timeLabel}</Text>
 					<Text style={Styles.workTitle}>{program.work.title}</Text>
+					<Icon
+						name="check-circle"
+						type="font-awesome"
+						color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
+						/>
 					<Text style={Styles.title}>{label}</Text>
 				</View>
 				<View style={Styles.footer}>
 					<View style={Styles.row}>
-						<Icon style={{fontSize: 15, marginRight: 5}} name="bookmark" color={Colors.broccoli}/>
+						<Icon
+							name="bookmark"
+							type="font-awesome"
+							color={Colors.broccoli}
+							/>
 						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
 					</View>
 					<View style={Styles.row}>
-						<Icon style={{fontSize: 15, marginRight: 5}} name="comment" color={Colors.broccoli}/>
+						<Icon
+							name="comment"
+							type="font-awesome"
+							color={Colors.broccoli}
+							/>
 						<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
 					</View>
 				</View>

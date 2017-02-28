@@ -48,9 +48,18 @@ class AnnictApi {
 			sort_started_at: 'desc',
 			filter_started_at_lt: moment().format('Y/MM/DD HH:mm')
 		};
-		const res = await this.api.get('v1/me/programs', params);
-		this.errorCheck(res);
-		return res.data.programs.map(e => new Program(e));
+		const res = await Promise.all([
+			this.api.get('v1/me/programs', params),
+			this.api.get('v1/me/programs', {...params, filter_unwatched: true})
+		]);
+		this.errorCheck(res[0]);
+		this.errorCheck(res[1]);
+		const unwatched_program_ids = res[1].data.programs.map(e => e.id);
+		return res[0].data.programs.map(e => {
+			const r = new Program(e);
+			r.episode.isWatched = !unwatched_program_ids.includes(r.id);
+			return r;
+		});
 	}
 
 	async getRecords(episodeID: number): Promise<Array<Record>> {

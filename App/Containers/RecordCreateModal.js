@@ -13,7 +13,6 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import {Episode, Record} from '../Services/Type';
 import type {RecordFields} from '../Services/Type';
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
-import ToggleIconButton from '../Components/ToggleIconButton';
 import {Icon} from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
