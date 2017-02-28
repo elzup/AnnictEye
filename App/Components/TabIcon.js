@@ -6,6 +6,8 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Colors} from '../Themes';
 
 const styles = StyleSheet.create({
 	tabText: {
@@ -17,15 +19,23 @@ const styles = StyleSheet.create({
 });
 
 const TabIcon = (props: any) => (
-	<Text
-		style={
-      props.selected ?
-      styles.tebTextActive :
-      styles.tabText
-    }
-		>
-		{props.title}
-	</Text>
+	<View>
+		<Icon
+			containerStyle={{
+				justifyContent: 'center',
+				alignItems: 'center',
+				marginTop: 5
+			}}
+			color={props.selected ? Colors.snow : Colors.disable}
+			name={props.iconName}
+			size={25}
+			/>
+		<Text
+			style={{color: props.selected ? Colors.snow : Colors.disable}}
+			>
+			{props.selected ? props.title : ''}
+		</Text>
+	</View>
   );
 
 export default TabIcon;

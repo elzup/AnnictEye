@@ -39,8 +39,24 @@ class NavigationRouter extends Component {
 				<Scene key="drawer" open={false}>
 					<Scene key="drawerChildrenWrapper" navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
 						<Scene initial key="tabbar" tabs tabBarStyle={Styles.tabBarStyle}>
-							<Scene key="homeScreen" initial navigationBarStyle={Styles.navBar} component={HomeScreen} title="ホーム" icon={TabIcon}/>
-							<Scene key="profileScreen" navigationBarStyle={Styles.navBar} component={HomeScreen} title="プロフィール" icon={TabIcon}/>
+							<Scene
+								initial key="homeScreen"
+								navigationBarStyle={Styles.navBar}
+								titleStyle={Styles.title}
+								component={HomeScreen}
+								title="Home"
+								iconName="home"
+								icon={TabIcon}
+								/>
+							<Scene
+								key="profileScreen"
+								navigationBarStyle={Styles.navBar}
+								titleStyle={Styles.title}
+								component={HomeScreen}
+								title="('ω')"
+								iconName="person"
+								icon={TabIcon}
+								/>
 						</Scene>
 						<Scene key="loginScreen" component={LoginScreen} title="ログイン" hideBackImage/>
 						<Scene key="episodeScreen" component={EpisodeScreen} title="エピソード"/>
