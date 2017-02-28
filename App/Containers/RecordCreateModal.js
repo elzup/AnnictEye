@@ -35,9 +35,6 @@ const Styles = {
 		fontSize: Fonts.size.h6,
 		paddingHorizontal: 15
 	},
-	navigationDummy: {
-		backgroundColor: Colors.pink
-	},
 	episodeHeader: {
 		...ApplicationStyles.headerBox
 	},
