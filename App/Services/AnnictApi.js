@@ -1,7 +1,7 @@
 /* @flow */
 
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
-import {Program, Record} from './Type';
+import {Program, Record, Episode} from './Type';
 import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
 import moment from 'moment';
@@ -11,10 +11,11 @@ import type {RecordFields} from '../Services/Type';
 class AnnictApi {
 	token: string
 	api: any
+	host = 'https://api.annict.com/'
 
 	constructor() {
 		this.api = create({
-			baseURL: 'https://api.annict.com/',
+			baseURL: this.host,
 			timeout: 10000
 		});
 
@@ -85,6 +86,20 @@ class AnnictApi {
 
 	login(code: string): boolean {
 		return false;
+	}
+
+	authURL(): string {
+		return [
+			`${this.host}oauth/authorize`,
+			'?response_type=code',
+			'&client_id=' + CLIENT_ID,
+			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
+			'&scope=read+write'
+		].join('');
+	}
+
+	recordURL(record: Record): string {
+		return `https://annict.com/@${record.user.username}/records/${record.id}`;
 	}
 }
 const client = new AnnictApi();
