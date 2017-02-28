@@ -3,12 +3,16 @@ import Realm from 'realm';
 
 class Session {
 	access_token: string
+	user_id: number
+	username: string
 }
 
 Session.schema = {
 	name: 'Session',
 	properties: {
-		access_token: 'string'
+		access_token: 'string',
+		user_id: 'int',
+		username: 'string'
 	}
 };
 
@@ -29,6 +33,14 @@ class RealmManager {
 		});
 	}
 
+	saveUser(user_id: number, username: string) {
+		const session = this.getSession();
+		realm.write(() => {
+			session.user_id = user_id;
+			session.username = username;
+		});
+	}
+
 	deleteSession() {
 		realm.write(() => {
 			realm.delete(realm.objects('Session'));
@@ -46,7 +58,7 @@ class RealmManager {
 
 const realm = new Realm({
 	schema: [Session],
-	schemaVersion: 0
+	schemaVersion: 1
 });
 
 const store = new RealmManager(realm);

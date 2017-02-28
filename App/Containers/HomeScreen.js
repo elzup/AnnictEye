@@ -70,7 +70,6 @@ class HomeScreen extends React.PureComponent {
 
 	async loadProgram() {
 		const programs = await client.getPrograms();
-		console.log(programs);
 		// 放送済みのみ
 		this.setState({
 			loading: false,

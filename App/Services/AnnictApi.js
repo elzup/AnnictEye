@@ -1,10 +1,11 @@
 /* @flow */
 
 import {CLIENT_ID, CLIENT_SECRET} from 'react-native-dotenv';
-import {Program, Record, Episode} from './Type';
-import {store} from '../Models/RealmManager';
 import {create} from 'apisauce';
 import moment from 'moment';
+
+import {Program, Record, Episode} from './Type';
+import {store} from '../Models/RealmManager';
 
 import type {RecordFields} from '../Services/Type';
 
@@ -14,6 +15,7 @@ class AnnictApi {
 	host = 'https://api.annict.com/'
 
 	constructor() {
+		console.log('Gen AnncitAPI');
 		this.api = create({
 			baseURL: this.host,
 			timeout: 10000
@@ -22,7 +24,16 @@ class AnnictApi {
 		if (store.isLogin()) {
 			const session = store.getSession();
 			this.setToken(session.access_token);
+			console.log(session);
+			if (session.id == null) {
+				this.userInfoSync();
+			}
 		}
+	}
+
+	async userInfoSync() {
+		const userInfo = await this.getMe();
+		store.saveUser(userInfo.id, userInfo.username);
 	}
 
 	setToken(token: string) {
@@ -42,6 +53,12 @@ class AnnictApi {
 
 	oauthRevoke() {
 		return this.api.post('oauth/revoke', {token: this.token});
+	}
+
+	async getMe() {
+		const res = await this.api.get('v1/me');
+		this.errorCheck(res);
+		return res.data;
 	}
 
 	async getPrograms(): Promise<Array<Program>> {
@@ -69,7 +86,12 @@ class AnnictApi {
 			filter_has_record_comment: true
 		});
 		this.errorCheck(res);
-		return res.data.records.map(e => new Record(e));
+		const records: Array<Record> = res.data.records.map(e => new Record(e));
+		const my = -1;
+		records.forEach(e => {
+			// e.user.id == 1;
+		});
+		return records;
 	}
 
 	errorCheck(res: any) {
