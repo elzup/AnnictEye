@@ -82,7 +82,7 @@ class ProfileScreen extends React.PureComponent {
 	}
 
 	render() {
-		const avator = this.state.profile.avatar_url == null ? (
+		const avator = (this.state.profile.avatar_url == null || this.state.profile.avatar_url == '') ? (
 			<View style={{width: 50, height: 50, borderRadius: 25, marginTop: 20, backgroundColor: Colors.cloud}}/>
 		) : (
 			<Image

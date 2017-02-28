@@ -42,14 +42,16 @@ class RealmManager {
 		const session = this.getSession();
 		return {
 			id: session.user_id || 0,
-			username: session.username || ''
+			username: session.username || '',
+			name: session.name || '---',
+			avatar_url: session.avatar_url || ''
 		};
 	}
 
 	saveUser(profile: Profile) {
 		const session = this.getSession();
 		realm.write(() => {
-			session.user_id = profile.id;
+			session.user_id = profile.user_id;
 			session.username = profile.username;
 			session.name = profile.name;
 			session.avatar_url = profile.avatar_url;

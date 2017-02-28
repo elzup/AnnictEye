@@ -25,7 +25,7 @@ class AnnictApi {
 			const session = store.getSession();
 			this.setToken(session.access_token);
 			console.log(session);
-			if (session.id == null) {
+			if (session.user_id == null) {
 				this.getMe();
 			}
 		}
@@ -91,8 +91,9 @@ class AnnictApi {
 		});
 		this.errorCheck(res);
 		const records: Array<Record> = res.data.records.map(e => new Record(e));
-		const myRecords = records.filter(e => e.user.id == store.getSession().user_id);
-		const otherRecords = records.filter(e => e.user.id != store.getSession().user_id);
+		const user_id = store.getUser().id;
+		const myRecords = records.filter(e => e.user.id == user_id);
+		const otherRecords = records.filter(e => e.user.id != user_id);
 		myRecords.forEach(e => {
 			e.isMine = true;
 		});
