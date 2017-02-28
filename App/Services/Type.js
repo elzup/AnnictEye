@@ -234,3 +234,10 @@ export type RecordFields = {
 	share_twitter: 'true' | 'false',
 	share_facebook: 'true' | 'false'
 }
+
+export type Profile = {
+	id?: number,
+	username?: string,
+	avatar_url?: string,
+	name?: string
+}

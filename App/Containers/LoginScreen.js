@@ -92,9 +92,13 @@ class LoginScreen extends React.Component {
 
 	async auth() {
 		const res = await client.oauthToken(this.state.code);
-		store.saveAccessToken(res.data.access_token);
+		await client.setToken(res.data.access_token);
 		console.log('t: ' + res.data.access_token);
-		Actions.homeScreen({type: ActionConst.RESET});
+		Actions.pop();
+		setTimeout(() => {
+			console.log('refresh tabbar');
+			Actions.refresh({name: 'tabbar'});
+		}, 10);
 	}
 
 	handleChangeCode(code: string) {
