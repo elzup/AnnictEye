@@ -1,5 +1,4 @@
 /* @flow */
-;
 
 import React, {Component} from 'react';
 import moment from 'moment';
@@ -77,8 +76,8 @@ class RecordCell extends Component {
 				</View>
 				<View style={Styles.footer}>
 					<View style={Styles.buttons}>
-						<IconButton iconName="heart" onPress={onPressLike}/>
-						<IconButton iconName="reply" onPress={onPressReply}/>
+						<IconButton text={record.likesCount.toString()} iconName="heart" onPress={onPressLike}/>
+						<IconButton text={record.commentsCount.toString()} iconName="reply" onPress={onPressReply}/>
 						<IconButton iconName="globe" onPress={onPressGlobe}/>
 					</View>
 				</View>
