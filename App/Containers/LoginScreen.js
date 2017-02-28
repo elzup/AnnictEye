@@ -11,7 +11,6 @@ import {FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-
 import {Actions, ActionConst} from 'react-native-router-flux';
 import {Metrics, Colors, ApplicationStyles} from '../Themes/';
 
-import {CLIENT_ID} from 'react-native-dotenv';
 import {store} from '../Models/RealmManager';
 import {client} from '../Services/AnnictApi';
 
@@ -84,13 +83,7 @@ class LoginScreen extends React.Component {
 	}
 
 	handlePressOauth() {
-		Linking.openURL([
-			'https://api.annict.com/oauth/authorize',
-			'?response_type=code',
-			'&client_id=' + CLIENT_ID,
-			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
-			'&scope=read+write'
-		].join(''));
+		Linking.openURL(client.authURL());
 	}
 
 	handleSubmitCode() {

@@ -156,7 +156,7 @@ class EpisodeScreen extends React.Component {
 				this.handlePressReply(record);
 			}}
 			onPressGlobe={() => {
-				this.handlePressGlobe(this.props.episode, record);
+				this.handlePressGlobe(record);
 			}}
 			/>
   )
@@ -169,10 +169,9 @@ class EpisodeScreen extends React.Component {
 		console.log(`reply action: ${record.id}`);
 	}
 
-	handlePressGlobe = (episode: Episode, record: Record) => {
+	handlePressGlobe = (record: Record) => {
 		console.log(`open action: ${record.id}`);
-    // HACK: move to model
-		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`);
+		Linking.openURL(client.recordURL(record));
 	}
 }
 
