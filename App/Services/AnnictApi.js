@@ -7,7 +7,7 @@ import moment from 'moment';
 import {Program, Record, Episode} from './Type';
 import {store} from '../Models/RealmManager';
 
-import type {RecordFields} from '../Services/Type';
+import type {RecordFields, Profile} from '../Services/Type';
 
 class AnnictApi {
 	token: string
@@ -26,21 +26,16 @@ class AnnictApi {
 			this.setToken(session.access_token);
 			console.log(session);
 			if (session.id == null) {
-				this.userInfoSync();
+				this.getMe();
 			}
 		}
-	}
-
-	async userInfoSync() {
-		const userInfo = await this.getMe();
-		store.saveUser(userInfo.id, userInfo.username);
 	}
 
 	async setToken(token: string) {
 		this.token = token;
 		this.api.setHeader('Authorization', `Bearer ${token}`);
 		store.saveAccessToken(token);
-		this.userInfoSync();
+		this.getMe();
 	}
 
 	oauthToken(code: string) {
@@ -57,10 +52,17 @@ class AnnictApi {
 		return this.api.post('oauth/revoke', {token: this.token});
 	}
 
-	async getMe() {
+	async getMe(): Profile {
 		const res = await this.api.get('v1/me');
 		this.errorCheck(res);
-		return res.data;
+		const profile: Profile = {
+			user_id: res.data.id,
+			username: res.data.username,
+			avatar_url: res.data.avatar_url,
+			name: res.data.name
+		};
+		store.saveUser(profile);
+		return profile;
 	}
 
 	async getPrograms(): Promise<Array<Program>> {

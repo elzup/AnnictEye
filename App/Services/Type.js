@@ -236,8 +236,8 @@ export type RecordFields = {
 }
 
 export type Profile = {
-	id: number,
-	username: string,
+	id?: number,
+	username?: string,
 	avatar_url?: string,
 	name?: string
 }

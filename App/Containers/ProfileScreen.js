@@ -5,6 +5,7 @@ import {
 	View,
 	Text,
 	ListView,
+	Image,
 	StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
@@ -45,7 +46,10 @@ class ProfileScreen extends React.PureComponent {
 	props: Props
 	state: State = {
 		loading: true,
-		profile: {}
+		profile: {
+			username: '---',
+			name: '---'
+		}
 	}
 
 	componentWillMount() {
@@ -72,14 +76,24 @@ class ProfileScreen extends React.PureComponent {
 	}
 
 	async loadProfile() {
-		const profile = store.getUser();
-		this.setState({profile});
+		this.setState({profile: await store.getUser()});
+		this.setState({profile: await client.getMe()});
 	}
 
 	render() {
+		const avator = this.state.profile.avatar_url == null ? (
+			<Text>loading</Text>
+		) : (
+			<Image
+				style={{width: 50, height: 50}}
+				source={{uri: this.state.profile.avatar_url}}
+				/>
+		);
 		return (
 			<View style={Styles.container}>
+				{avator}
 				<Text>{this.state.profile.username}</Text>
+				<Text>{this.state.profile.name}</Text>
 			</View>
 		);
 	}

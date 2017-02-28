@@ -4,8 +4,10 @@ import type {Profile} from '../Services/Type';
 
 class Session {
 	access_token: string
-	user_id: number
-	username: string
+	user_id: ?number
+	username: ?string
+	name: ?string
+	avatar_url: ?string
 }
 
 Session.schema = {
@@ -13,7 +15,9 @@ Session.schema = {
 	properties: {
 		access_token: 'string',
 		user_id: {type: 'int', optional: true},
-		username: {type: 'string', optional: true}
+		username: {type: 'string', optional: true},
+		name: {type: 'string', optional: true},
+		avatar_url: {type: 'string', optional: true}
 	}
 };
 
@@ -37,16 +41,18 @@ class RealmManager {
 	getUser(): Profile {
 		const session = this.getSession();
 		return {
-			id: session.user_id,
-			username: session.username
+			id: session.user_id || 0,
+			username: session.username || ''
 		};
 	}
 
-	saveUser(user_id: number, username: string) {
+	saveUser(profile: Profile) {
 		const session = this.getSession();
 		realm.write(() => {
-			session.user_id = user_id;
-			session.username = username;
+			session.user_id = profile.id;
+			session.username = profile.username;
+			session.name = profile.name;
+			session.avatar_url = profile.avatar_url;
 		});
 	}
 
@@ -67,7 +73,7 @@ class RealmManager {
 
 const realm = new Realm({
 	schema: [Session],
-	schemaVersion: 2
+	schemaVersion: 3
 });
 
 const store = new RealmManager(realm);
