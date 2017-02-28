@@ -78,6 +78,7 @@ class HomeScreen extends React.PureComponent {
 		});
 		const episodeIDs = programs.map(e => e.episode.id);
 		const episodes = store.getEpisodes(episodeIDs);
+		console.log(episodes.map(e => e));
 		const lib = {};
 		episodes.forEach(e => {
 			lib[e.episode_id] = e.comments_count;

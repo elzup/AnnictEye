@@ -92,6 +92,16 @@ class RealmManager {
 
 	addEpisode(episode: Episode) {
 		realm.write(() => {
+			const ep = this.realm.objects('EpisodeModel').filtered('episode_id == $0', episode.id)[0];
+			realm.create('EpisodeModel', {
+				episode_id: 100,
+				comments_count: 0
+			});
+		});
+	}
+
+	saveEpisodeReaded(episode: Episode) {
+		realm.write(() => {
 			realm.create('EpisodeModel', {
 				episode_id: 100,
 				comments_count: 0

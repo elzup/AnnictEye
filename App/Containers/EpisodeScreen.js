@@ -91,6 +91,7 @@ class EpisodeScreen extends React.Component {
 				Actions.loginScreen();
 			}
 		}
+		store.saveEpisodeReaded(this.props.episode);
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
