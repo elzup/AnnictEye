@@ -95,6 +95,10 @@ class LoginScreen extends React.Component {
 		await client.setToken(res.data.access_token);
 		console.log('t: ' + res.data.access_token);
 		Actions.pop();
+		setTimeout(() => {
+			console.log('refresh tabbar');
+			Actions.refresh({name: 'tabbar'});
+		}, 10);
 	}
 
 	handleChangeCode(code: string) {
