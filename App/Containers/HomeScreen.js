@@ -9,6 +9,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SplashScreen from 'react-native-splash-screen';
 
 import ProgramCell from '../Components/ProgramCell';
 import Indicator from '../Components/Indicator';
@@ -46,6 +47,7 @@ class HomeScreen extends React.PureComponent {
 	}
 
 	componentWillMount() {
+		SplashScreen.hide();
 		if (!store.isLogin()) {
 			Actions.loginScreen();
 		}
