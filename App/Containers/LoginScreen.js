@@ -1,137 +1,112 @@
-'use strict'
+/* @flow */
 
-import React from 'react'
+import React, {Component} from 'react';
 import {
-  ScrollView,
-  Text,
-  View,
   StyleSheet,
-  Linking,
-  TextInput} from 'react-native'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import {connect} from 'react-redux'
+  View,
+	Text,
+  Linking} from 'react-native';
+import {FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-elements';
 
-import {Actions, ActionConst} from 'react-native-router-flux'
-import {Metrics, Colors, ApplicationStyles} from '../Themes/'
-import DrawerButton from '../Components/DrawerButton'
+import {Actions, ActionConst} from 'react-native-router-flux';
+import {Metrics, Colors, ApplicationStyles} from '../Themes/';
 
-import {CLIENT_ID} from 'react-native-dotenv'
+import {CLIENT_ID} from 'react-native-dotenv';
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
-	logo: {
-		height: Metrics.images.logo,
-		width: Metrics.images.logo,
-		resizeMode: 'contain'
+	warn: {
+		color: 'orange',
+		marginTop: 10,
+		marginBottom: 10
 	},
-	centered: {
-		alignItems: 'center'
+	text: {
+		marginTop: 10,
+		marginBottom: 10
 	},
-	textInput: {
-		height: 40,
-		color: Colors.coal
+	wrap: {
+		paddingLeft: 20,
+		paddingRight: 20
 	}
-})
+});
 
-type LoginScreenProps = {
+type Props = {
   attemptLogin: () => void,
-  loggedIn: boolean
+  loggedIn: boolean,
+}
+
+type State = {
+	code: string
 }
 
 class LoginScreen extends React.Component {
-
-	props: LoginScreenProps
-
-	isAttempting: boolean
-
-	state: {
-    code: string
-  }
-
-	constructor(props: LoginScreenProps) {
-		super(props)
-		this.state = {
-			code: ''
-		}
-		this.isAttempting = false
+	props: Props
+	state: State = {
+		code: ''
 	}
 
-	componentDidMount = () => {
-		this.isAttempting = true
-	}
-
-	componentWillReceiveProps = (newProps: LoginScreenProps) => {
-		this.forceUpdate()
-		if (!this.isAttempting) {
-			return
-		}
-		if (newProps.loggedIn) {
-			Actions.homeScreen({type: ActionConst.RESET})
-		} else {
-			console.log('login failed.')
+	componentWillMount() {
+		if (store.isLogin()) {
+			Actions.pop();
 		}
 	}
 
-	handlePressOauth = () => {
+	componentDidMount() {
+		this.init();
+	}
+
+	async init() {
+	}
+
+	render() {
+		const {code} = this.state;
+		return (
+			<View style={Styles.mainContainer}>
+				<View style={Styles.wrap}>
+					<Text style={Styles.text}>
+						Annict にログインし、認証コードをコピーしてください。
+					</Text>
+					<Text style={Styles.warn}>
+						(ログイン後に認証コードが表示されない場合はボタンから開き直してください。)
+					</Text>
+					<Button onPress={this.handlePressOauth} title="認証画面を開く"/>
+					<FormLabel>コード</FormLabel>
+					<FormInput onChangeText={this.handleChangeCode.bind(this)}/>
+					<Button
+						onPress={this.handleSubmitCode.bind(this)}
+						title="ログイン"
+						/>
+				</View>
+			</View>
+		);
+	}
+
+	handlePressOauth() {
 		Linking.openURL([
 			'https://api.annict.com/oauth/authorize',
 			'?response_type=code',
 			'&client_id=' + CLIENT_ID,
 			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
 			'&scope=read+write'
-		].join(''))
+		].join(''));
 	}
 
-	render() {
-		const {code} = this.state
-		return (
-			<View style={Styles.mainContainer}>
-				<ScrollView style={Styles.container}>
-					<View style={Styles.section} >
-						<Text>
-							認証画面から Annict にログインし、認証コードをコピーしてください。
-						</Text>
-						<DrawerButton text="認証画面を開く" onPress={this.handlePressOauth}/>
-						<TextInput
-							value={code}
-							style={Styles.textInput}
-							keyboardType="default"
-							returnKeyType="next"
-							autoCapitalize="none"
-							autoCorrect={false}
-							onChangeText={this.handleChangeCode}
-							underlineColorAndroid="transparent"
-							onSubmitEditing={this.handleSubmitCode}
-							placeholder="認証コード"
-							/>
-						<DrawerButton text="ログイン" onPress={this.handleSubmitCode}/>
-					</View>
-				</ScrollView>
-			</View>
-		)
+	handleSubmitCode() {
+		this.auth();
 	}
 
-	handleChangeCode = text => {
-		this.setState({code: text})
+	async auth() {
+		const res = await client.oauthToken(this.state.code);
+		store.saveAccessToken(res.data.access_token);
+		console.log('t: ' + res.data.access_token);
+		Actions.homeScreen({type: ActionConst.RESET});
 	}
 
-	handleSubmitCode = () => {
-		const {code} = this.state
-		this.isAttempting = true
-		this.props.attemptLogin(code)
+	handleChangeCode(code: string) {
+		this.setState({code});
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		loggedIn: isLoggedIn(state.login)
-	}
-}
-
-const mapDispatchToProps = dispatch => {
-	return {
-		attemptLogin: code => dispatch(LoginActions.loginRequest(code))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+export default LoginScreen;

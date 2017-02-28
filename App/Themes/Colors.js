@@ -1,9 +1,11 @@
-'use strict'
+/* @flow */
 
 const colors = {
 	background: '#1F0808',
 	pink: '#f85b73',
 	green: '#36b1bf',
+	checkGreen: '#36BF5D',
+	broccoli: '#334854',
 	silver: '#F7F7F7',
 	disable: '#CCCCCC',
 	steel: '#888888',
@@ -25,7 +27,8 @@ const colors = {
 	snow: 'white',
 	ember: 'rgba(164, 0, 48, 0.5)',
 	fire: '#e73536',
-	drawer: 'rgba(30, 30, 29, 0.95)'
-}
+	drawer: 'rgba(30, 30, 29, 0.95)',
+	black: '#000'
+};
 
-export default colors
+export default colors;

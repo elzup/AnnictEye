@@ -1,11 +1,9 @@
-'use strict'
+/* @flow */
 
-import React, {Component} from 'react'
-import {View, StatusBar, StyleSheet} from 'react-native'
-import NavigationRouter from '../Navigation/NavigationRouter'
-import {connect} from 'react-redux'
-import StartupActions from '../Redux/StartupRedux'
-import {Fonts, Metrics, Colors} from '../Themes/'
+import React, {Component} from 'react';
+import {View, StatusBar, StyleSheet} from 'react-native';
+import NavigationRouter from '../Navigation/NavigationRouter';
+import {Fonts, Metrics, Colors} from '../Themes/';
 
 const Styles = StyleSheet.create({
 	applicationView: {
@@ -27,12 +25,11 @@ const Styles = StyleSheet.create({
 		height: 200,
 		alignSelf: 'center'
 	}
-})
+});
 
 class RootContainer extends Component {
 	componentDidMount() {
-    // if redux persist is not active fire startup action
-		this.props.startup()
+		// this.props.startup();
 	}
 
 	render() {
@@ -41,13 +38,8 @@ class RootContainer extends Component {
 				<StatusBar barStyle="light-content"/>
 				<NavigationRouter/>
 			</View>
-		)
+		);
 	}
 }
 
-// wraps dispatch to create nicer functions to call within our component
-const mapDispatchToProps = dispatch => ({
-	startup: () => dispatch(StartupActions.startup())
-})
-
-export default connect(null, mapDispatchToProps)(RootContainer)
+export default RootContainer;

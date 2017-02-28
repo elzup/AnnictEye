@@ -1,25 +1,25 @@
-'use strict'
+/* @flow */
 
-import React from 'react'
+import React from 'react';
 import {
   View,
-  Text,
   ListView,
   StyleSheet,
-  ScrollView,
-  Linking
-} from 'react-native'
-import Indicator from '../Components/Indicator'
-import RecordCell from '../Components/RecordCell'
-import DrawerButton from '../Components/DrawerButton'
+	ScrollView,
+	Linking,
+	Text
+} from 'react-native';
+import {Actions, ActionConst} from 'react-native-router-flux';
+import {Button} from 'react-native-elements';
 
-import {connect} from 'react-redux'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import EpisodeActions, {selectEpisode, selectCommentRecords, isSomeEpisode} from '../Redux/EpisodeRedux'
+import Indicator from '../Components/Indicator';
+import RecordCell from '../Components/RecordCell';
+import {Record, Episode} from '../Services/Type';
 
-import {Actions, ActionConst} from 'react-native-router-flux'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import {Record, Episode} from '../Services/Type'
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -48,74 +48,79 @@ const Styles = StyleSheet.create({
 	listContent: {
 		marginTop: Metrics.baseMargin
 	}
-})
+});
 
-type EpisodeScreenProps = {
-  loadEpisode: () => void,
-  isLoggedIn: ?boolean,
-  records: Array<Record>,
-  episode: Episode
+type Props = {
+	episode: Episode
 }
 
+type State = {
+	loading: boolean,
+	dataSourceRecords: Object
+}
+const notSomeID = (r1: Record, r2: Record) => r1.id !== r2.id;
 class EpisodeScreen extends React.Component {
-	props: EpisodeScreenProps
-	state: {
-    loading: boolean,
-    dataSourceRecords: Object
-  }
+	props: Props
+	state: State = {
+		loading: true,
+		dataSourceRecords: new ListView.DataSource({rowHasChanged: notSomeID}).cloneWithRows([])
+	}
 
-	constructor(props) {
-		super(props)
-
-		const rowHasChanged = (r1: Record, r2: Record) => r1.id !== r2.id
-
-		if (props.episode === null) {
-			Actions.homeScreen({type: ActionConst.RESET})
-		}
-		const ds = new ListView.DataSource({rowHasChanged})
-		this.state = {
-			loading: false,
-			dataSourceRecords: ds.cloneWithRows(props.isSomeEpisode ? props.records : [])
+	componentWillMount() {
+		if (!store.isLogin()) {
+			Actions.loginScreen();
 		}
 	}
 
 	componentDidMount = () => {
-		console.log('componentDidMount')
-		this.setState({loading: true})
-		this.props.loadEpisode(this.props.episode)
+		this.init();
 	}
 
-	componentWillReceiveProps = newProps => {
-		console.log('=> Receive', newProps)
-		this.forceUpdate()
-		const {isLoggedIn, records} = newProps
-		if (!isLoggedIn) {
-			Actions.homeScreen({type: ActionConst.RESET})
-			return
-		}
+	async init() {
+		this.loadRecords();
+	}
 
+	async loadRecords() {
+		let records;
+		try {
+			records = await client.getRecords(this.props.episode.id);
+		} catch (e) {
+			console.log(e.stack);
+			if (e.message == 'no-auth') {
+				store.deleteSession();
+				Actions.loginScreen();
+			}
+		}
 		this.setState({
 			loading: false,
 			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows(records)
-		})
+		});
 	}
 
 	noRowData = () => {
-		return this.state.dataSourceRecords.getRowCount() === 0
+		return this.state.dataSourceRecords.getRowCount() === 0;
 	}
 
 	render() {
-		const {episode} = this.props
+		const {episode} = this.props;
+		const title = episode.work ? episode.work.title : '---';
 		return (
 			<ScrollView
 				automaticallyAdjustContentInsets={false}
 				>
 				<View style={Styles.container}>
 					<View style={Styles.episodeHeader}>
-						<Text style={Styles.subLabel}>{this.props.episode.work.title}</Text>
-						<Text style={Styles.boldLabel}>{episode.number_text} {episode.title || '---'}</Text>
+						<Text style={Styles.subLabel}>{title}</Text>
+						<Text style={Styles.boldLabel}>{episode.numberText} {episode.title || '---'}</Text>
 					</View>
-					<DrawerButton text={'記録する'} onPress={this.handleOpenModal}/>
+					<Button
+						raised
+						icon={{name: 'pencil', type: 'font-awesome'}}
+						backgroundColor={Colors.green}
+						onPress={this.handleOpenModal}
+						iconRight
+						title="記録する"
+						/>
 					<ListView
 						contentContainerStyle={Styles.listContent}
 						dataSource={this.state.dataSourceRecords}
@@ -126,7 +131,7 @@ class EpisodeScreen extends React.Component {
 						/>
 				</View>
 			</ScrollView>
-		)
+		);
 	}
 
 	renderFooter = () => (
@@ -134,55 +139,41 @@ class EpisodeScreen extends React.Component {
   )
 
 	handleOpenModal = () => {
-		const {episode} = this.props
-		Actions.recordCreateModal({title: `記録する ${episode.number_text}`})
+		const {episode} = this.props;
+		Actions.recordCreateModal({
+			title: `記録する ${episode.numberText}`,
+			episode
+		});
 	}
 
 	renderRow = (record: Record) => (
 		<RecordCell
-			episode={this.props.episode}
 			record={record}
-			onPressLike={this.handlePressLike}
-			onPressReply={this.handlePressReply}
-			onPressGlobe={this.handlePressGlobe}
+			onPressLike={() => {
+				this.handlePressLike(record);
+			}}
+			onPressReply={() => {
+				this.handlePressReply(record);
+			}}
+			onPressGlobe={() => {
+				this.handlePressGlobe(this.props.episode, record);
+			}}
 			/>
   )
 
 	handlePressLike = (record: Record) => {
-		console.log(`like action: ${record.id}`)
+		console.log(`like action: ${record.id}`);
 	}
 
 	handlePressReply = (record: Record) => {
-		console.log(`reply action: ${record.id}`)
+		console.log(`reply action: ${record.id}`);
 	}
 
 	handlePressGlobe = (episode: Episode, record: Record) => {
-		console.log(`open action: ${record.id}`)
+		console.log(`open action: ${record.id}`);
     // HACK: move to model
-		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`)
-	}
-
-	componentWillUnmount = () => {
-		this.setState({
-			dataSourceRecords: this.state.dataSourceRecords.cloneWithRows([])
-		})
+		Linking.openURL(`https://annict.com/works/${episode.work.id}/episodes/${episode.id}/checkins/${record.id}`);
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		isLoggedIn: isLoggedIn(state.login),
-		records: selectCommentRecords(state.episode),
-		episode: selectEpisode(state.episode),
-		isSomeEpisode: isSomeEpisode(state.episode)
-	}
-}
-
-const mapDispatchToProps = dispatch => {
-	return {
-		logout: () => dispatch(LoginActions.logout()),
-		loadEpisode: episode => dispatch(EpisodeActions.episodeRequest(episode))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EpisodeScreen)
+export default EpisodeScreen;

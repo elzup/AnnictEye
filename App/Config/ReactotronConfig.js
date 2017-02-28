@@ -1,11 +1,8 @@
-import {StartupTypes} from '../Redux/StartupRedux'
-import Config from '../Config/DebugSettings'
-import Immutable from 'seamless-immutable'
-const Reactotron = require('reactotron-react-native').default
-const errorPlugin = require('reactotron-react-native').trackGlobalErrors
-const apisaucePlugin = require('reactotron-apisauce')
-const {reactotronRedux} = require('reactotron-redux')
-const sagaPlugin = require('reactotron-redux-saga')
+import Config from '../Config/DebugSettings';
+import Immutable from 'seamless-immutable';
+const Reactotron = require('reactotron-react-native').default;
+const errorPlugin = require('reactotron-react-native').trackGlobalErrors;
+const apisaucePlugin = require('reactotron-apisauce');
 
 if (Config.useReactotron) {
 	Reactotron
@@ -37,14 +34,14 @@ if (Config.useReactotron) {
   .use(sagaPlugin())
 
   // let's connect!
-  .connect()
+  .connect();
 
   // Let's clear Reactotron on every time we load the app
-	Reactotron.clear()
+	Reactotron.clear();
 
   // Totally hacky, but this allows you to not both importing reactotron-react-native
   // on every file.  This is just DEV mode, so no big deal.
-	console.tron = Reactotron
+	console.tron = Reactotron;
 } else {
   // a mock version should you decide to leave console.tron in your codebase
 	console.tron = {
@@ -53,5 +50,5 @@ if (Config.useReactotron) {
 		error: () => false,
 		display: () => false,
 		image: () => false
-	}
+	};
 }

@@ -1,13 +1,13 @@
-'use strict'
+/* @flow */
 
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
   TouchableOpacity
-} from 'react-native'
-import {Metrics, Colors, Fonts} from '../Themes'
-import Icon from 'react-native-vector-icons/FontAwesome'
+} from 'react-native';
+import {Metrics, Colors, Fonts} from '../Themes';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Styles = {
 	action: {
@@ -19,24 +19,29 @@ const Styles = {
 		marginLeft: Metrics.smallMargin,
 		fontSize: Fonts.size.small
 	}
+};
+
+type Props = {
+	iconName: string,
+	onPress: () => void,
+	text?: string,
+	color?: string
 }
 
-type IconButtonProps = {
-  iconName: string,
-  count: number,
-  color: Colors.disable,
-  onPress: () => void
+class IconButton extends React.PureComponent {
+	props: Props
+
+	render() {
+		const {onPress, iconName, color, text} = this.props;
+		return (
+			<TouchableOpacity onPress={onPress}>
+				<View style={Styles.action}>
+					<Icon name={iconName} color={color}/>
+					<Text style={Styles.count}>{text}</Text>
+				</View>
+			</TouchableOpacity>
+		);
+	}
 }
 
-const IconButton = (props: IconButtonProps) => {
-	return (
-		<TouchableOpacity onPress={props.onPress}>
-			<View style={Styles.action}>
-				<Icon name={props.iconName} color={props.color}/>
-				<Text style={Styles.count}>{props.count}</Text>
-			</View>
-		</TouchableOpacity>
-	)
-}
-
-export default IconButton
+export default IconButton;

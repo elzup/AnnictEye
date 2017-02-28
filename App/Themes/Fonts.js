@@ -1,10 +1,11 @@
-'use strict'
+/* @flow */
+;
 
 const type = {
 	base: 'HelveticaNeue',
 	bold: 'HelveticaNeue-Bold',
 	emphasis: 'HelveticaNeue-Italic'
-}
+};
 
 const size = {
 	h1: 38,
@@ -18,7 +19,7 @@ const size = {
 	medium: 14,
 	small: 12,
 	tiny: 8.5
-}
+};
 
 const style = {
 	h1: {
@@ -53,10 +54,10 @@ const style = {
 		fontFamily: type.base,
 		fontSize: size.medium
 	}
-}
+};
 
 export default {
 	type,
 	size,
 	style
-}
+};

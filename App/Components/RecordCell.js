@@ -1,16 +1,17 @@
-'use strict'
+/* @flow */
+;
 
-import React, {Component} from 'react'
-import moment from 'moment'
+import React, {Component} from 'react';
+import moment from 'moment';
 import {
   View,
   Text,
 	Animated
-} from 'react-native'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import IconButton from './IconButton'
+} from 'react-native';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import IconButton from './IconButton';
 
-import {Record} from '../Services/Type'
+import {Record} from '../Services/Type';
 
 const Styles = {
 	root: {
@@ -47,33 +48,29 @@ const Styles = {
 		flexDirection: 'row',
 		justifyContent: 'space-around'
 	}
-}
+};
 
 type RecordCellProps = {
   record: Record,
   onPressLike: () => void,
   onPressReply: () => void,
-  onPressGlobe: (record) => void
+  onPressGlobe: () => void
 }
 
 class RecordCell extends Component {
 	props: RecordCellProps
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			progress: new Animated.Value(0)
-		}
+	constructor(props: RecordCellProps) {
+		super(props);
 	}
 
 	render() {
-		const {record, onPressLike, onPressReply, onPressGlobe} = this.props
-		const timeLabel = moment(record.started_at).format('MM/DD HH:mm')
+		const {record, onPressLike, onPressReply, onPressGlobe} = this.props;
 		return (
 			<View style={Styles.root}>
 				<View style={Styles.head}>
 					<Text style={Styles.userName}>{record.user.name}</Text>
-					<Text style={Styles.postTime}>{timeLabel}</Text>
+					<Text style={Styles.postTime}>{record.postTimeLabel()}</Text>
 				</View>
 				<View style={Styles.body}>
 					<Text style={Styles.comment}>{record.comment}</Text>
@@ -86,8 +83,8 @@ class RecordCell extends Component {
 					</View>
 				</View>
 			</View>
-		)
+		);
 	}
 }
 
-export default RecordCell
+export default RecordCell;

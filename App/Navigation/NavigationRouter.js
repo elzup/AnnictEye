@@ -1,14 +1,15 @@
-'use strict'
+/* @flow */
+;
 
-import React, {Component} from 'react'
-import {Scene, Router} from 'react-native-router-flux'
-import {Colors} from '../Themes'
+import React, {Component} from 'react';
+import {Scene, Router} from 'react-native-router-flux';
+import {Colors} from '../Themes';
 
 // screens identified by the router
-import LoginScreen from '../Containers/LoginScreen'
-import HomeScreen from '../Containers/HomeScreen'
-import EpisodeScreen from '../Containers/EpisodeScreen'
-import RecordCreateModal from '../Containers/RecordCreateModal'
+import LoginScreen from '../Containers/LoginScreen';
+import HomeScreen from '../Containers/HomeScreen';
+import EpisodeScreen from '../Containers/EpisodeScreen';
+import RecordCreateModal from '../Containers/RecordCreateModal';
 
 const Styles = {
 	container: {
@@ -26,7 +27,7 @@ const Styles = {
 	rightButton: {
 		color: Colors.snow
 	}
-}
+};
 
 class NavigationRouter extends Component {
 	render() {
@@ -41,8 +42,8 @@ class NavigationRouter extends Component {
 					</Scene>
 				</Scene>
 			</Router>
-		)
+		);
 	}
 }
 
-export default NavigationRouter
+export default NavigationRouter;

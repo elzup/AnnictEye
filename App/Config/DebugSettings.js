@@ -7,6 +7,6 @@ const SETTINGS = {
 	reduxLogging: __DEV__,
 	includeExamples: __DEV__,
 	useReactotron: __DEV__
-}
+};
 
-export default SETTINGS
+export default SETTINGS;

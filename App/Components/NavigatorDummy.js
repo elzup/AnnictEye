@@ -1,8 +1,9 @@
-'use strict'
+/* @flow */
+;
 
-import React from 'react'
-import {View, Text} from 'react-native'
-import {Metrics, Colors} from '../Themes'
+import React from 'react';
+import {View, Text} from 'react-native';
+import {Metrics, Colors} from '../Themes';
 
 const Styles = {
 	root: {
@@ -15,7 +16,7 @@ const Styles = {
 		textAlign: 'center',
 		color: Colors.snow
 	}
-}
+};
 
 type NavigationDummyProps = {
   text: string
@@ -25,6 +26,6 @@ const NavigationDummy = (props: NavigationDummyProps) => (
 	<View style={Styles.root}>
 		<Text style={Styles.text}>{ props.text }</Text>
 	</View>
-)
+);
 
-export default NavigationDummy
+export default NavigationDummy;

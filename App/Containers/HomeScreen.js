@@ -1,23 +1,22 @@
-'use strict'
+/* @flow */
 
-import React from 'react'
+import React, {Component} from 'react';
 import {
-  View,
-  ListView,
-  StyleSheet} from 'react-native'
+	View,
+	Text,
+	ListView,
+	StyleSheet} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import ProgramCell from '../Components/ProgramCell'
-import Indicator from '../Components/Indicator'
+import ProgramCell from '../Components/ProgramCell';
+import Indicator from '../Components/Indicator';
 
-import {connect} from 'react-redux'
-import LoginActions, {isLoggedIn} from '../Redux/LoginRedux'
-import HomeActions, {selectPrograms} from '../Redux/HomeRedux'
-import EpisodeActions from '../Redux/EpisodeRedux'
-import moment from 'moment'
-
-import {Actions} from 'react-native-router-flux'
-import {ApplicationStyles, Metrics, Colors} from '../Themes/'
-import {Program, Episode} from '../Services/Type'
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import {Program, Episode} from '../Services/Type';
+import {store} from '../Models/RealmManager';
+import {client} from '../Services/AnnictApi';
 
 const Styles = StyleSheet.create({
 	...ApplicationStyles.screen,
@@ -29,80 +28,66 @@ const Styles = StyleSheet.create({
 	listContent: {
 		marginTop: Metrics.baseMargin
 	}
-})
+});
 
-type HomeScreenProps = {
-  loading: boolean,
-  isLoggedIn: ?boolean,
-  programs: Array<Program>,
-  logout: () => void,
-  loadProgram: () => void,
-  setupEpisode: () => void
+type Props = {
 }
 
-class HomeScreen extends React.Component {
-	props: HomeScreenProps
-	state: {
-    dataSource: Object,
-    loading: boolean
-  }
+type State = {
+	loading: boolean,
+	dataSource: any
+}
 
-	constructor(props) {
-		super(props)
+class HomeScreen extends React.PureComponent {
+	props: Props
+	state: State = {
+		loading: true,
+		dataSource: new ListView.DataSource({rowHasChanged: (r1: Program, r2: Program) => r1.id !== r2.id}).cloneWithRows([])
+	}
 
-		const rowHasChanged = (r1: Program, r2: Program) => r1.id !== r2.id
-
-    // DataSource configured
-		const ds = new ListView.DataSource({rowHasChanged})
-
-    // Datasource is always in state
-		this.state = {
-			loading: false,
-			dataSource: ds.cloneWithRows(props.programs)
+	componentWillMount() {
+		if (!store.isLogin()) {
+			Actions.loginScreen();
 		}
 	}
 
-	componentDidMount = () => {
-		console.log('componentDidMount')
-		this.setState({loading: true})
-		this.props.loadProgram()
+	componentDidMount() {
+		this.init();
 	}
 
-	componentWillReceiveProps = (newProps: HomeScreenProps) => {
-		console.log('=> Receive', newProps)
-		this.forceUpdate()
-		if (!newProps.isLoggedIn) {
-			Actions.loginScreen()
-			return
+	async init() {
+		try {
+			await this.loadProgram();
+		} catch (e) {
+			if (e.message == 'no-auth') {
+				store.deleteSession();
+				Actions.loginScreen();
+			} else {
+				console.log(e.stack);
+			}
 		}
+	}
 
-    // 放送済みのみ
-		const finishFilter = (program: Program) => moment(program.started_at).isBefore()
+	async loadProgram() {
+		const programs = await client.getPrograms();
+		console.log(programs);
+		// 放送済みのみ
 		this.setState({
-			loading: newProps.programs.length === 0,
-			dataSource: this.state.dataSource.cloneWithRows(newProps.programs.filter(finishFilter))
-		})
+			loading: false,
+			dataSource: this.state.dataSource.cloneWithRows(programs)
+		});
 	}
-
-	renderRow = (program: Program) => {
-		return (
-			<ProgramCell
-				program={program}
-				onPress={() => {
-					this.pressRow(program)
-				}}
-				/>
-		)
-	}
-
 	pressRow = (program: Program) => {
-		const {episode, work} = program
-		this.props.setupEpisode(episode.merge({work}))
-		Actions.episodeScreen({title: `${work.title} ${episode.number_text}`})
+		const {episode, work} = program;
+		episode.work = work;
+		Actions.episodeScreen({
+			title: `${work.title} ${episode.numberText}`,
+			episode
+		});
 	}
 
 	noRowData = () => {
-		return this.state.dataSource.getRowCount() === 0
+		return this.state.dataSource.getRowCount() === 0;
 	}
 
 	render() {
@@ -111,35 +96,32 @@ class HomeScreen extends React.Component {
 				<ListView
 					contentContainerStyle={Styles.listContent}
 					dataSource={this.state.dataSource}
-					renderRow={this.renderRow}
-					renderFooter={this.renderFooter}
+					renderRow={this.renderRow.bind(this)}
+					renderFooter={this.renderFooter.bind(this)}
 					pageSize={50}
 					onEndReachedThreshold={10}
 					enableEmptySections
 					/>
 			</View>
-		)
+		);
 	}
 
-	renderFooter = () => (
-		<Indicator loading={this.state.loading}/>
-  )
-}
-
-const mapStateToProps = state => {
-  // 監視対象はここ
-	return {
-		isLoggedIn: isLoggedIn(state.login),
-		programs: selectPrograms(state.home)
+	renderRow = (program: Program) => {
+		return (
+			<ProgramCell
+				program={program}
+				onPress={() => {
+					this.pressRow(program);
+				}}
+				/>
+		);
 	}
-}
 
-const mapDispatchToProps = dispatch => {
-	return {
-		logout: () => dispatch(LoginActions.logout()),
-		loadProgram: () => dispatch(HomeActions.programRequest()),
-		setupEpisode: (episode: Episode) => dispatch(EpisodeActions.episodeSetup(episode))
+	renderFooter() {
+		return (
+			<Indicator loading={this.state.loading}/>
+		);
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default HomeScreen;

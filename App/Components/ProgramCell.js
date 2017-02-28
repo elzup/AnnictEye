@@ -1,14 +1,15 @@
-'use strict'
+/* @flow */
 
-import React from 'react'
-import moment from 'moment'
+import React from 'react';
+import moment from 'moment';
 import {
-  TouchableOpacity,
-  View,
-  Text
-} from 'react-native'
-import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/'
-import {Program} from '../Services/Type'
+	TouchableOpacity,
+	View,
+	Text
+} from 'react-native';
+import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
+import {Icon} from 'react-native-elements';
+import {Program} from '../Services/Type';
 
 const Styles = {
 	card: {
@@ -29,24 +30,73 @@ const Styles = {
 	},
 	title: {
 		marginBottom: Metrics.smallMargin
+	},
+	footer: {
+		flex: 3,
+		flexDirection: 'row'
+	},
+	number: {
+		marginLeft: 10
+	},
+	row: {
+		flex: 2,
+		flexDirection: 'row'
+	},
+	space_row: {
+		flex: 2,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	}
+};
+
+type Prop = {
+	program: Program,
+	onPress: () => void
 }
 
-const ProgramCell = (props: { program: Program, onPress: () => void }) => {
-	const {program, onPress} = props
-	const label = `${program.episode.number_text}|${program.episode.title}`
-	const timeLabel = moment(program.started_at).format('MM/DD HH:mm')
+const ProgramCell = ({program, onPress}: Prop) => {
+	const label = `${program.episode.numberText}|${program.episode.safeTilte()}`;
+	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm');
 	return (
 		<TouchableOpacity onPress={onPress} >
 			<View style={Styles.card}>
 				<View style={Styles.infos}>
-					<Text style={Styles.time}>{timeLabel}</Text>
-					<Text style={Styles.workTitle}>{program.work.title}</Text>
+					<View style={Styles.space_row}>
+						<View>
+							<Text style={Styles.time}>{timeLabel}</Text>
+							<Text style={Styles.workTitle}>{program.work.title}</Text>
+						</View>
+						<Icon
+							name="check-circle"
+							type="font-awesome"
+							color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
+							/>
+					</View>
 					<Text style={Styles.title}>{label}</Text>
+				</View>
+				<View style={Styles.footer}>
+					<View style={Styles.row}>
+						<Icon
+							name="bookmark"
+							size={18}
+							type="font-awesome"
+							color={Colors.broccoli}
+							/>
+						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
+					</View>
+					<View style={Styles.row}>
+						<Icon
+							name="comment"
+							size={18}
+							type="font-awesome"
+							color={Colors.broccoli}
+							/>
+						<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
+					</View>
 				</View>
 			</View>
 		</TouchableOpacity>
-	)
-}
+	);
+};
 
-export default ProgramCell
+export default ProgramCell;
