@@ -36,9 +36,11 @@ class AnnictApi {
 		store.saveUser(userInfo.id, userInfo.username);
 	}
 
-	setToken(token: string) {
+	async setToken(token: string) {
 		this.token = token;
 		this.api.setHeader('Authorization', `Bearer ${token}`);
+		store.saveAccessToken(token);
+		this.userInfoSync();
 	}
 
 	oauthToken(code: string) {

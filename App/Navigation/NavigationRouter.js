@@ -58,7 +58,7 @@ class NavigationRouter extends Component {
 								icon={TabIcon}
 								/>
 						</Scene>
-						<Scene key="loginScreen" component={LoginScreen} title="ログイン" hideBackImage/>
+						<Scene key="loginScreen" component={LoginScreen} title="ログイン" hideBackImage direction="vertical"/>
 						<Scene key="episodeScreen" component={EpisodeScreen} title="エピソード"/>
 						<Scene key="recordCreateModal" component={RecordCreateModal} title="記録"/>
 					</Scene>

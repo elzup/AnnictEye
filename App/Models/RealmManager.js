@@ -11,8 +11,8 @@ Session.schema = {
 	name: 'Session',
 	properties: {
 		access_token: 'string',
-		user_id: 'int',
-		username: 'string'
+		user_id: {type: 'int', optional: true},
+		username: {type: 'string', optional: true}
 	}
 };
 
@@ -58,7 +58,7 @@ class RealmManager {
 
 const realm = new Realm({
 	schema: [Session],
-	schemaVersion: 1
+	schemaVersion: 2
 });
 
 const store = new RealmManager(realm);
