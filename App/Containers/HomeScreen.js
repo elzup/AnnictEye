@@ -38,7 +38,7 @@ type State = {
 	dataSource: any
 }
 
-class HomeScreen extends Component {
+class HomeScreen extends React.PureComponent {
 	props: Props
 	state: State = {
 		loading: true,
@@ -90,6 +90,22 @@ class HomeScreen extends Component {
 		return this.state.dataSource.getRowCount() === 0;
 	}
 
+	render() {
+		return (
+			<View style={Styles.container}>
+				<ListView
+					contentContainerStyle={Styles.listContent}
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow.bind(this)}
+					renderFooter={this.renderFooter.bind(this)}
+					pageSize={50}
+					onEndReachedThreshold={10}
+					enableEmptySections
+					/>
+			</View>
+		);
+	}
+
 	renderRow = (program: Program) => {
 		return (
 			<ProgramCell
@@ -101,18 +117,9 @@ class HomeScreen extends Component {
 		);
 	}
 
-	render() {
+	renderFooter() {
 		return (
-			<View style={Styles.container}>
-				<ListView
-					contentContainerStyle={Styles.listContent}
-					dataSource={this.state.dataSource}
-					renderRow={this.renderRow}
-					pageSize={50}
-					onEndReachedThreshold={10}
-					enableEmptySections
-					/>
-			</View>
+			<Indicator loading={this.state.loading}/>
 		);
 	}
 }
