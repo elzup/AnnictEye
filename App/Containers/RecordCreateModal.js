@@ -14,6 +14,7 @@ import {Episode, Record} from '../Services/Type';
 import type {RecordFields} from '../Services/Type';
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
 import ToggleIconButton from '../Components/ToggleIconButton';
+import {Icon} from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import {store} from '../Models/RealmManager';
@@ -179,20 +180,18 @@ class RecordCreateModal extends Component {
 
 					<View style={Styles.footerBottom}>
 						<View style={Styles.toggle} >
-							<ToggleIconButton
-								iconName="twitter"
-								size={Fonts.size.h4}
-								active={this.state.shareTwitter}
-								colorActive={Colors.twitter}
+							<Icon
+								name="twitter"
+								type="font-awesome"
+								color={this.state.shareTwitter ? Colors.twitter : Colors.disable}
 								onPress={this.handleToggleTwitter.bind(this)}
 								/>
 						</View>
 						<View style={Styles.toggle} >
-							<ToggleIconButton
-								iconName="facebook"
-								size={Fonts.size.h4}
-								active={this.state.shareFacebook}
-								colorActive={Colors.facebook}
+							<Icon
+								name="facebook"
+								type="font-awesome"
+								color={this.state.shareTwitter ? Colors.facebook : Colors.disable}
 								onPress={this.handleToggleFacebook.bind(this)}
 								/>
 						</View>

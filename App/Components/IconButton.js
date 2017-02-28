@@ -29,12 +29,8 @@ type Props = {
 }
 
 class IconButton extends React.PureComponent {
-	props: Props = {
-		iconName: 'star',
-		onPress: () => {},
-		text: '',
-		color: Colors.disable
-	}
+	props: Props
+
 	render() {
 		const {onPress, iconName, color, text} = this.props;
 		return (
