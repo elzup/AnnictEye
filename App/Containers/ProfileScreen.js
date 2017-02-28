@@ -27,7 +27,8 @@ const Styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		marginTop: Metrics.navBarHeight,
-		backgroundColor: Colors.silver
+		backgroundColor: Colors.silver,
+		alignItems: 'center'
 	},
 	listContent: {
 		marginTop: Metrics.baseMargin
@@ -82,18 +83,18 @@ class ProfileScreen extends React.PureComponent {
 
 	render() {
 		const avator = this.state.profile.avatar_url == null ? (
-			<Text>loading</Text>
+			<View style={{width: 50, height: 50, borderRadius: 25, marginTop: 20, backgroundColor: Colors.cloud}}/>
 		) : (
 			<Image
-				style={{width: 50, height: 50}}
+				style={{width: 50, height: 50, borderRadius: 25, marginTop: 20}}
 				source={{uri: this.state.profile.avatar_url}}
 				/>
 		);
 		return (
 			<View style={Styles.container}>
 				{avator}
-				<Text>{this.state.profile.username}</Text>
-				<Text>{this.state.profile.name}</Text>
+				<Text style={{marginTop: 10, fontSize: 20}}>{this.state.profile.name || '---'}</Text>
+				<Text style={{marginTop: 10}}>@{this.state.profile.username}</Text>
 			</View>
 		);
 	}
