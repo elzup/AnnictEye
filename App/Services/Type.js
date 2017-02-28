@@ -151,7 +151,7 @@ export class Episode {
 }
 
 export type UserScheme = {
-	id: string,
+	id: number,
 	username: string,
 	name: string,
 	description: string,
@@ -161,7 +161,7 @@ export type UserScheme = {
 }
 
 export class User {
-	id: string
+	id: number
 	username: string
 	name: string
 	description: string
@@ -203,6 +203,7 @@ export class Record {
 	user: User
 	work: Work
 	episode: Episode
+	isMine: boolean
 
 	constructor(obj: RecordScheme) {
 		this.id = parseInt(obj.id);
@@ -215,6 +216,7 @@ export class Record {
 		this.user = new User(obj.user);
 		this.work = new Work(obj.work);
 		this.episode = new Episode(obj.episode);
+		this.isMine = false;
 	}
 
 	postTimeLabel() {

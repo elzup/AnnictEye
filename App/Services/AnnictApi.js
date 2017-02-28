@@ -87,11 +87,12 @@ class AnnictApi {
 		});
 		this.errorCheck(res);
 		const records: Array<Record> = res.data.records.map(e => new Record(e));
-		const my = -1;
-		records.forEach(e => {
-			// e.user.id == 1;
+		const myRecords = records.filter(e => e.user.id == store.getSession().user_id);
+		const otherRecords = records.filter(e => e.user.id != store.getSession().user_id);
+		myRecords.forEach(e => {
+			e.isMine = true;
 		});
-		return records;
+		return myRecords.concat(otherRecords);
 	}
 
 	errorCheck(res: any) {
