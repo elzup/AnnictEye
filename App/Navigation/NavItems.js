@@ -3,7 +3,7 @@
 
 import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import {Actions as NavigationActions} from 'react-native-router-flux';
+import {Actions, ActionConst as NavigationActions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Colors, Metrics} from '../Themes';
 

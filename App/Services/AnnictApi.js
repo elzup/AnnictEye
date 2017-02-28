@@ -91,7 +91,7 @@ class AnnictApi {
 		});
 		this.errorCheck(res);
 		const records: Array<Record> = res.data.records.map(e => new Record(e));
-		const user_id = store.getUser().id;
+		const user_id = store.getUser().user_id;
 		const myRecords = records.filter(e => e.user.id == user_id);
 		const otherRecords = records.filter(e => e.user.id != user_id);
 		myRecords.forEach(e => {

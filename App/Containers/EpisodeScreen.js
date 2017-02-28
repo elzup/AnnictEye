@@ -68,7 +68,7 @@ class EpisodeScreen extends React.Component {
 
 	componentWillMount() {
 		if (!store.isLogin()) {
-			Actions.loginScreen();
+			Actions.loginScreen({type: ActionConst.REPLACE});
 		}
 	}
 

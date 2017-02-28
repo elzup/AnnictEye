@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, {Component} from 'react';
-import {Actions} from 'react-native-router-flux';
+import {Actions, ActionConst} from 'react-native-router-flux';
 import {
   View,
   Text,
@@ -130,7 +130,7 @@ class RecordCreateModal extends Component {
 
 	componentWillMount() {
 		if (!store.isLogin()) {
-			Actions.loginScreen();
+			Actions.loginScreen({type: ActionConst.REPLACE});
 		}
 	}
 

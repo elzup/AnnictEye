@@ -7,10 +7,9 @@ import {
 	ListView,
 	Image,
 	StyleSheet} from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions, ActionConst} from 'react-native-router-flux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SplashScreen from 'react-native-splash-screen';
 
 import ProgramCell from '../Components/ProgramCell';
 import Indicator from '../Components/Indicator';
@@ -55,7 +54,7 @@ class ProfileScreen extends React.PureComponent {
 
 	componentWillMount() {
 		if (!store.isLogin()) {
-			Actions.loginScreen();
+			Actions.loginScreen({type: ActionConst.REPLACE});
 		}
 	}
 
@@ -69,7 +68,7 @@ class ProfileScreen extends React.PureComponent {
 		} catch (e) {
 			if (e.message == 'no-auth') {
 				store.deleteSession();
-				Actions.loginScreen();
+				Actions.loginScreen({type: ActionConst.REPLACE});
 			} else {
 				throw e;
 			}

@@ -41,7 +41,7 @@ class RealmManager {
 	getUser(): Profile {
 		const session = this.getSession();
 		return {
-			id: session.user_id || 0,
+			user_id: session.user_id || 0,
 			username: session.username || '',
 			name: session.name || '---',
 			avatar_url: session.avatar_url || ''
