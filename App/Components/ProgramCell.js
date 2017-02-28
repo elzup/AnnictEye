@@ -36,10 +36,16 @@ const Styles = {
 		flexDirection: 'row'
 	},
 	number: {
+		marginLeft: 10
 	},
 	row: {
 		flex: 2,
 		flexDirection: 'row'
+	},
+	space_row: {
+		flex: 2,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	}
 };
 
@@ -55,19 +61,24 @@ const ProgramCell = ({program, onPress}: Prop) => {
 		<TouchableOpacity onPress={onPress} >
 			<View style={Styles.card}>
 				<View style={Styles.infos}>
-					<Text style={Styles.time}>{timeLabel}</Text>
-					<Text style={Styles.workTitle}>{program.work.title}</Text>
-					<Icon
-						name="check-circle"
-						type="font-awesome"
-						color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
-						/>
+					<View style={Styles.space_row}>
+						<View>
+							<Text style={Styles.time}>{timeLabel}</Text>
+							<Text style={Styles.workTitle}>{program.work.title}</Text>
+						</View>
+						<Icon
+							name="check-circle"
+							type="font-awesome"
+							color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
+							/>
+					</View>
 					<Text style={Styles.title}>{label}</Text>
 				</View>
 				<View style={Styles.footer}>
 					<View style={Styles.row}>
 						<Icon
 							name="bookmark"
+							size={18}
 							type="font-awesome"
 							color={Colors.broccoli}
 							/>
@@ -76,6 +87,7 @@ const ProgramCell = ({program, onPress}: Prop) => {
 					<View style={Styles.row}>
 						<Icon
 							name="comment"
+							size={18}
 							type="font-awesome"
 							color={Colors.broccoli}
 							/>
