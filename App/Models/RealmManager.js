@@ -1,5 +1,6 @@
 /* @flow */
 import Realm from 'realm';
+import {Episode} from '../Services/Type';
 import type {Profile} from '../Services/Type';
 
 class Session {
@@ -18,6 +19,19 @@ Session.schema = {
 		username: {type: 'string', optional: true},
 		name: {type: 'string', optional: true},
 		avatar_url: {type: 'string', optional: true}
+	}
+};
+
+class EpisodeModel {
+	episode_id: number
+	comments_count: number
+}
+
+EpisodeModel.schema = {
+	name: 'EpisodeModel',
+	properties: {
+		episode_id: 'int',
+		comments_count: 'int'
 	}
 };
 
@@ -71,11 +85,24 @@ class RealmManager {
 		}
 		return sessions[0];
 	}
+
+	getEpisodes(ids: Array<number>) {
+		return this.realm.objects('EpisodeModel').filtered(ids.map(id => 'episode_id == ' + id).join(' OR '));
+	}
+
+	addEpisode(episode: Episode) {
+		realm.write(() => {
+			realm.create('EpisodeModel', {
+				episode_id: 100,
+				comments_count: 0
+			});
+		});
+	}
 }
 
 const realm = new Realm({
-	schema: [Session],
-	schemaVersion: 3
+	schema: [Session, EpisodeModel],
+	schemaVersion: 4
 });
 
 const store = new RealmManager(realm);

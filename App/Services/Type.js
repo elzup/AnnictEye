@@ -95,7 +95,7 @@ export class Work {
 }
 
 export type EpisodeScheme = {
-	id: string,
+	id: number,
 	number: string,
 	number_text: string,
 	sort_number: number,
@@ -115,6 +115,7 @@ export class Episode {
 	title: string
 	recordsCount: number
 	recordCommentsCount: number
+	readedRecordCommentsCount: number
 
 	work: ?Work
 	prevEpisode: ?Episode
@@ -129,6 +130,7 @@ export class Episode {
 		this.title = obj.title;
 		this.recordsCount = obj.records_count;
 		this.recordCommentsCount = obj.record_comments_count;
+		this.readedRecordCommentsCount = 0;
 		if (obj.work != null) {
 			this.work = new Work(obj.work);
 		}
@@ -143,6 +145,14 @@ export class Episode {
 			this.nextEpisode = null;
 		}
 		this.isWatched = false;
+	}
+
+	hasNew(): boolean {
+		return this.newCommentCount() == 0;
+	}
+
+	newCommentCount(): number {
+		return this.recordCommentsCount - this.readedRecordCommentsCount;
 	}
 
 	safeTilte() {

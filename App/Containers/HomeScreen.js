@@ -65,19 +65,35 @@ class HomeScreen extends React.PureComponent {
 				store.deleteSession();
 				Actions.loginScreen({type: ActionConst.REPLACE});
 			} else {
-				console.log(e.stack);
+				throw e;
 			}
 		}
 	}
 
 	async loadProgram() {
 		const programs = await client.getPrograms();
-		// 放送済みのみ
 		this.setState({
 			loading: false,
 			dataSource: this.state.dataSource.cloneWithRows(programs)
 		});
+		const episodeIDs = programs.map(e => e.episode.id);
+		const episodes = store.getEpisodes(episodeIDs);
+		const lib = {};
+		episodes.forEach(e => {
+			lib[e.episode_id] = e.comments_count;
+		});
+		programs.forEach(p => {
+			const oldCount = lib[p.episode.id] || 0;
+			if (lib[p.episode.id] == null) {
+				store.addEpisode(p.episode);
+			}
+			p.episode.readedRecordCommentsCount = oldCount;
+		});
+		this.setState({
+			dataSource: this.state.dataSource.cloneWithRows(programs)
+		});
 	}
+
 	pressRow = (program: Program) => {
 		const {episode, work} = program;
 		episode.work = work;

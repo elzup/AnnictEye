@@ -35,6 +35,10 @@ const Styles = {
 		flex: 3,
 		flexDirection: 'row'
 	},
+	number_new: {
+		color: Colors.bloodOrange,
+		marginLeft: 5
+	},
 	number: {
 		marginLeft: 10
 	},
@@ -92,6 +96,7 @@ const ProgramCell = ({program, onPress}: Prop) => {
 							color={Colors.broccoli}
 							/>
 						<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
+						<Text style={Styles.number_new}>(+{program.episode.newCommentCount()})</Text>
 					</View>
 				</View>
 			</View>
