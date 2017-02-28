@@ -190,7 +190,7 @@ class RecordCreateModal extends Component {
 							<Icon
 								name="facebook"
 								type="font-awesome"
-								color={this.state.shareTwitter ? Colors.facebook : Colors.disable}
+								color={this.state.shareFacebook ? Colors.facebook : Colors.disable}
 								onPress={this.handleToggleFacebook.bind(this)}
 								/>
 						</View>
