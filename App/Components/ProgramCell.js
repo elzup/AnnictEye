@@ -101,7 +101,7 @@ class ProgramCell extends React.PureComponent {
 								color={Colors.broccoli}
 								/>
 							<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
-							<Text style={Styles.number_new}>(+{program.episode.newCommentCount()})</Text>
+							<Text style={Styles.number_new}>{program.episode.newCommentCountLabel()}</Text>
 						</View>
 					</View>
 				</View>

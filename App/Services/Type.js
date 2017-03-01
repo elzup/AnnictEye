@@ -155,6 +155,12 @@ export class Episode {
 		return this.recordCommentsCount - this.readedRecordCommentsCount;
 	}
 
+	newCommentCountLabel(): string {
+		// n == 0 => ''
+		// n >= 1 => (+n)
+		return this.newCommentCount() == 0 ? '' : `(+${this.newCommentCount()})`;
+	}
+
 	safeTilte() {
 		return this.title || '---';
 	}
