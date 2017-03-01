@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0081C49831524081995E0646 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23C4C18017574D80B634C712 /* Foundation.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -1336,7 +1337,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elzup.AnnictEye;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elzup.annict-eye";
 				PRODUCT_NAME = AnnictEye;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1362,7 +1363,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elzup.AnnictEye;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elzup.annict-eye";
 				PRODUCT_NAME = AnnictEye;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

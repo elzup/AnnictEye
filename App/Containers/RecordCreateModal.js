@@ -217,7 +217,7 @@ class RecordCreateModal extends Component {
 	async handleChangeRate(value: number) {
 		const color = value === 0 ? Colors.disable : Colors.star;
 		const source = await FAIcon.getImageSource('star', 22, color);
-		this.setState({sliderThumb: source, rating: value});
+		this.setState({sliderThumb: source, rating: Math.round(value * 10) / 10});
 	}
 
 	handleText(text: string) {
