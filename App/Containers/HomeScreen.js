@@ -36,6 +36,7 @@ type Props = {
 
 type State = {
 	loading: boolean,
+	programs: Array<Program>,
 	dataSource: any
 }
 
@@ -43,6 +44,7 @@ class HomeScreen extends React.PureComponent {
 	props: Props
 	state: State = {
 		loading: true,
+		programs: [],
 		dataSource: new ListView.DataSource({rowHasChanged: ProgramCell.rowHasChanged}).cloneWithRows([])
 	}
 
@@ -88,13 +90,21 @@ class HomeScreen extends React.PureComponent {
 		});
 		this.setState({
 			loading: false,
+			programs,
 			dataSource: this.state.dataSource.cloneWithRows(programs)
 		});
 	}
 
-	pressRow = (program: Program) => {
+	pressRow(rowID: number) {
+		const program = this.state.programs[rowID];
 		const {episode, work} = program;
 		episode.work = work;
+		episode.readed();
+		store.saveEpisodeReaded(episode);
+		this.setState({
+			programs: this.state.programs,
+			dataSource: this.state.dataSource.cloneWithRows(this.state.programs)
+		});
 		Actions.episodeScreen({
 			title: `${work.title} ${episode.numberText}`,
 			episode
@@ -121,12 +131,12 @@ class HomeScreen extends React.PureComponent {
 		);
 	}
 
-	renderRow = (program: Program) => {
+	renderRow(program: Program, sectionID: number, rowID: number) {
 		return (
 			<ProgramCell
 				program={program}
 				onPress={() => {
-					this.pressRow(program);
+					this.pressRow(rowID);
 				}}
 				/>
 		);

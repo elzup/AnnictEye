@@ -110,7 +110,8 @@ class ProgramCell extends React.PureComponent {
 	}
 
 	static rowHasChanged(p1: Program, p2: Program) {
-		return `${p1.id}::${p1.episode.readedRecordCommentsCount}` !== `${p2.id}::${p2.episode.readedRecordCommentsCount}`;
+		// const res = `${p1.id}::${p1.episode.readedRecordCommentsCount}` != `${p2.id}::${p2.episode.readedRecordCommentsCount}`;
+		return true;
 	}
 }
 

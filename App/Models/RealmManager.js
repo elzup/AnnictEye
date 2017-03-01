@@ -115,7 +115,7 @@ class RealmManager {
 
 const realm = new Realm({
 	schema: [Session, EpisodeModel],
-	schemaVersion: 4
+	schemaVersion: 7
 });
 
 const store = new RealmManager(realm);

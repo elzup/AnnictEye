@@ -147,8 +147,12 @@ export class Episode {
 		this.isWatched = false;
 	}
 
+	readed() {
+		this.readedRecordCommentsCount = this.recordCommentsCount;
+	}
+
 	hasNew(): boolean {
-		return this.newCommentCount() == 0;
+		return this.newCommentCount() > 0;
 	}
 
 	newCommentCount(): number {
