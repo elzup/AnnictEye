@@ -35,6 +35,10 @@ const Styles = {
 		flex: 3,
 		flexDirection: 'row'
 	},
+	number_new: {
+		color: Colors.bloodOrange,
+		marginLeft: 5
+	},
 	number: {
 		marginLeft: 10
 	},
@@ -49,54 +53,66 @@ const Styles = {
 	}
 };
 
-type Prop = {
+type Props = {
 	program: Program,
 	onPress: () => void
 }
 
-const ProgramCell = ({program, onPress}: Prop) => {
-	const label = `${program.episode.numberText}|${program.episode.safeTilte()}`;
-	const timeLabel = moment(program.startedAt).format('MM/DD HH:mm');
-	return (
-		<TouchableOpacity onPress={onPress} >
-			<View style={Styles.card}>
-				<View style={Styles.infos}>
-					<View style={Styles.space_row}>
-						<View>
-							<Text style={Styles.time}>{timeLabel}</Text>
-							<Text style={Styles.workTitle}>{program.work.title}</Text>
+class ProgramCell extends React.PureComponent {
+	props: Props
+
+	render() {
+		const {program, onPress} = this.props;
+		const label = `${program.episode.numberText}|${program.episode.safeTilte()}`;
+		const timeLabel = moment(program.startedAt).format('MM/DD HH:mm');
+
+		return (
+			<TouchableOpacity onPress={onPress} >
+				<View style={Styles.card}>
+					<View style={Styles.infos}>
+						<View style={Styles.space_row}>
+							<View>
+								<Text style={Styles.time}>{timeLabel}</Text>
+								<Text style={Styles.workTitle}>{program.work.title}</Text>
+							</View>
+							<Icon
+								name="check-circle"
+								type="font-awesome"
+								color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
+								/>
 						</View>
-						<Icon
-							name="check-circle"
-							type="font-awesome"
-							color={program.episode.isWatched ? Colors.checkGreen : Colors.disable}
-							/>
+						<Text style={Styles.title}>{label}</Text>
 					</View>
-					<Text style={Styles.title}>{label}</Text>
-				</View>
-				<View style={Styles.footer}>
-					<View style={Styles.row}>
-						<Icon
-							name="bookmark"
-							size={18}
-							type="font-awesome"
-							color={Colors.broccoli}
-							/>
-						<Text style={Styles.number}>{program.episode.recordsCount}</Text>
-					</View>
-					<View style={Styles.row}>
-						<Icon
-							name="comment"
-							size={18}
-							type="font-awesome"
-							color={Colors.broccoli}
-							/>
-						<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
+					<View style={Styles.footer}>
+						<View style={Styles.row}>
+							<Icon
+								name="bookmark"
+								size={18}
+								type="font-awesome"
+								color={Colors.broccoli}
+								/>
+							<Text style={Styles.number}>{program.episode.recordsCount}</Text>
+						</View>
+						<View style={Styles.row}>
+							<Icon
+								name="comment"
+								size={18}
+								type="font-awesome"
+								color={Colors.broccoli}
+								/>
+							<Text style={Styles.number}>{program.episode.recordCommentsCount}</Text>
+							<Text style={Styles.number_new}>{program.episode.newCommentCountLabel()}</Text>
+						</View>
 					</View>
 				</View>
-			</View>
-		</TouchableOpacity>
-	);
-};
+			</TouchableOpacity>
+		);
+	}
+
+	static rowHasChanged(p1: Program, p2: Program) {
+		// const res = `${p1.id}::${p1.episode.readedRecordCommentsCount}` != `${p2.id}::${p2.episode.readedRecordCommentsCount}`;
+		return true;
+	}
+}
 
 export default ProgramCell;

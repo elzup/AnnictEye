@@ -48,7 +48,7 @@ class LoginScreen extends React.Component {
 
 	componentWillMount() {
 		if (store.isLogin()) {
-			Actions.pop();
+			Actions.tabbar({type: ActionConst.REPLACE});
 		}
 	}
 
@@ -94,11 +94,7 @@ class LoginScreen extends React.Component {
 		const res = await client.oauthToken(this.state.code);
 		await client.setToken(res.data.access_token);
 		console.log('t: ' + res.data.access_token);
-		Actions.pop();
-		setTimeout(() => {
-			console.log('refresh tabbar');
-			Actions.refresh({name: 'tabbar'});
-		}, 10);
+		Actions.tabbar({type: ActionConst.REPLACE});
 	}
 
 	handleChangeCode(code: string) {

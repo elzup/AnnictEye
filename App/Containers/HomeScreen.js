@@ -6,7 +6,7 @@ import {
 	Text,
 	ListView,
 	StyleSheet} from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions, ActionConst} from 'react-native-router-flux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
@@ -36,6 +36,7 @@ type Props = {
 
 type State = {
 	loading: boolean,
+	programs: Array<Program>,
 	dataSource: any
 }
 
@@ -43,13 +44,14 @@ class HomeScreen extends React.PureComponent {
 	props: Props
 	state: State = {
 		loading: true,
-		dataSource: new ListView.DataSource({rowHasChanged: (r1: Program, r2: Program) => r1.id !== r2.id}).cloneWithRows([])
+		programs: [],
+		dataSource: new ListView.DataSource({rowHasChanged: ProgramCell.rowHasChanged}).cloneWithRows([])
 	}
 
 	componentWillMount() {
 		SplashScreen.hide();
 		if (!store.isLogin()) {
-			Actions.loginScreen();
+			Actions.loginScreen({type: ActionConst.REPLACE});
 		}
 	}
 
@@ -63,24 +65,46 @@ class HomeScreen extends React.PureComponent {
 		} catch (e) {
 			if (e.message == 'no-auth') {
 				store.deleteSession();
-				Actions.loginScreen();
+				Actions.loginScreen({type: ActionConst.REPLACE});
 			} else {
-				console.log(e.stack);
+				throw e;
 			}
 		}
 	}
 
 	async loadProgram() {
 		const programs = await client.getPrograms();
-		// 放送済みのみ
+		const episodeIDs = programs.map(e => e.episode.id);
+		const episodes = store.getEpisodes(episodeIDs);
+		const lib = {};
+		episodes.forEach(e => {
+			lib[e.episode_id] = e.comments_count;
+		});
+		console.log(lib);
+		programs.forEach(p => {
+			const oldCount = lib[p.episode.id] || 0;
+			if (lib[p.episode.id] == null) {
+				store.addEpisode(p.episode);
+			}
+			p.episode.readedRecordCommentsCount = oldCount;
+		});
 		this.setState({
 			loading: false,
+			programs,
 			dataSource: this.state.dataSource.cloneWithRows(programs)
 		});
 	}
-	pressRow = (program: Program) => {
+
+	pressRow(rowID: number) {
+		const program = this.state.programs[rowID];
 		const {episode, work} = program;
 		episode.work = work;
+		episode.readed();
+		store.saveEpisodeReaded(episode);
+		this.setState({
+			programs: this.state.programs,
+			dataSource: this.state.dataSource.cloneWithRows(this.state.programs)
+		});
 		Actions.episodeScreen({
 			title: `${work.title} ${episode.numberText}`,
 			episode
@@ -107,12 +131,12 @@ class HomeScreen extends React.PureComponent {
 		);
 	}
 
-	renderRow = (program: Program) => {
+	renderRow(program: Program, sectionID: number, rowID: number) {
 		return (
 			<ProgramCell
 				program={program}
 				onPress={() => {
-					this.pressRow(program);
+					this.pressRow(rowID);
 				}}
 				/>
 		);
