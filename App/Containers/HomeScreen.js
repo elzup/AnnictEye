@@ -43,7 +43,7 @@ class HomeScreen extends React.PureComponent {
 	props: Props
 	state: State = {
 		loading: true,
-		dataSource: new ListView.DataSource({rowHasChanged: (r1: Program, r2: Program) => r1.id !== r2.id}).cloneWithRows([])
+		dataSource: new ListView.DataSource({rowHasChanged: ProgramCell.rowHasChanged}).cloneWithRows([])
 	}
 
 	componentWillMount() {
@@ -72,17 +72,13 @@ class HomeScreen extends React.PureComponent {
 
 	async loadProgram() {
 		const programs = await client.getPrograms();
-		this.setState({
-			loading: false,
-			dataSource: this.state.dataSource.cloneWithRows(programs)
-		});
 		const episodeIDs = programs.map(e => e.episode.id);
 		const episodes = store.getEpisodes(episodeIDs);
-		console.log(episodes.map(e => e));
 		const lib = {};
 		episodes.forEach(e => {
 			lib[e.episode_id] = e.comments_count;
 		});
+		console.log(lib);
 		programs.forEach(p => {
 			const oldCount = lib[p.episode.id] || 0;
 			if (lib[p.episode.id] == null) {
@@ -91,6 +87,7 @@ class HomeScreen extends React.PureComponent {
 			p.episode.readedRecordCommentsCount = oldCount;
 		});
 		this.setState({
+			loading: false,
 			dataSource: this.state.dataSource.cloneWithRows(programs)
 		});
 	}

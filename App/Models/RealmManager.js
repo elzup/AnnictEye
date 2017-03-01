@@ -90,22 +90,25 @@ class RealmManager {
 		return this.realm.objects('EpisodeModel').filtered(ids.map(id => 'episode_id == ' + id).join(' OR '));
 	}
 
+	deleteEpisodes() {
+		realm.write(() => {
+			realm.delete(realm.objects('EpisodeModel'));
+		});
+	}
+
 	addEpisode(episode: Episode) {
 		realm.write(() => {
-			const ep = this.realm.objects('EpisodeModel').filtered('episode_id == $0', episode.id)[0];
 			realm.create('EpisodeModel', {
-				episode_id: 100,
+				episode_id: episode.id,
 				comments_count: 0
 			});
 		});
 	}
 
 	saveEpisodeReaded(episode: Episode) {
+		const ep = this.realm.objects('EpisodeModel').filtered('episode_id == $0', episode.id)[0];
 		realm.write(() => {
-			realm.create('EpisodeModel', {
-				episode_id: 100,
-				comments_count: 0
-			});
+			ep.comments_count = episode.recordCommentsCount;
 		});
 	}
 }
