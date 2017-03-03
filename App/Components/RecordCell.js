@@ -76,8 +76,8 @@ class RecordCell extends Component {
 				</View>
 				<View style={Styles.footer}>
 					<View style={Styles.buttons}>
-						<IconButton text={record.likesCount.toString()} iconName="heart" onPress={onPressLike}/>
-						<IconButton text={record.commentsCount.toString()} iconName="reply" onPress={onPressReply}/>
+						<IconButton color={Colors.disable} text={record.likesCount.toString()} iconName="heart" onPress={onPressLike}/>
+						<IconButton color={Colors.disable} text={record.commentsCount.toString()} iconName="reply" onPress={onPressReply}/>
 						<IconButton iconName="globe" onPress={onPressGlobe}/>
 					</View>
 				</View>

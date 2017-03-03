@@ -7,6 +7,7 @@ import {
   StyleSheet,
 	ScrollView,
 	Linking,
+	Alert,
 	Text
 } from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
@@ -163,10 +164,12 @@ class EpisodeScreen extends React.Component {
 
 	handlePressLike = (record: Record) => {
 		console.log(`like action: ${record.id}`);
+		Alert.alert('未実装', '次バージョンで実装予定です。');
 	}
 
 	handlePressReply = (record: Record) => {
 		console.log(`reply action: ${record.id}`);
+		Alert.alert('未実装', '次バージョンで実装予定です。');
 	}
 
 	handlePressGlobe = (record: Record) => {
