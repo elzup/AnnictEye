@@ -13,6 +13,7 @@ class AnnictApi {
 	token: string
 	api: any
 	host = 'https://api.annict.com/'
+	site_host = 'https://annict.com/'
 
 	constructor() {
 		console.log('Gen AnncitAPI');
@@ -118,7 +119,7 @@ class AnnictApi {
 
 	authURL(): string {
 		return [
-			`${this.host}oauth/authorize`,
+			`${this.site_host}oauth/authorize`,
 			'?response_type=code',
 			'&client_id=' + CLIENT_ID,
 			'&redirect_uri=urn:ietf:wg:oauth:2.0:oob',
