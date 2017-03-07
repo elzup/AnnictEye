@@ -16,6 +16,7 @@
 		00E356F31AD99517003FC87E /* AnnictEyeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AnnictEyeTests.m */; };
 		075E6E40288F4606BDF23623 /* Andale Mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 715C455505D94F05A395B861 /* Andale Mono.ttf */; };
 		095F91559FA044F3949EA9DC /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D3CC7C301E475AA61BB9D5 /* libcxxreact.a */; };
+		0B2917A572044FBD8009E291 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 671EAF8090464CAFABAE9A51 /* libRNSpinkit.a */; };
 		0B385172F1B54A1F9121929C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB1CB947E9FD4A14837D2105 /* MaterialIcons.ttf */; };
 		0BB666312265417C94F9FBB2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70E41D5465BB4A469BFF4E9F /* FontAwesome.ttf */; };
 		0E178C1BC653418CA9F51348 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0035820690BC4D209DB8591A /* Roboto_medium.ttf */; };
@@ -237,6 +238,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		457081631E6EDDDD0050E6D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6FF5D0CCC06F43AFA9810B2D /* RNSpinkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D42CB3511B2538DE00FD0AE2;
+			remoteInfo = RNSpinkit;
+		};
 		45962C2D1E44BECD004F1C36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C63972ECD9624575AA16EAEA /* RCTMaterialKit.xcodeproj */;
@@ -367,7 +375,9 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		5FE85021C57F4DA39E0612DA /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		669C42D6638C41C4B303E103 /* SanFrancisco.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFrancisco.ttf; path = "../node_modules/native-base/Fonts/SanFrancisco.ttf"; sourceTree = "<group>"; };
+		671EAF8090464CAFABAE9A51 /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		6D984A60DC4342F79835A625 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		6FF5D0CCC06F43AFA9810B2D /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		70E41D5465BB4A469BFF4E9F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		715C455505D94F05A395B861 /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
 		75A35E326D9B4C7A8721C40D /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
@@ -447,6 +457,7 @@
 				89CA4973C1814A68A14F2FDD /* libc++.tbd in Frameworks */,
 				CF899E2EE4B9473898C1395F /* libz.tbd in Frameworks */,
 				32A713AAE1EE4F798BB1ACB4 /* libSplashScreen.a in Frameworks */,
+				0B2917A572044FBD8009E291 /* libRNSpinkit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +570,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		457081431E6EDDDD0050E6D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				457081641E6EDDDD0050E6D9 /* libRNSpinkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		45962C221E44BECD004F1C36 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,6 +674,7 @@
 				C63972ECD9624575AA16EAEA /* RCTMaterialKit.xcodeproj */,
 				98D6BC199B17401DB0B4C6EE /* RealmReact.xcodeproj */,
 				EAA1799E6F8F49F5999B737E /* SplashScreen.xcodeproj */,
+				6FF5D0CCC06F43AFA9810B2D /* RNSpinkit.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -886,6 +906,10 @@
 					ProjectRef = E0D80E30D5A94CBCAC26AB5B /* RNI18n.xcodeproj */;
 				},
 				{
+					ProductGroup = 457081431E6EDDDD0050E6D9 /* Products */;
+					ProjectRef = 6FF5D0CCC06F43AFA9810B2D /* RNSpinkit.xcodeproj */;
+				},
+				{
 					ProductGroup = 45B4D6E31E3C4070009E4585 /* Products */;
 					ProjectRef = 29FC2D38BBAA4A1F8B3EF24D /* RNVectorIcons.xcodeproj */;
 				},
@@ -1048,6 +1072,13 @@
 			fileType = archive.ar;
 			path = libjschelpers.a;
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		457081641E6EDDDD0050E6D9 /* libRNSpinkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpinkit.a;
+			remoteRef = 457081631E6EDDDD0050E6D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		45962C2E1E44BECD004F1C36 /* libRCTMaterialKit.a */ = {
@@ -1282,6 +1313,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnnictEye.app/AnnictEye";
@@ -1299,6 +1331,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1329,6 +1362,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 				);
 				INFOPLIST_FILE = AnnictEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1355,6 +1389,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 				);
 				INFOPLIST_FILE = AnnictEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
