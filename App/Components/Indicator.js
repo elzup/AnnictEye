@@ -1,8 +1,8 @@
-/* @flow */
-;
-
 import React from 'react';
-import {ActivityIndicator} from 'react-native';
+import {View} from 'react-native';
+import Spinner from 'react-native-spinkit';
+
+import {Colors} from '../Themes/';
 
 const Styles = {
 	indicator: {
@@ -12,12 +12,23 @@ const Styles = {
 	}
 };
 
-const Indicator = (props: { loading: boolean }) => props.loading ? (
-	<ActivityIndicator
-		animating
-		style={Styles.indicator}
-		size="large"
-		/>
-) : null;
+function Indicator({loading}) {
+	if (!loading) {
+		return null;
+	}
+	return (
+		<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} >
+			<Spinner size={100} type="WanderingCubes" color={Colors.green}/>
+		</View>
+	);
+}
+
+Indicator.propTypes = {
+	loading: React.PropTypes.bool
+};
+
+Indicator.defaultProps = {
+	loading: true
+};
 
 export default Indicator;

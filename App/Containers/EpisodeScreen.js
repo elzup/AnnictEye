@@ -105,6 +105,17 @@ class EpisodeScreen extends React.Component {
 	render() {
 		const {episode} = this.props;
 		const title = episode.work ? episode.work.title : '---';
+		const listView = !this.state.loading && this.noRowData() ? null : (
+			<ListView
+				contentContainerStyle={Styles.listContent}
+				dataSource={this.state.dataSourceRecords}
+				renderRow={this.renderRow}
+				renderFooter={this.renderFooter}
+				pageSize={50}
+				enableEmptySections
+				/>
+		);
+
 		return (
 			<ScrollView
 				automaticallyAdjustContentInsets={false}
@@ -122,21 +133,14 @@ class EpisodeScreen extends React.Component {
 						iconRight
 						title="記録する"
 						/>
-					<ListView
-						contentContainerStyle={Styles.listContent}
-						dataSource={this.state.dataSourceRecords}
-						renderRow={this.renderRow}
-						renderFooter={this.renderFooter}
-						pageSize={50}
-						enableEmptySections
-						/>
+					{listView}
 				</View>
 			</ScrollView>
 		);
 	}
 
 	renderFooter = () => (
-		<Indicator loading={this.state.loading}/>
+		<Indicator/>
   )
 
 	handleOpenModal = () => {

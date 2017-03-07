@@ -10,9 +10,9 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
-import Spinner from 'react-native-spinkit';
 
 import ProgramCell from '../Components/ProgramCell';
+import Indicator from '../Components/Indicator';
 
 import {ApplicationStyles, Metrics, Colors, Fonts} from '../Themes/';
 import {Program, Episode} from '../Services/Type';
@@ -152,9 +152,7 @@ class HomeScreen extends React.PureComponent {
 
 	renderFooter() {
 		return (
-			<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} >
-				<Spinner style={Styles.spinner} size={100} type="WanderingCubes" color={Colors.green}/>
-			</View>
+			<Indicator/>
 		);
 	}
 }
