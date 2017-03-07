@@ -86,8 +86,9 @@ class RealmManager {
 		return sessions[0];
 	}
 
-	getEpisodes(ids: Array<number>) {
-		return this.realm.objects('EpisodeModel').filtered(ids.map(id => 'episode_id == ' + id).join(' OR '));
+	async getEpisodes(ids: Array<number>) {
+		const episodes = this.realm.objects('EpisodeModel');
+		return episodes.filtered(ids.map(id => 'episode_id == ' + id).join(' OR '));
 	}
 
 	deleteEpisodes() {

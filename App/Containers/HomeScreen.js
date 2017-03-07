@@ -75,7 +75,7 @@ class HomeScreen extends React.PureComponent {
 	async loadProgram() {
 		const programs = await client.getPrograms();
 		const episodeIDs = programs.map(e => e.episode.id);
-		const episodes = store.getEpisodes(episodeIDs);
+		const episodes = await store.getEpisodes(episodeIDs);
 		const lib = {};
 		episodes.forEach(e => {
 			lib[e.episode_id] = e.comments_count;
@@ -116,6 +116,14 @@ class HomeScreen extends React.PureComponent {
 	}
 
 	render() {
+		if (this.noRowData()) {
+			return (
+				<View style={Styles.container}>
+					<Text>データがありませんでした。</Text>
+					<Text>おかしな場合は annict.com でチャンネルの登録、「見てる」アニメの登録を確認してください。</Text>
+				</View>
+			);
+		}
 		return (
 			<View style={Styles.container}>
 				<ListView
